@@ -8,6 +8,6 @@ class MyFormatter implements IFormatting {
 
 const format = createFormatter(new MyFormatter());
 
-const s = format('Hello ${name}', {name: 'World'});
+const s = format('Hello ${name} and ${value:flt}', {name: 'World', value: 123});
 
 console.log(s);
