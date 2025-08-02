@@ -1,2 +1,3 @@
 # custom-string-formatter
-Customizable String Formatter
+
+This is currently a draft for `Customizable String Formatter`.
