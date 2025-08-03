@@ -5,7 +5,7 @@ import {resolveProperty} from './resolver';
  */
 export interface IFormattingFilter {
     /**
-     * Takes any value and formats it according to the type.
+     * Takes any value and formats it according to the type and/or the filter logic.
      */
     format(value: any): string;
 }
