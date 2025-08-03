@@ -10,7 +10,7 @@
 * [Self-Reference](#self-reference)
 * [Safety Checks](#safety-checks)
 
-This is a platform for easy implementation of flexible string-value formatting.
+This is a platform for implementing flexible string-value formatting.
 
 ```ts
 import {createFormatter, IFormattingConfig} from 'custom-string-formatter';
