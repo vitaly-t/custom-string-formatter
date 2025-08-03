@@ -10,7 +10,8 @@
 * [Self-Reference](#self-reference)
 * [Safety Checks](#safety-checks)
 
-This is a platform for implementing flexible string-value formatting.
+Platform for implementing flexible string-value formatting, sharing unified formatting notation
+for any type of output.
 
 ```ts
 import {createFormatter, IFormattingConfig} from 'custom-string-formatter';
@@ -38,7 +39,7 @@ $ npm i custom-type-formatting
 
 ## Basic Syntax
 
-Supported variable syntax is any of the following:
+Supported variable syntaxes:
 
 * `${propertyName}`
 * `$(propertyName)`
