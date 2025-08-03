@@ -4,3 +4,4 @@ coverage/
 dist/
 src/*.js
 test/*.js
+examples/*.js
