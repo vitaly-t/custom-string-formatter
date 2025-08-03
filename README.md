@@ -129,6 +129,10 @@ This is to help with detection of using invalid property names.
 
 If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
 
+You can override such behavior, by implementing `getDefaultValue` function inside `IFormattingConfig` to return
+a default value whenever the property cannot be resolved. This is not a safe approach when no error is thrown,
+as invalid property names can be easily missed.
+
 #### Filter-name safety
 
 When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection

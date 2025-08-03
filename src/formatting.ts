@@ -1,30 +1,5 @@
+import {IFormattingConfig} from './protocol';
 import {resolveProperty} from './resolver';
-
-/**
- * Formatting Filter interface.
- */
-export interface IFormattingFilter {
-    /**
-     * Takes any value and formats it according to the type and/or the filter logic.
-     */
-    format(value: any): string;
-}
-
-/**
- * Formatting Configuration interface.
- */
-export interface IFormattingConfig {
-    /**
-     * Implements default formatting (when without a filter):
-     *  - takes any value and formats it according to the type.
-     */
-    format(value: any): string;
-
-    /**
-     * Optional set of formatting filters that override default formatting.
-     */
-    filters?: { [name: string]: IFormattingFilter };
-}
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -37,7 +12,10 @@ export function createFormatter(cfg: IFormattingConfig) {
             const filter = args[8]; // filter, if specified
             const res = resolveProperty(params, prop);
             if (!res.exists) {
-                throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+                if (typeof cfg.getDefaultValue !== 'function') {
+                    throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+                }
+                res.value = cfg.getDefaultValue(prop, params);
             }
             if (filter) {
                 const f = cfg.filters?.[filter];

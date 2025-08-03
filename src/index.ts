@@ -1,1 +1,2 @@
-export {IFormattingFilter, IFormattingConfig, createFormatter} from './formatting';
+export {IFormattingFilter, IFormattingConfig} from './protocol';
+export {createFormatter} from './formatting';
