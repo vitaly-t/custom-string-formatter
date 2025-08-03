@@ -129,7 +129,7 @@ This is to help with detection of using invalid property names.
 
 If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
 
-You can override such behavior, by implementing `getDefaultValue` function inside `IFormattingConfig` to return
+You can override such behavior, by implementing [getDefaultValue] function inside [IFormattingConfig] to return
 a default value whenever the property cannot be resolved. This is not a safe approach when no error is thrown,
 as invalid property names can be easily missed.
 
@@ -137,3 +137,10 @@ as invalid property names can be easily missed.
 
 When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection
 of using invalid filter names.
+
+You can override such behavior, by implementing [getDefaultFilter] function inside [IFormattingConfig] to return
+an alternative filter, which can have various uses.
+
+[IFormattingConfig]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#14
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#32
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#56

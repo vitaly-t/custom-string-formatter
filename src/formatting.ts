@@ -18,8 +18,14 @@ export function createFormatter(cfg: IFormattingConfig) {
                 res.value = cfg.getDefaultValue(prop, params);
             }
             if (filter) {
-                const f = cfg.filters?.[filter];
+                let f = cfg.filters?.[filter];
                 if (!f) {
+                    if (typeof cfg.getDefaultFilter === 'function') {
+                        f = cfg.getDefaultFilter(filter);
+                        if (f) {
+                            return f.format(res.value);
+                        }
+                    }
                     throw new Error(`Filter ${JSON.stringify(filter)} not recognized`);
                 }
                 return f.format(res.value);
