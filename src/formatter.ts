@@ -22,9 +22,9 @@ export interface IFormatting {
 export function createFormatter(f: IFormatting) {
     const reg = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)\s*(:\s*([\w\$]*)\s*)?\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
     return function (text: string, params: { [key: string]: any }) {
-        return text.replace(reg, (match: string, ...args: string[]) => {
-            const prop = args[5]; // property name
-            const filter = args[7]; // filter, if specified
+        return text.replace(reg, (...args: string[]) => {
+            const prop = args[6]; // property name
+            const filter = args[8]; // filter, if specified
             console.log(`Found property ${JSON.stringify(prop)}, with filter ${JSON.stringify(filter)}`);
             return params[prop];
         });
