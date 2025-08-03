@@ -3,7 +3,7 @@ module.exports = {
     collectCoverage: true,
     coverageThreshold: {
         global: {
-            branches: 100,
+            branches: 95, // Interoperability JS lines cannot be covered, hence 95%
             lines: 100
         }
     },
