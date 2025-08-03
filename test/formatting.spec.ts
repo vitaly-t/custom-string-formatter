@@ -49,7 +49,7 @@ describe('createFormatter', () => {
     it('must resolve aliases', () => {
         expect(fullFormat('some ${value:object}', {value: 'message'})).toEqual('some "message"');
     });
-    it('must redirect to default values', () => {
+    it('must redirect to default value', () => {
         expect(fullFormat('${value}', {})).toEqual('nada');
     });
     it('must throw on missing property', () => {

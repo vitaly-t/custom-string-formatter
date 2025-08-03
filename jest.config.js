@@ -1,6 +1,12 @@
 module.exports = {
     verbose: true,
     collectCoverage: true,
+    coverageThreshold: {
+        global: {
+            branches: 100,
+            lines: 100
+        }
+    },
     "roots": [
         "./test"
     ],
