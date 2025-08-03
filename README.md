@@ -140,7 +140,7 @@ When using an unknown filter, the parser will throw `Filter "filterName" not rec
 of using invalid filter names.
 
 You can override such behavior, by implementing [getDefaultFilter] function inside [IFormattingConfig] to return
-an alternative filter, which can have various uses, such as:
+an alternative filter. This can have various uses, such as:
 
 * Support for filter aliases
 * Support for dynamic filters / lazy-loading
