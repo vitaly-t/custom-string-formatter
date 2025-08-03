@@ -122,7 +122,7 @@ though it may not have a practical need, as use of `this` in this case is superf
 
 ## Safety Checks
 
-#### Property-name safety
+### Property-name safety
 
 The parser requires that any referenced property exists, or else it will throw `Property "propName" does not exist`.
 This is to help with detection of using invalid property names.
@@ -133,7 +133,7 @@ You can override such behavior, by implementing [getDefaultValue] function insid
 a default value whenever the property cannot be resolved. This is not a safe approach when no error is thrown,
 as invalid property names can be easily missed.
 
-#### Filter-name safety
+### Filter-name safety
 
 When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection
 of using invalid filter names.
