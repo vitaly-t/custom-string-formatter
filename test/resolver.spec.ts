@@ -1,4 +1,4 @@
-import {resolveProperty} from '../src/prop';
+import {resolveProperty} from '../src/resolver';
 
 describe('resolveProperty', () => {
     it('must resolve "this"', () => {

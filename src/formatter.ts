@@ -1,13 +1,15 @@
 // TODO: Add support for custom-type formatting
 
-import {resolveProperty} from './prop';
+import {resolveProperty} from './resolver';
 
 export interface IFormattingFilter {
-
+    format(value: any): string;
 }
 
 export interface IFormatting {
-    formatValue(value: any): string;
+    format(value: any): string;
+
+    filters?: { [name: string]: IFormattingFilter };
 }
 
 /**
@@ -21,18 +23,24 @@ export interface IFormatting {
  *
  * @param f
  */
-export function createFormatter(f: IFormatting) {
+export function createFormatter(config: IFormatting) {
     const reg = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)\s*(:\s*([\w\$]*)\s*)?\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
     return function (text: string, params: { [key: string]: any }) {
         return text.replace(reg, (...args: string[]) => {
             const prop = args[6]; // property name
             const filter = args[8]; // filter, if specified
-            console.log(`Found property ${JSON.stringify(prop)}, with filter ${JSON.stringify(filter)}`);
             const res = resolveProperty(params, prop);
             if (!res.exists) {
                 throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
             }
-            return res.value;
+            if (filter) {
+                const f = config.filters?.[filter];
+                if (!f) {
+                    throw new Error(`Filter ${JSON.stringify(filter)} not recognized`);
+                }
+                return f.format(res.value);
+            }
+            return config.format(res.value);
         });
     }
 }

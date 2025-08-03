@@ -1,13 +1,23 @@
-import {createFormatter, IFormatting} from './formatter';
+import {createFormatter, IFormatting, IFormattingFilter} from './formatter';
+
+class JsonFilter implements IFormattingFilter {
+    format(value: any): string {
+        return JSON.stringify(value);
+    }
+}
 
 class MyFormatter implements IFormatting {
-    formatValue(value: any): string {
-        return value.toString();
+    format(value: any): string {
+        return (value ?? 'null').toString();
     }
+
+    filters = {
+        json: new JsonFilter()
+    };
 }
 
 const format = createFormatter(new MyFormatter());
 
-const s = format('Hello ${name} and ${this.value.bla:flt}', {name: 'World', value: {bla: 123}});
+const s = format('Hello ${name} and ${this.value.hello}', {name: 'World', value: {bla: 123, hello: undefined}});
 
 console.log(s);
