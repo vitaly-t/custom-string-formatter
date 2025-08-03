@@ -1,8 +1,8 @@
 import {createFormatter, IFormattingConfig, IFormattingFilter} from 'custom-string-formatter';
 
-class FirstFilter implements IFormattingFilter {
+class DummyFilter implements IFormattingFilter {
     format(value: any) {
-        return value + '-1';
+        return '[' + value + ']';
     }
 }
 
@@ -12,24 +12,24 @@ class BaseFormatter implements IFormattingConfig {
     }
 
     getDefaultFilter(name: string): IFormattingFilter | undefined {
-        if (['one', '1'].indexOf(name) >= 0) {
-            return this.filters.first;
+        if (['wrap', 'brackets'].indexOf(name) >= 0) {
+            return this.filters.dummy;
         }
     }
 
     filters = {
-        first: new FirstFilter()
+        dummy: new DummyFilter()
     }
 }
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${a:first}\n${b:second}\n${c:third}',
-    {a: 'aaa', b: 'bbb', c: 'ccc'});
+const s = format('${a:dummy}\n${b:wrap}\n${c:brackets}',
+    {a: 'first', b: 'second', c: 'third'});
 
 console.log(s);
 // OUTPUT:
 //
-// aaa-1
-// bbb-2
-// ccc-3
+// [first]
+// [second]
+// [third]
