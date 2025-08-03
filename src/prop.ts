@@ -5,38 +5,27 @@ export interface IProperty {
     exists: boolean;
 
     /**
-     * The resolved value, set when 'exists' = true
+     * The resolved value, set only when 'exists' = true
      */
     value?: any;
 }
 
 /**
- * Parses a property name and resolves the value from an object.
- *
- * TODO: This needs to support `this`
- *
- * @param obj
- * @param prop
+ * Parses a property name and resolves the value of an object.
  */
 export function resolveProperty(obj: { [key: string]: any }, prop: string): IProperty {
-    // const names = prop.split('.').filter(a => a);
-    /*
-    if (names.length) {
-        let i = 0, result = obj;
-        for (const [key, value] of Object.entries(obj)) {
-            if (!i && key === 'this') {
-                continue;
-            }
-            result = value;
+    const names = prop.split('.').filter(a => a);
+    let exists = false, value = obj;
+    for (const [i, n] of names.entries()) {
+        if (!i && n === 'this') {
+            exists = true;
+            continue;
         }
-    }*/
-    return {exists: false};
+        if (value === null || value === undefined || !(n in value)) {
+            return {exists: false};
+        }
+        exists = true;
+        value = value[n];
+    }
+    return {exists, value};
 }
-
-/*
-/////////////////////////////////////////////////////////////////////////
-// Checks if the property exists in the object or value or its prototype;
-function hasProperty(value, prop) {
-    return (value && typeof value === 'object' && prop in value) ||
-        value !== null && value !== undefined && value[prop] !== undefined;
-}*/

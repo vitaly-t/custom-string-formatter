@@ -1,5 +1,7 @@
 // TODO: Add support for custom-type formatting
 
+import {resolveProperty} from './prop';
+
 export interface IFormattingFilter {
 
 }
@@ -26,7 +28,11 @@ export function createFormatter(f: IFormatting) {
             const prop = args[6]; // property name
             const filter = args[8]; // filter, if specified
             console.log(`Found property ${JSON.stringify(prop)}, with filter ${JSON.stringify(filter)}`);
-            return params[prop];
+            const res = resolveProperty(params, prop);
+            if (!res.exists) {
+                throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+            }
+            return res.value;
         });
     }
 }
