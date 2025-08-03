@@ -139,8 +139,16 @@ When using an unknown filter, the parser will throw `Filter "filterName" not rec
 of using invalid filter names.
 
 You can override such behavior, by implementing [getDefaultFilter] function inside [IFormattingConfig] to return
-an alternative filter, which can have various uses.
+an alternative filter, which can have various uses, such as:
 
-[IFormattingConfig]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#14
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#32
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#56
+* Support for filter aliases
+* Support for dynamic filters / lazy-loading
+* Support for composite filters names
+
+For more details see the [getDefaultFilter] documentation.
+
+[IFormattingConfig]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
+
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L32
+
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L56
