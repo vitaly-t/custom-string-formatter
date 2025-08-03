@@ -93,11 +93,11 @@ console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 
 Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works the same as `${propertyName:filterName}`.
 
-## Self-reference
+## Self-Reference
 
-When a property name starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object itself.  
+When a property starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object itself.  
 
-This is to avoid wrapping the parameter object into another object when you want to format the parameter object itself.
+It is to avoid wrapping the parameter object into another object when you want to format that object itself.
 
 For the above example with the filter, we can use it like this:
 
