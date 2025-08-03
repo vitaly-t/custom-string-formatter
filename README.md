@@ -5,9 +5,10 @@
 
 * [Installation](#installation)
 * [Basic Syntax](#basic-syntax)
-* [Nested Properties Syntax](#nested-properties)
+* [Nested Properties](#nested-properties)
 * [Formatting Filters](#formatting-filters)
 * [Self-Reference](#self-reference)
+* [Safety Checks](#safety-checks)
 
 This is a platform for easy implementation of flexible string-value formatting.
 
@@ -101,7 +102,8 @@ Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works t
 
 ## Self-Reference
 
-When a property starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object itself.  
+When a property starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object
+itself.
 
 It is to avoid wrapping the parameter object into another object when you want to format that object itself.
 
@@ -117,3 +119,17 @@ Above, we referenced the parameter object itself, and forwarded formatting into 
 
 Because `this` references the parameter object, its use with nested properties is also valid - `${this.propA.propB}`,
 though it may not have a practical need, as use of `this` in this case is superfluous.
+
+## Safety Checks
+
+#### Property-name safety
+
+The parser requires that any referenced property exists, or else it will throw `Property "propName" does not exist`.
+This is to help with detection of using invalid property names.
+
+If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
+
+#### Filter-name safety
+
+When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection
+of using invalid filter names.
