@@ -146,7 +146,7 @@ an alternative filter. This can have various uses, such as:
 * Support for dynamic filters / lazy-loading
 * Support for composite filters names
 
-For more details see the [getDefaultFilter] documentation.
+Check out [the examples](./examples).
 
 [IFormattingConfig]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 
