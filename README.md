@@ -10,7 +10,7 @@
 * [Self-Reference](#self-reference)
 * [Safety Checks](#safety-checks)
 
-Platform for implementing flexible string-value formatting, sharing unified formatting notation
+Platform for implementing flexible string-value formatting, sharing unified formatting syntax
 for any type of output.
 
 ```ts
