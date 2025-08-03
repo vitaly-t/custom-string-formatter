@@ -8,14 +8,14 @@ Platform for easy implementation of flexible string-value formatting.
 ```ts
 import {createFormatter, IFormattingConfig} from 'custom-string-formatter';
 
-class BasicFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormattingConfig {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
 }
 
 // creating a reusable formatting function:
-const format = createFormatter(new BasicFormatter());
+const format = createFormatter(new BaseFormatter());
 
 // formatting a string with values from an object:
 const s = format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
@@ -66,7 +66,7 @@ class JsonFilter implements IFormattingFilter {
     }
 }
 
-class BasicFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormattingConfig {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
@@ -76,16 +76,14 @@ class BasicFormatter implements IFormattingConfig {
     };
 }
 
-const format = createFormatter(new MyFormatter());
+const format = createFormatter(new BaseFormatter());
 
 const s = format('${title} ${name} address: ${address:json}', {
     title: 'Mr.',
     name: 'Foreman',
-    address: {street: 'Springfield', house: '10'}
+    address: {street: 'Springfield', house: 10}
 });
 
-console.log(s); //=> 
+console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
-
 </details>
-

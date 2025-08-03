@@ -6,7 +6,7 @@ class JsonFilter implements IFormattingFilter {
     }
 }
 
-class MyFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormattingConfig {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
@@ -16,8 +16,12 @@ class MyFormatter implements IFormattingConfig {
     };
 }
 
-const format = createFormatter(new MyFormatter());
+const format = createFormatter(new BaseFormatter());
 
-const s = format('Hello ${name} and ${this.value.hello}', {name: 'World', value: {bla: 123, hello: undefined}});
+const s = format('${title} ${name} address: ${address:json}', {
+    title: 'Mr.',
+    name: 'Foreman',
+    address: {street: 'Springfield', house: 10}
+});
 
-console.log(s);
+console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
