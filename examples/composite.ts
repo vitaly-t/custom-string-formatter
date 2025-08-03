@@ -1,4 +1,4 @@
-import {createFormatter, IFormattingConfig, IFormattingFilter} from 'custom-string-formatter';
+import {createFormatter, IFormattingConfig, IFormattingFilter} from '../src';
 
 /**
  * This filter example wraps the value into angle brackets <value>,

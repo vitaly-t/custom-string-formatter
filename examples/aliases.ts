@@ -1,4 +1,4 @@
-import {createFormatter, IFormattingConfig, IFormattingFilter} from 'custom-string-formatter';
+import {createFormatter, IFormattingConfig, IFormattingFilter} from '../src';
 
 class DummyFilter implements IFormattingFilter {
     format(value: any) {
