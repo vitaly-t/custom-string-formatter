@@ -6,7 +6,6 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p src",
-    "start": "npm run build && node ./dist/test.js",
     "test": "jest"
   },
   "files": [

@@ -49,18 +49,17 @@ Name-surrounding spaces are ignored, i.e. `${  propertyName  }` works the same a
 
 ## Nested Properties
 
-Property nesting (separated with `.`) of any depth is supported: `${prop_A.prop_B.prop_C}`.
+Property nesting (separated with `.`) of any depth is supported: `${propA.propB.propC}`.
 
-Empty property names adjacent to `.` are ignored, i.e. `${...prop_A...prop_B...prop_C...}` will work
-the same as `${prop_A.prop_B.prop_C}`.
+Empty property names adjacent to `.` are ignored, i.e. `${...propA...propB...propC...}` will work
+the same as `${propA.propB.propC}`.
 
-### Formatting Filters
+## Formatting Filters
 
 Formatting filters are appended to the property name after `:` to override the default formatting, i.e.
 in the form of `${propertyName:filterName}`.
 
-<details>
-<summary><b>Example of using formatting filters</b></summary>
+<b>Example of using formatting filters</b>
 
 ```ts
 import {createFormatter, IFormattingConfig, IFormattingFilter} from './';
@@ -92,6 +91,23 @@ const s = format('${title} ${name} address: ${address:json}', {
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
 
-</details>
-
 Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works the same as `${propertyName:filterName}`.
+
+## Self-reference
+
+When a property name starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object itself.  
+
+This is to avoid wrapping the parameter object into another object when you want to format the parameter object itself.
+
+For the above example with the filter, we can use it like this:
+
+```ts
+const s = format('Address: ${this:json}', {street: 'Springfield', house: 10});
+
+console.log(s); //=> Address: {"street":"Springfield","house":10}
+```
+
+Above, we referenced the parameter object itself, and forwarded formatting into our `json` filter.
+
+Because `this` references the parameter object, its use with nested properties is also valid - `${this.propA.propB}`,
+though it may not have a practical need, as use of `this` in this case is superfluous.
