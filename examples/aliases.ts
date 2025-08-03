@@ -12,6 +12,7 @@ class BaseFormatter implements IFormattingConfig {
     }
 
     getDefaultFilter(name: string): IFormattingFilter | undefined {
+        // return "dummy" filter for "wrap" and "brackets" the same:
         if (['wrap', 'brackets'].indexOf(name) >= 0) {
             return this.filters.dummy;
         }

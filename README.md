@@ -34,7 +34,7 @@ console.log(s); //=> Hello Mr. Foreman!
 ## Installation
 
 ```sh
-$ npm i custom-type-formatter
+$ npm i custom-string-formatter
 ```
 
 ## Basic Syntax
