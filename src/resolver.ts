@@ -1,6 +1,10 @@
+/**
+ * Result of calling function `resolveProperty` below,
+ * to indicate success + value for the property resolution.
+ */
 export interface IProperty {
     /**
-     * Indicates if the property exists.
+     * Indicates if the property exists on the object.
      */
     exists: boolean;
 
@@ -11,7 +15,9 @@ export interface IProperty {
 }
 
 /**
- * Parses a property name and resolves the value of an object.
+ * Parses a nested property name and resolves the value of an object.
+ *
+ * It supports `this` as the first name to reference the object itself.
  */
 export function resolveProperty(obj: { [key: string]: any }, prop: string): IProperty {
     const names = prop.split('.').filter(a => a);
