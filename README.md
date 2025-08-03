@@ -29,7 +29,7 @@ console.log(s); //=> Hello Mr. Foreman!
 $ npm i custom-type-formatting
 ```
 
-## Variable Syntax
+## Basic Syntax
 
 Supported variable syntax is any of the following:
 
@@ -45,13 +45,18 @@ digits, plus `$` (dollar) and `_` (underscore).
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
 something like `${propertyName]` is invalid, and won't be recognized as a variable.
 
-### Nested Properties
+Name-surrounding spaces are ignored, i.e. `${  propertyName  }` works the same as `${propertyname}`.
 
-Property nesting of any depth is supported: `${property_A.property_B.property_C}`
+## Nested Properties
+
+Property nesting (separated with `.`) of any depth is supported: `${prop_A.prop_B.prop_C}`.
+
+Empty property names adjacent to `.` are ignored, i.e. `${...prop_A...prop_B...prop_C...}` will work
+the same as `${prop_A.prop_B.prop_C}`.
 
 ### Formatting Filters
 
-Formatting filters are appended to the property name with `:filterName` to override the default formatting, i.e.
+Formatting filters are appended to the property name after `:` to override the default formatting, i.e.
 in the form of `${propertyName:filterName}`.
 
 <details>
@@ -86,4 +91,7 @@ const s = format('${title} ${name} address: ${address:json}', {
 
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
+
 </details>
+
+Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works the same as `${propertyName:filterName}`.

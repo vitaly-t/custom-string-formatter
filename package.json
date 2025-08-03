@@ -1,6 +1,6 @@
 {
   "name": "custom-string-formatter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Customizable String Formatter",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -40,7 +40,7 @@
     "@types/jest": "30.0.0",
     "@types/node": "24.1.0",
     "jest": "30.0.5",
-    "ts-jest": "29.4.0",
+    "ts-jest": "29.4.1",
     "typescript": "5.9.2"
   }
 }
