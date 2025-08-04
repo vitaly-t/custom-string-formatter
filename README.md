@@ -3,6 +3,8 @@
 [![ci](https://github.com/vitaly-t/custom-string-formatter/actions/workflows/ci.yml/badge.svg)](https://github.com/vitaly-t/custom-string-formatter/actions/workflows/ci.yml)
 [![Node Version](https://img.shields.io/badge/nodejs-20%20--%2024-green.svg?logo=node.js&style=flat)](https://nodejs.org)
 
+Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browsers the same.
+
 * [Installation](#installation)
 * [Basic Syntax](#basic-syntax)
 * [Nested Properties](#nested-properties)
@@ -10,8 +12,7 @@
 * [Self-Reference](#self-reference)
 * [Safety Checks](#safety-checks)
 
-Platform for implementing flexible string-value formatting, based on unified formatting syntax, and for any type of
-output.
+Platform for implementing string-value formatting: unified formatting syntax for any type of output.
 
 ```ts
 import {createFormatter, IFormattingConfig} from 'custom-string-formatter';
