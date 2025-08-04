@@ -40,11 +40,24 @@ const shortFormat = createFormatter(new ShortFormatter());
 const fullFormat = createFormatter(new FullFormatter());
 
 describe('createFormatter', () => {
-    it('must resolve properties', () => {
-        expect(fullFormat('some ${value}', {value: 123})).toEqual('some 123');
+    it('must resolve properties in every syntax', () => {
+        const obj = {value: 'hi'};
+        expect(fullFormat('${value}', obj)).toEqual('hi');
+        expect(fullFormat('$(value)', obj)).toEqual('hi');
+        expect(fullFormat('$[value]', obj)).toEqual('hi');
+        expect(fullFormat('$<value>', obj)).toEqual('hi');
+        expect(fullFormat('$/value/', obj)).toEqual('hi');
+    });
+    it('must not recognize mixed opener-closer pairs', () => {
+        const obj = {value: 'hi'};
+        expect(fullFormat('${value)', obj)).toEqual('${value)');
+        expect(fullFormat('$[value>', obj)).toEqual('$[value>');
+        expect(fullFormat('$<value/', obj)).toEqual('$<value/');
+        expect(fullFormat('$/value}', obj)).toEqual('$/value}');
     });
     it('must resolve filters', () => {
         expect(fullFormat('some ${value:json}', {value: 'message'})).toEqual('some "message"');
+        expect(fullFormat('some ${  value  :  json  }', {value: 'message'})).toEqual('some "message"');
     });
     it('must resolve aliases', () => {
         expect(fullFormat('some ${value:object}', {value: 'message'})).toEqual('some "message"');
