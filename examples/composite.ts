@@ -1,4 +1,4 @@
-import {createFormatter, IFormattingConfig, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 /**
  * This filter example wraps the value into angle brackets <value>,
@@ -18,7 +18,7 @@ class AngleFilter implements IFormattingFilter {
     }
 }
 
-class BaseFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormatter {
     format(value: any) {
         return (value ?? 'null').toString();
     }

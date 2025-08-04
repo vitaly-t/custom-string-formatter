@@ -9,9 +9,9 @@ export interface IFormattingFilter {
 }
 
 /**
- * Formatting Configuration interface.
+ * Base formatting interface.
  */
-export interface IFormattingConfig {
+export interface IFormatter {
     /**
      * Implements default formatting (when without a filter):
      *  - takes any value and formats it according to the type.

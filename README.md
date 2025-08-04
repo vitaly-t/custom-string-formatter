@@ -13,9 +13,9 @@
 Platform for implementing string-value formatting: unified formatting syntax for any type of output.
 
 ```ts
-import {createFormatter, IFormattingConfig} from 'custom-string-formatter';
+import {createFormatter, IFormatter} from 'custom-string-formatter';
 
-class BaseFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
@@ -71,7 +71,7 @@ in the form of `${propertyName:filterName}`.
 **Example of using a formatting filter:**
 
 ```ts
-import {createFormatter, IFormattingConfig, IFormattingFilter} from 'custom-string-formatter';
+import {createFormatter, IFormatter, IFormattingFilter} from 'custom-string-formatter';
 
 class JsonFilter implements IFormattingFilter {
     format(value: any): string {
@@ -79,7 +79,7 @@ class JsonFilter implements IFormattingFilter {
     }
 }
 
-class BaseFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
@@ -131,7 +131,7 @@ This is to help with detection of using invalid property names.
 
 If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
 
-You can override such behavior by implementing [getDefaultValue] function inside [IFormattingConfig] and return
+You can override such behavior by implementing [getDefaultValue] function inside [IFormatter] and return
 a default value whenever the property cannot be resolved. This is not a safe approach when no error is thrown,
 as invalid property names can be easily missed.
 
@@ -140,7 +140,7 @@ as invalid property names can be easily missed.
 When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection
 of using invalid filter names.
 
-You can override such behavior by implementing [getDefaultFilter] function inside [IFormattingConfig] and return
+You can override such behavior by implementing [getDefaultFilter] function inside [IFormatter] and return
 an alternative filter. This can have various uses, such as:
 
 * Support for filter aliases
@@ -149,7 +149,7 @@ an alternative filter. This can have various uses, such as:
 
 Check out [the examples](./examples).
 
-[IFormattingConfig]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
+[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 
 [getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L32
 

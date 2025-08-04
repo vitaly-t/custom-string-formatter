@@ -1,4 +1,4 @@
-import {createFormatter, IFormattingConfig, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 class FirstFilter implements IFormattingFilter {
     format(value: any) {
@@ -18,7 +18,7 @@ class ThirdFilter implements IFormattingFilter {
     }
 }
 
-class BaseFormatter implements IFormattingConfig {
+class BaseFormatter implements IFormatter {
     format(value: any) {
         return (value ?? 'null').toString();
     }

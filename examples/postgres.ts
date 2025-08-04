@@ -1,6 +1,6 @@
-import {IFormattingConfig, IFormattingFilter} from '../src';
+import {IFormatter, IFormattingFilter} from '../src';
 
-export class PostgresFormatter implements IFormattingConfig {
+export class PostgresFormatter implements IFormatter {
     format(value: any): string {
         switch (typeof value) {
             case 'undefined': {

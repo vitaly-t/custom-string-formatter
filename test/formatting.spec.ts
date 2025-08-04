@@ -1,4 +1,4 @@
-import {createFormatter, IFormattingConfig, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 class JsonFilter implements IFormattingFilter {
     format(value: any): string {
@@ -6,7 +6,7 @@ class JsonFilter implements IFormattingFilter {
     }
 }
 
-class ShortFormatter implements IFormattingConfig {
+class ShortFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
@@ -16,7 +16,7 @@ class ShortFormatter implements IFormattingConfig {
     };
 }
 
-class FullFormatter implements IFormattingConfig {
+class FullFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
     }
