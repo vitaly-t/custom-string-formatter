@@ -70,7 +70,7 @@ in the form of `${propertyName:filterName}`.
 <b>Example of using formatting filters</b>
 
 ```ts
-import {createFormatter, IFormattingConfig, IFormattingFilter} from './';
+import {createFormatter, IFormattingConfig, IFormattingFilter} from 'custom-string-formatter';
 
 class JsonFilter implements IFormattingFilter {
     format(value: any): string {
