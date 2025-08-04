@@ -1,4 +1,4 @@
-import {IFormattingConfig} from '../src';
+import {IFormattingConfig, IFormattingFilter} from '../src';
 
 export class PostgresFormatter implements IFormattingConfig {
     format(value: any): string {
@@ -70,5 +70,32 @@ export class PostgresFormatter implements IFormattingConfig {
             return `'\\x${value.toString('hex')}'`;
         }
         return `'${PostgresFormatter.safeText(PostgresFormatter.toJson(value) as string)}'`;
+    }
+
+    filters = {
+        name: new SqlNameFilter()
+    }
+}
+
+/**
+ * Formatting for SQL Name(s):
+ *  - from a single string
+ *  - from an array of strings
+ *  - from an object (for property names)
+ */
+export class SqlNameFilter implements IFormattingFilter {
+    format(value: any): string {
+        switch (typeof value) {
+            case 'string': {
+                return `"${value}"`;
+            }
+            case 'object': {
+                const names = Array.isArray(value) ? value : Object.keys(value);
+                return names.map(n => `"${n}"`).join();
+            }
+            default: {
+                throw new Error(`Invalid sql name: ${JSON.stringify(value)}`);
+            }
+        }
     }
 }
