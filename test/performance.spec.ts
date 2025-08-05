@@ -87,4 +87,19 @@ describe('performance', () => {
             expect(duration).toBeLessThan(1000);
         });
     });
+    describe('for one-value string', () => {
+        it(`must do at least ${totalVars} * 3 replacements per second`, () => {
+            const start = Date.now();
+            const obj = {value: 123};
+            let s: string;
+            // NOTE: It does about 4 times, but we reduce it to pass tests
+            for (let i = 0; i < totalVars * 3; i++) {
+                s = format('${value}', obj);
+            }
+            const duration = Date.now() - start;
+            console.log('duration:', duration);
+            expect(s).toEqual('123');
+            expect(duration).toBeLessThan(1000);
+        });
+    });
 });

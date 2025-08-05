@@ -152,10 +152,15 @@ Check out [the examples](./examples).
 
 ### Performance
 
-The high performance of this library is enforced right in the unit tests (see [./test/performance.spec.ts](./test/performance.spec.ts)).
+The high performance of this library is enforced right in the unit tests (
+see [./test/performance.spec.ts](./test/performance.spec.ts)).
 
-The engine averages 10^6 (1 million) variable replacements per second when running under NodeJS v20/24 locally.
-The unit test has it reduced to 500k to avoid failures in GitHub CI due to the lowered CPU quota there.
+The engine can do the following inside 1 second:
+
+- replace 1 million variables inside a string that contains 1 million variables;
+- replace a variable inside one-variable string 4 million times in a row.
+
+Tested under NodeJS v20/24. The unit test halves the expectation, so that GitHub CI can always pass tests.
 
 [IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 
