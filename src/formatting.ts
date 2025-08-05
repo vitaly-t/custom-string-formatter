@@ -10,7 +10,7 @@ export function createFormatter(base: IFormatter) {
         return text.replace(reg, (...args: string[]) => {
             const prop = args[6]; // property name
             const filter = args[8]; // filter, if specified
-            const res = resolveProperty(params, prop);
+            const res = resolveProperty(prop, params);
             if (!res.exists) {
                 if (typeof base.getDefaultValue !== 'function') {
                     throw new Error(`Property ${JSON.stringify(prop)} does not exist`);

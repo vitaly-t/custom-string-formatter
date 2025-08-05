@@ -16,6 +16,12 @@ class ShortFormatter implements IFormatter {
     };
 }
 
+class DummyFormatter implements IFormatter {
+    format(value: any): string {
+        return value.toString();
+    }
+}
+
 class FullFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
@@ -38,6 +44,7 @@ class FullFormatter implements IFormatter {
 
 const shortFormat = createFormatter(new ShortFormatter());
 const fullFormat = createFormatter(new FullFormatter());
+const dummyFormat = createFormatter(new DummyFormatter());
 
 describe('createFormatter', () => {
     it('must resolve properties in every syntax', () => {
@@ -69,7 +76,8 @@ describe('createFormatter', () => {
         expect(() => shortFormat('${first}', {})).toThrow('Property "first" does not exist');
     });
     it('must throw on invalid filter', () => {
-        expect(() => fullFormat('${value:bla}', {value: 123})).toThrow('Filter "bla" not recognized');
-        expect(() => shortFormat('${value:bla}', {value: 123})).toThrow('Filter "bla" not recognized');
+        expect(() => fullFormat('${value:full}', {value: 123})).toThrow('Filter "full" not recognized');
+        expect(() => shortFormat('${value:short}', {value: 123})).toThrow('Filter "short" not recognized');
+        expect(() => dummyFormat('${value:dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
     });
 });

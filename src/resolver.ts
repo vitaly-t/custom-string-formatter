@@ -1,6 +1,6 @@
 /**
  * Result of calling function `resolveProperty` below,
- * to indicate success + value for the property resolution.
+ * to indicate success+value for the property resolution.
  */
 export interface IProperty {
     /**
@@ -15,11 +15,11 @@ export interface IProperty {
 }
 
 /**
- * Parses a nested property name and resolves it from the object.
+ * Parses a property and resolves its value from an object.
  *
  * It supports `this` as the first name to reference the object itself.
  */
-export function resolveProperty(obj: { [key: string]: any }, prop: string): IProperty {
+export function resolveProperty(prop: string, obj: { [key: string]: any }): IProperty {
     const names = prop.split('.').filter(a => a);
     let exists = false, value = obj;
     for (const [i, n] of names.entries()) {
