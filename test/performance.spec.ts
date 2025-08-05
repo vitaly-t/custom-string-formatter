@@ -41,6 +41,7 @@ const testData = {
 };
 
 beforeAll(() => {
+    console.log('PERF ENV:', process.env.NODE_ENV);
     generateData();
 });
 
