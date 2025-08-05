@@ -128,7 +128,7 @@ though it may not have a practical need, as use of `this` in this case is superf
 ### Property-name Safety
 
 The parser requires that any referenced property exists, or else it will throw `Property "propName" does not exist`.
-This is to help with detection of using invalid property names.
+This is to help with detection of invalid property names.
 
 If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
 
@@ -139,7 +139,7 @@ as invalid property names can be easily missed.
 ### Filter-name Safety
 
 When using an unknown filter, the parser will throw `Filter "filterName" not recognized`, to help with detection
-of using invalid filter names.
+of invalid filter names.
 
 You can override such behavior by implementing [getDefaultFilter] function inside [IFormatter] and return
 an alternative filter. This can have various uses, such as:
@@ -155,7 +155,7 @@ Check out [the examples](./examples).
 The high performance of this library is enforced right in the unit tests (see [./test/performance.spec.ts](./test/performance.spec.ts)).
 
 The engine averages 10^6 (1 million) variable replacements per second when running under NodeJS v20/24 locally.
-The unit test has it reduced to 500k to avoid failures in GitHub CI due to the lower CPU quota there.
+The unit test has it reduced to 500k to avoid failures in GitHub CI due to the lowered CPU quota there.
 
 [IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 
