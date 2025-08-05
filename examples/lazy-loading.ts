@@ -23,8 +23,8 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(name: string): IFormattingFilter | undefined {
-        switch (name) {
+    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+        switch (filter) {
             case 'first': {
                 return this.filters.first = new FirstFilter();
             }

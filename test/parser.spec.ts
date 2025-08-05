@@ -27,12 +27,12 @@ class FullFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultValue(name: string, params: { [key: string]: any }): any {
+    getDefaultValue(prop: string, params: { [key: string]: any }): any {
         return 'nada';
     }
 
-    getDefaultFilter(name: string): IFormattingFilter | undefined {
-        if (name === 'object') {
+    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+        if (filter === 'object') {
             return this.filters.json;
         }
     }

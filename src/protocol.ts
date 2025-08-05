@@ -23,13 +23,13 @@ export interface IFormatter {
      * property does not exist. This will prevent throwing an error, which
      * is not the safest approach.
      *
-     * @param text
-     * Name of the property that failed to resolve value (it does not exist).
+     * @param prop
+     * Name of the property that failed to resolve the value (it does not exist).
      *
      * @param params
      * Parameter object that the property was being resolved against.
      */
-    getDefaultValue?(text: string, params: { [key: string]: any }): any;
+    getDefaultValue?(prop: string, params: { [key: string]: any }): any;
 
     /**
      * Optional override for when a filter cannot be found, to provide
@@ -47,13 +47,13 @@ export interface IFormatter {
      *     parameters, like `gap_5`, to be parsed for extra data to be
      *     passed into the filter.
      *
-     * @param name
+     * @param filter
      * Filter Name.
      *
-     * @return
-     * Alternative filter, or nothing (if no alternative filter can be provided).
+     * @returns
+     * An alternative filter, or nothing (if no alternative filter can be provided).
      */
-    getDefaultFilter?(name: string): IFormattingFilter | undefined;
+    getDefaultFilter?(filter: string): IFormattingFilter | undefined;
 
     /**
      * Optional set of formatting filters that override default formatting.

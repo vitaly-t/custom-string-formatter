@@ -11,9 +11,8 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(name: string): IFormattingFilter | undefined {
-        // return "dummy" filter for "wrap" and "brackets" the same:
-        if (['wrap', 'brackets'].indexOf(name) >= 0) {
+    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+        if (filter === 'wrap' || filter === 'brackets') {
             return this.filters.dummy;
         }
     }

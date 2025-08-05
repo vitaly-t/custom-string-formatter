@@ -23,8 +23,8 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(name: string): IFormattingFilter | undefined {
-        const m = name.match(/angle_(\d+)/);
+    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+        const m = filter.match(/angle_(\d+)/);
         if (m) {
             const f = this.filters.angle;
             f.setRepeat(parseInt(m[1])); // set repeat value
