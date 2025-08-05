@@ -1,4 +1,4 @@
-import {createFormatter, IFormatter, IFormattingFilter} from '../src';
+import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFormattingFilter} from '../src';
 
 class JsonFilter implements IFormattingFilter {
     format(value: any): string {
@@ -79,5 +79,36 @@ describe('createFormatter', () => {
         expect(() => fullFormat('${value:full}', {value: 123})).toThrow('Filter "full" not recognized');
         expect(() => shortFormat('${value:short}', {value: 123})).toThrow('Filter "short" not recognized');
         expect(() => dummyFormat('${value:dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
+    });
+});
+
+describe('hasVariables', () => {
+    it('must return false when no variables used', () => {
+        expect(hasVariables('')).toBeFalsy();
+        expect(hasVariables('$(bla}')).toBeFalsy();
+    });
+    it('must return true when variables are used', () => {
+        expect(hasVariables('$(bla)')).toBeTruthy();
+    });
+});
+
+describe('countVariables', () => {
+    it('must return correct variable count', () => {
+        expect(countVariables('')).toBe(0);
+        expect(countVariables('$(bla}')).toBe(0);
+        expect(countVariables('$(bla)')).toBe(1);
+        expect(countVariables('$(bla) $[here]')).toBe(2);
+    });
+});
+
+describe('enumVariables', () => {
+    it('must handle no matches', () => {
+        expect(enumVariables('')).toStrictEqual([]);
+    });
+    it('must handle multiple matches', () => {
+        expect(enumVariables('$[first] $[ second:test ]')).toStrictEqual([
+            {match: '$[first]', property: 'first'},
+            {match: '$[ second:test ]', property: 'second', filter: 'test'}
+        ]);
     });
 });

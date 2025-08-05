@@ -1,2 +1,2 @@
 export {IFormattingFilter, IFormatter} from './protocol';
-export {createFormatter} from './formatting';
+export {createFormatter, enumVariables, hasVariables, countVariables, IVariable} from './parser';

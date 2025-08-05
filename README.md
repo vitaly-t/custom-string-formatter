@@ -8,6 +8,7 @@
 * [Nested Properties](#nested-properties)
 * [Formatting Filters](#formatting-filters)
 * [Self-Reference](#self-reference)
+* [Input Analysis](#input-analysis)
 * [Safety Checks](#safety-checks)
 * [Performance](#performance)
 
@@ -41,7 +42,7 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 
 ## Basic Syntax
 
-Supported variable syntaxes:
+Supported variable syntax:
 
 * `${propertyName}`
 * `$(propertyName)`
@@ -123,6 +124,17 @@ Above, we referenced the parameter object itself, and then forwarded formatting 
 Because `this` references the parameter object, its use with nested properties is also valid - `${this.propA.propB}`,
 though it may not have a practical need, as use of `this` in this case is superfluous.
 
+## Input Analysis
+
+If you need to verify an input string for the variable references it has, this library offers three global
+functions to help you with that:
+
+| Function         | Description                                    |
+|------------------|------------------------------------------------|
+| [hasVariables]   | A fast check if a string has variables in it.  |
+| [countVariables] | A fast count of variables in a string.         |
+| [enumVariables]  | Enumerates and parses variables from a string. |
+
 ## Safety Checks
 
 ### Property-name Safety
@@ -167,3 +179,9 @@ Tested under NodeJS v20/24.
 [getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L32
 
 [getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L56
+
+[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L42
+
+[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L49
+
+[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L83
