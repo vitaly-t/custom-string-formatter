@@ -9,6 +9,7 @@
 * [Formatting Filters](#formatting-filters)
 * [Self-Reference](#self-reference)
 * [Safety Checks](#safety-checks)
+* [Performance](#performance)
 
 Platform for implementing string-value formatting: unified formatting syntax for any type of output.
 
@@ -148,6 +149,13 @@ an alternative filter. This can have various uses, such as:
 * Support for composite filters names
 
 Check out [the examples](./examples).
+
+### Performance
+
+The high performance of this library is enforced right in the unit tests (see [./test/performance.spec.ts](./test/performance.spec.ts)).
+
+The engine averages 10^6 (1 million) variable replacements per second when running under NodeJS v20/24 locally.
+The unit test has it reduced to 500k to avoid failures in GitHub CI due to the lower CPU quota there.
 
 [IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 

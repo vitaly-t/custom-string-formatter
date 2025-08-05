@@ -18,7 +18,8 @@ class TestFormatter implements IFormatter {
 
 const format = createFormatter(new TestFormatter());
 
-const totalVars = 500_000; // It can do 1 mln, but GitHub will fail
+const totalVars = 500_000; // It can do 1 mln locally, but GitHub CI will fail
+
 let output = ''; // expected output
 
 const testData = {
@@ -64,7 +65,6 @@ describe('performance', () => {
             const start = Date.now();
             const s = format(testData.simple.input, testData.simple.obj);
             const duration = Date.now() - start;
-            console.log(`duration: ${duration}ms`);
             expect(s).toEqual(output);
             expect(duration).toBeLessThan(1000);
         });
@@ -74,7 +74,6 @@ describe('performance', () => {
             const start = Date.now();
             const s = format(testData.nested.input, testData.nested.obj);
             const duration = Date.now() - start;
-            console.log(`duration: ${duration}ms`);
             expect(s).toEqual(output);
             expect(duration).toBeLessThan(1000);
         });
@@ -84,7 +83,6 @@ describe('performance', () => {
             const start = Date.now();
             const s = format(testData.filtered.input, testData.filtered.obj);
             const duration = Date.now() - start;
-            console.log(`duration: ${duration}ms`);
             expect(s).toEqual(output);
             expect(duration).toBeLessThan(1000);
         });
