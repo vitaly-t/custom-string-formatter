@@ -160,7 +160,7 @@ The engine can do the following inside 1 second:
 - replace 1 million variables inside a string that contains 1 million variables;
 - replace a variable inside one-variable string 4 million times in a row.
 
-Tested under NodeJS v20/24. The unit test halves the expectation, so that GitHub CI can always pass tests.
+Tested under NodeJS v20/24. The unit test halves the expectation, so that GitHub CI can always pass.
 
 [IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 

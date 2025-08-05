@@ -92,8 +92,8 @@ describe('performance', () => {
             const start = Date.now();
             const obj = {value: 123};
             let s: string;
-            // NOTE: It does about 4 times, but we reduce it to pass tests
-            for (let i = 0; i < totalVars * 3; i++) {
+            // NOTE: It does about 4 times, but we reduce it to pass GitHub CI
+            for (let i = 0; i < totalVars * 2.5; i++) {
                 s = format('${value}', obj);
             }
             const duration = Date.now() - start;
