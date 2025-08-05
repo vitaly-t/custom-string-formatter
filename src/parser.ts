@@ -37,6 +37,20 @@ export function createFormatter(base: IFormatter) {
 }
 
 /**
+ * A fast check if a string has variables in it.
+ */
+export function hasVariables(text: string): boolean {
+    return text.search(regEx) >= 0;
+}
+
+/**
+ * A fast count of variables in a string.
+ */
+export function countVariables(text: string): number {
+    return text.match(regEx)?.length ?? 0;
+}
+
+/**
  * Variable descriptor, as returned from `enumVariables` function.
  */
 export interface IVariable {
@@ -58,7 +72,7 @@ export interface IVariable {
 }
 
 /**
- * Enumerates variables from a string, for any kind of reference analysis.
+ * Enumerates and parses variables from a string, for any kind of reference analysis.
  *
  * @param text
  * Text string that contains variables.
