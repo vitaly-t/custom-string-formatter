@@ -14,4 +14,9 @@ describe('resolveProperty', () => {
         const obj = {a: {b: null}};
         expect(resolveProperty(obj, 'a.b.c')).toEqual({exists: false});
     });
+    it('it must handle a no-properties', () => {
+        expect(resolveProperty({}, '')).toEqual({exists: false});
+        expect(resolveProperty({}, '.')).toEqual({exists: false});
+        expect(resolveProperty({}, '...')).toEqual({exists: false});
+    });
 });

@@ -15,7 +15,7 @@ export interface IProperty {
 }
 
 /**
- * Parses a nested property name and resolves the value of an object.
+ * Parses a nested property name and resolves it from the object.
  *
  * It supports `this` as the first name to reference the object itself.
  */
@@ -33,5 +33,5 @@ export function resolveProperty(obj: { [key: string]: any }, prop: string): IPro
         exists = true;
         value = value[n];
     }
-    return {exists, value};
+    return exists ? {exists, value} : {exists};
 }
