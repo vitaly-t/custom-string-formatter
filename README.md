@@ -63,9 +63,9 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 **Full Syntax:**
 
-Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3:filter}`.
+Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3|filter}`.
 
-Spaces in between are ignored, i.e. `${  prop1.prop2.prop3  :  filter  }` works the same as `${prop1.prop2.prop3:filter}`.
+Spaces in between are ignored, i.e. `${  prop1.prop2.prop3  |  filter  }` works the same as `${prop1.prop2.prop3|filter}`.
 
 See the chapters below for further details.
 
@@ -77,8 +77,8 @@ The first property in the chain can also be `this` - see chapter [Self-Reference
 
 ## Formatting Filters
 
-A formatting filter can be appended to the property name after `:` to override the default formatting, i.e.
-in the form of `${propertyName:filterName}`.
+A formatting filter can be appended to the property name after `|` to override the default formatting, i.e.
+in the form of `${propertyName|filterName}`.
 
 **Example of using a formatting filter:**
 
@@ -103,7 +103,7 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${title} ${name} address: ${address:json}', {
+const s = format('${title} ${name} address: ${address|json}', {
     title: 'Mr.',
     name: 'Foreman',
     address: {street: 'Springfield', house: 10}
@@ -120,7 +120,7 @@ itself. It is to avoid wrapping the parameter object into another object when yo
 For the above example with the filter, we can use it like this:
 
 ```ts
-const s = format('Address: ${this:json}', {street: 'Springfield', house: 10});
+const s = format('Address: ${this|json}', {street: 'Springfield', house: 10});
 
 console.log(s); //=> Address: {"street":"Springfield","house":10}
 ```
@@ -145,12 +145,12 @@ functions to help you with that:
 ```ts
 import {enumVariables} from 'custom-string-formatter';
 
-enumVariables('${title} ${name} address: ${address:json}');
+enumVariables('${title} ${name} address: ${address|json}');
 // ==>
 [
     { match: '${title}', property: 'title' },
     { match: '${name}', property: 'name' },
-    { match: '${address:json}', property: 'address', filter: 'json' }
+    { match: '${address|json}', property: 'address', filter: 'json' }
 ]
 ```
 

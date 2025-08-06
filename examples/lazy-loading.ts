@@ -44,7 +44,7 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${a:first}\n${b:second}\n${c:third}',
+const s = format('${a|first}\n${b|second}\n${c|third}',
     {a: 'aaa', b: 'bbb', c: 'ccc'});
 
 console.log(s);

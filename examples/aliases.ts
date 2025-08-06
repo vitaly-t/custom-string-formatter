@@ -24,7 +24,7 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${a:dummy}\n${b:wrap}\n${c:brackets}',
+const s = format('${a|dummy}\n${b|wrap}\n${c|brackets}',
     {a: 'first', b: 'second', c: 'third'});
 
 console.log(s);

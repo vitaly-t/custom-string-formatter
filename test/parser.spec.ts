@@ -63,11 +63,11 @@ describe('createFormatter', () => {
         expect(fullFormat('$/value}', obj)).toEqual('$/value}');
     });
     it('must resolve filters', () => {
-        expect(fullFormat('some ${value:json}', {value: 'message'})).toEqual('some "message"');
-        expect(fullFormat('some ${  value  :  json  }', {value: 'message'})).toEqual('some "message"');
+        expect(fullFormat('some ${value|json}', {value: 'message'})).toEqual('some "message"');
+        expect(fullFormat('some ${  value  |  json  }', {value: 'message'})).toEqual('some "message"');
     });
     it('must resolve aliases', () => {
-        expect(fullFormat('some ${value:object}', {value: 'message'})).toEqual('some "message"');
+        expect(fullFormat('some ${value|object}', {value: 'message'})).toEqual('some "message"');
     });
     it('must redirect to default value', () => {
         expect(fullFormat('${value}', {})).toEqual('nada');
@@ -76,9 +76,9 @@ describe('createFormatter', () => {
         expect(() => shortFormat('${first}', {})).toThrow('Property "first" does not exist');
     });
     it('must throw on invalid filter', () => {
-        expect(() => fullFormat('${value:full}', {value: 123})).toThrow('Filter "full" not recognized');
-        expect(() => shortFormat('${value:short}', {value: 123})).toThrow('Filter "short" not recognized');
-        expect(() => dummyFormat('${value:dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
+        expect(() => fullFormat('${value|full}', {value: 123})).toThrow('Filter "full" not recognized');
+        expect(() => shortFormat('${value|short}', {value: 123})).toThrow('Filter "short" not recognized');
+        expect(() => dummyFormat('${value|dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
     });
 });
 
@@ -106,9 +106,9 @@ describe('enumVariables', () => {
         expect(enumVariables('')).toStrictEqual([]);
     });
     it('must handle multiple matches', () => {
-        expect(enumVariables('$[first] $[ second:test ]')).toStrictEqual([
+        expect(enumVariables('$[first] $[ second|test ]')).toStrictEqual([
             {match: '$[first]', property: 'first'},
-            {match: '$[ second:test ]', property: 'second', filter: 'test'}
+            {match: '$[ second|test ]', property: 'second', filter: 'test'}
         ]);
     });
 });

@@ -52,7 +52,7 @@ function generateData() {
         testData.nested.input += `$(prop_${i}.value)`;
         testData.nested.obj[`prop_${i}`] = {value: i};
 
-        testData.filtered.input += `$(prop_${i}:test)`;
+        testData.filtered.input += `$(prop_${i}|test)`;
         testData.filtered.obj[`prop_${i}`] = i;
 
         output += i;

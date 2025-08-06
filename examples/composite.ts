@@ -39,7 +39,7 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${first:angle}\n${second:angle_2}\n${third:angle_4}',
+const s = format('${first|angle}\n${second|angle_2}\n${third|angle_4}',
     {first: 'default: one angle', second: 'with two angles', third: 'with four angles'});
 
 console.log(s);
