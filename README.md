@@ -148,12 +148,12 @@ functions to help you with that:
 ```ts
 import {enumVariables} from 'custom-string-formatter';
 
-enumVariables('${title} ${name} address: ${address|json}');
+enumVariables('${title} ${name} address: ${address | json}');
 // ==>
 [
-    { match: '${title}', property: 'title' },
-    { match: '${name}', property: 'name' },
-    { match: '${address|json}', property: 'address', filter: 'json' }
+    { match: '${title}', property: 'title', filters: [] },
+    { match: '${name}', property: 'name', filters: [] },
+    { match: '${address | json}', property: 'address', filters: ['json'] }
 ]
 ```
 

@@ -78,9 +78,9 @@ export interface IVariable {
     property: string;
 
     /**
-     * Extracted filter name, if specified.
+     * Extracted filter names, if specified.
      */
-    filter?: string;
+    filters: string[];
 }
 
 /**
@@ -95,11 +95,12 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
-            const a = m.match(/\$.\s*([\w$.]+)\s*(\|\s*([\w$]+))?/) as RegExpMatchArray;
-            const result: IVariable = {match: m, property: a[1]};
-            if (a[3]) {
-                result.filter = a[3];
-            }
-            return result;
+            const a = m.match(/\$.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
+            const filters = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
+            return {
+                match: m,
+                property: a[1],
+                filters
+            };
         });
 }

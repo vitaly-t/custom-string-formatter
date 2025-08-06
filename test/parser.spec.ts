@@ -117,9 +117,9 @@ describe('enumVariables', () => {
         expect(enumVariables('')).toStrictEqual([]);
     });
     it('must handle multiple matches', () => {
-        expect(enumVariables('$[first] $[ second|test ]')).toStrictEqual([
-            {match: '$[first]', property: 'first'},
-            {match: '$[ second|test ]', property: 'second', filter: 'test'}
+        expect(enumVariables('$[first] $[ second | test | hello ]')).toStrictEqual([
+            {match: '$[first]', property: 'first', filters: []},
+            {match: '$[ second | test | hello ]', property: 'second', filters: ['test', 'hello']}
         ]);
     });
 });
