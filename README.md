@@ -33,7 +33,7 @@ console.log(s); //=> Hello Mr. Foreman!
 ```
 
 You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
-unlike ES6 Template Literals, which only work via static JavaScript interpolation.
+unlike ES6 Template Literals, which only work via JavaScript interpolation for static templates.
 
 Plus, you get some nice extensions, like [Formatting Filters](#formatting-filters).
 
