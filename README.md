@@ -61,11 +61,11 @@ digits, plus `$` and `_` (underscore).
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
 something like `${propertyName]` is invalid, and won't be recognized as a variable.
 
-Name-surrounding spaces are ignored, i.e. `${  propertyName  }` works the same as `${propertyname}`.
-
 **Full Syntax:**
 
 Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3:filter}`.
+
+Spaces in between are ignored, i.e. `${  prop1.prop2.prop3  :  filter  }` works the same as `${prop1.prop2.prop3:filter}`.
 
 See the chapters below for further details.
 
@@ -111,8 +111,6 @@ const s = format('${title} ${name} address: ${address:json}', {
 
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
-
-Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works the same as `${propertyName:filterName}`.
 
 ## Self-Reference
 
