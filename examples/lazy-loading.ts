@@ -1,18 +1,18 @@
-import {createFormatter, IFormatter, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFilter} from '../src';
 
-class FirstFilter implements IFormattingFilter {
+class FirstFilter implements IFilter {
     transform(value: any): any {
         return value + '-1';
     }
 }
 
-class SecondFilter implements IFormattingFilter {
+class SecondFilter implements IFilter {
     transform(value: any): any {
         return value + '-2';
     }
 }
 
-class ThirdFilter implements IFormattingFilter {
+class ThirdFilter implements IFilter {
     transform(value: any): any {
         return value + '-3';
     }
@@ -23,7 +23,7 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+    getDefaultFilter(filter: string): IFilter | undefined {
         switch (filter) {
             case 'first': {
                 return this.filters.first = new FirstFilter();
@@ -39,7 +39,7 @@ class BaseFormatter implements IFormatter {
         }
     }
 
-    filters: { [name: string]: IFormattingFilter } = {}
+    filters: { [name: string]: IFilter } = {}
 }
 
 const format = createFormatter(new BaseFormatter());

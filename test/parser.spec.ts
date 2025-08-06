@@ -1,12 +1,12 @@
-import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFormattingFilter} from '../src';
+import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFilter} from '../src';
 
-class JsonFilter implements IFormattingFilter {
+class JsonFilter implements IFilter {
     transform(value: any): any {
         return JSON.stringify(value);
     }
 }
 
-class AppendFilter implements IFormattingFilter {
+class AppendFilter implements IFilter {
     transform(value: any): any {
         return value + '-append';
     }
@@ -37,7 +37,7 @@ class FullFormatter implements IFormatter {
         return 'nada';
     }
 
-    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+    getDefaultFilter(filter: string): IFilter | undefined {
         if (filter === 'object') {
             return this.filters.json;
         }

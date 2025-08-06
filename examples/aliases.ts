@@ -1,6 +1,6 @@
-import {createFormatter, IFormatter, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFilter} from '../src';
 
-class DummyFilter implements IFormattingFilter {
+class DummyFilter implements IFilter {
     transform(value: any): any {
         return '[' + value + ']';
     }
@@ -11,7 +11,7 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+    getDefaultFilter(filter: string): IFilter | undefined {
         if (filter === 'wrap' || filter === 'brackets') {
             return this.filters.dummy;
         }

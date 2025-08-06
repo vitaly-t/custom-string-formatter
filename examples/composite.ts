@@ -1,10 +1,10 @@
-import {createFormatter, IFormatter, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFilter} from '../src';
 
 /**
  * This filter example wraps the value into angle brackets <value>,
  * with support for repeating angles N times.
  */
-class AngleFilter implements IFormattingFilter {
+class AngleFilter implements IFilter {
     private repeat = 1; // 1 is default
 
     setRepeat(n: number) {
@@ -23,7 +23,7 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(filter: string): IFormattingFilter | undefined {
+    getDefaultFilter(filter: string): IFilter | undefined {
         const m = filter.match(/angle_(\d+)/);
         if (m) {
             const f = this.filters.angle;

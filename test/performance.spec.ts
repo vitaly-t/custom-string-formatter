@@ -1,6 +1,6 @@
-import {createFormatter, IFormatter, IFormattingFilter} from '../src';
+import {createFormatter, IFormatter, IFilter} from '../src';
 
-class TestFilter implements IFormattingFilter {
+class TestFilter implements IFilter {
     transform(value: any): any {
         return (value ?? 'null').toString();
     }

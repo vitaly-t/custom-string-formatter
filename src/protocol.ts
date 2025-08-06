@@ -1,9 +1,9 @@
 /**
- * Formatting Filter interface.
+ * Value-Transformation Filter.
  */
-export interface IFormattingFilter {
+export interface IFilter {
     /**
-     * Takes a value and transforms it into something else.
+     * Transforms a value.
      */
     transform(value: any): any;
 }
@@ -52,13 +52,13 @@ export interface IFormatter {
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).
      */
-    getDefaultFilter?(filter: string): IFormattingFilter | undefined;
+    getDefaultFilter?(filter: string): IFilter | undefined;
 
     /**
-     * Optional set of formatting filters that override default formatting.
+     * Optional set of filters.
      *
      * When the parser cannot find a filter by name in this map, it will use
      *  the `getDefaultFilter` method when such is provided.
      */
-    filters?: { [name: string]: IFormattingFilter };
+    filters?: { [name: string]: IFilter };
 }

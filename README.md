@@ -63,9 +63,11 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 **Full Syntax:**
 
-Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3 | filter}`.
+Full variable syntax supports a chain of nested properties, plus an optional chain of filters:
 
-Spaces in between are ignored, i.e. `${  prop1.prop2.prop3  |  filter  }` works the same as `${prop1.prop2.prop3|filter}`.
+* `${prop1.prop2.prop3 | filter1 | filter2 | filter3}`.
+
+All spaces in between are ignored, i.e. `${  prop  |  filter  }` works the same as `${prop|filter}`.
 
 See the chapters below for further details.
 
@@ -86,9 +88,9 @@ Output from the last filter in the chain will go to the formatter, to be convert
 **Example of using formatting filters:**
 
 ```ts
-import {createFormatter, IFormatter, IFormattingFilter} from 'custom-string-formatter';
+import {createFormatter, IFormatter, IFilter} from 'custom-string-formatter';
 
-class JsonFilter implements IFormattingFilter {
+class JsonFilter implements IFilter {
     transform(value: any): any {
         return JSON.stringify(value); // transform into a JSON string
     }

@@ -1,4 +1,4 @@
-import {IFormatter, IFormattingFilter} from '../src';
+import {IFormatter, IFilter} from '../src';
 
 export class PostgresFormatter implements IFormatter {
     format(value: any): string {
@@ -83,7 +83,7 @@ export class PostgresFormatter implements IFormatter {
  *  - from an array of strings
  *  - from an object (for property names)
  */
-export class SqlNameFilter implements IFormattingFilter {
+export class SqlNameFilter implements IFilter {
     transform(value: any): any {
         switch (typeof value) {
             case 'string': {
