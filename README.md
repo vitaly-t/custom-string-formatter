@@ -70,6 +70,11 @@ All spaces in between are ignored, i.e. `${  prop  |  filter  }` works the same 
 
 See the chapters below for further details.
 
+**Limitation**
+
+> The library doesn't allow passing arguments into filters, mainly because it is a very new project,
+> and the addition of such is under consideration. Check issue [#4](#4) for the progress, and feel free to contribute.
+
 ## Formatting Filters
 
 Formatting filters can be appended to the property name, using `|` separator, for value transformation, in the form
@@ -113,7 +118,8 @@ console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ## Self-Reference
 
 When a property chain starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object
-itself. It is to avoid wrapping the parameter object into another object when you want to format that parameter object itself.
+itself. It is to avoid wrapping the parameter object into another object when you want to format that parameter object
+itself.
 
 For the above example with the filter, we can use it like this:
 
@@ -140,15 +146,16 @@ functions to help you with that:
 | [enumVariables]  | Enumerates and parses variables from a string. |
 
 **Example:**
+
 ```ts
 import {enumVariables} from 'custom-string-formatter';
 
 enumVariables('${title} ${name} address: ${address | json}');
 // ==>
 [
-    { match: '${title}', property: 'title', filters: [] },
-    { match: '${name}', property: 'name', filters: [] },
-    { match: '${address | json}', property: 'address', filters: ['json'] }
+    {match: '${title}', property: 'title', filters: []},
+    {match: '${name}', property: 'name', filters: []},
+    {match: '${address | json}', property: 'address', filters: ['json']}
 ]
 ```
 
