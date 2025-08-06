@@ -6,6 +6,12 @@ class JsonFilter implements IFormattingFilter {
     }
 }
 
+class AppendFilter implements IFormattingFilter {
+    transform(value: any): any {
+        return value + '-append';
+    }
+}
+
 class ShortFormatter implements IFormatter {
     format(value: any): string {
         return (value ?? 'null').toString();
@@ -38,7 +44,8 @@ class FullFormatter implements IFormatter {
     }
 
     filters = {
-        json: new JsonFilter()
+        json: new JsonFilter(),
+        append: new AppendFilter()
     };
 }
 
@@ -65,6 +72,10 @@ describe('createFormatter', () => {
     it('must resolve filters', () => {
         expect(fullFormat('some ${value|json}', {value: 'message'})).toEqual('some "message"');
         expect(fullFormat('some ${  value  |  json  }', {value: 'message'})).toEqual('some "message"');
+    });
+    it('must resolve chained filters', () => {
+        expect(fullFormat('some ${value|append|json}', {value: 'message'})).toEqual('some "message-append"');
+        expect(fullFormat('some ${  value  |  append  |  json  }', {value: 'message'})).toEqual('some "message-append"');
     });
     it('must resolve aliases', () => {
         expect(fullFormat('some ${value|object}', {value: 'message'})).toEqual('some "message"');

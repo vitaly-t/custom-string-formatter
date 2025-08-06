@@ -77,17 +77,20 @@ The first property in the chain can also be `this` - see chapter [Self-Reference
 
 ## Formatting Filters
 
-A formatting filter can be appended to the property name after `|` for value transformation, in the form
-of `${propertyName | filterName}` (all spaces in between are ignored).
+Formatting filters can be appended to the property name, using `|` separator, for value transformation, in the form
+of `${propertyName | filter1 | filter2 | filter3}` (all spaces in between are ignored).
 
-**Example of using a formatting filter:**
+Filters will then perform value transformation in the same order in which they are specified.
+Output from the last filter in the chain will go to the formatter, to be converted into a string (if needed).
+
+**Example of using formatting filters:**
 
 ```ts
 import {createFormatter, IFormatter, IFormattingFilter} from 'custom-string-formatter';
 
 class JsonFilter implements IFormattingFilter {
     transform(value: any): any {
-        return JSON.stringify(value);
+        return JSON.stringify(value); // transform into a JSON string
     }
 }
 

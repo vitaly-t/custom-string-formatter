@@ -100,7 +100,6 @@ describe('performance', () => {
                 s = format('${value}', obj);
             }
             const duration = Date.now() - start;
-            console.log('duration:', duration);
             expect(s).toEqual('123');
             expect(duration).toBeLessThan(1000);
         });
