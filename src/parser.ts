@@ -28,18 +28,13 @@ export function createFormatter(base: IFormatter) {
 
                 for (const name of filterNames) {
                     let f = base.filters?.[name];
-                    if (f) {
-                        value = f.transform(value);
-                        continue;
-                    }
-                    if (typeof base.getDefaultFilter === 'function') {
+                    if (!f && typeof base.getDefaultFilter === 'function') {
                         f = base.getDefaultFilter(name);
-                        if (f) {
-                            value = f.transform(value);
-                            continue;
-                        }
                     }
-                    throw new Error(`Filter ${JSON.stringify(name)} not recognized`);
+                    if (!f) {
+                        throw new Error(`Filter ${JSON.stringify(name)} not recognized`);
+                    }
+                    value = f.transform(value);
                 }
                 return base.format(value);
             }
@@ -78,7 +73,7 @@ export interface IVariable {
     property: string;
 
     /**
-     * Extracted filter names, if specified.
+     * List of specified filter names.
      */
     filters: string[];
 }
@@ -95,7 +90,7 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
-            const a = m.match(/\$.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
+            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
             const filters = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             return {
                 match: m,
