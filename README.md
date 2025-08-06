@@ -5,7 +5,6 @@
 
 * [Installation](#installation)
 * [Variable Syntax](#variable-syntax)
-* [Nested Properties](#nested-properties)
 * [Formatting Filters](#formatting-filters)
 * [Self-Reference](#self-reference)
 * [Input Analysis](#input-analysis)
@@ -70,12 +69,6 @@ Full variable syntax supports a chain of nested properties, plus an optional cha
 All spaces in between are ignored, i.e. `${  prop  |  filter  }` works the same as `${prop|filter}`.
 
 See the chapters below for further details.
-
-## Nested Properties
-
-Nested properties of any depth are supported, using JavaScript notation: `${prop1.prop2.prop3}`.
-
-The first property in the chain can also be `this` - see chapter [Self-Reference](#self-reference).
 
 ## Formatting Filters
 
