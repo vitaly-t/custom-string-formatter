@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)\s*(\|\s*([\w\$]*)\s*)?\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*([\w$]*))*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -10,7 +10,7 @@ export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
         return text.replace(regEx, (...args: string[]) => {
             const prop = args[6]; // property name
-            const filter = args[8]; // filter, if specified
+            const filters = args[7]; // filters, if specified
             const res = resolveProperty(prop, params);
             if (!res.exists) {
                 if (typeof base.getDefaultValue !== 'function') {
@@ -18,18 +18,30 @@ export function createFormatter(base: IFormatter) {
                 }
                 res.value = base.getDefaultValue(prop, params);
             }
-            if (filter) {
-                let f = base.filters?.[filter];
-                if (!f) {
+            if (filters) {
+                let value = res.value;
+
+                const filterNames = filters
+                    .split('|')
+                    .map(a => a.trim())
+                    .filter(a => a);
+
+                for (const name of filterNames) {
+                    let f = base.filters?.[name];
+                    if (f) {
+                        value = f.transform(value);
+                        continue;
+                    }
                     if (typeof base.getDefaultFilter === 'function') {
-                        f = base.getDefaultFilter(filter);
+                        f = base.getDefaultFilter(name);
                         if (f) {
-                            return base.format(f.transform(res.value));
+                            value = f.transform(value);
+                            continue;
                         }
                     }
-                    throw new Error(`Filter ${JSON.stringify(filter)} not recognized`);
+                    throw new Error(`Filter ${JSON.stringify(name)} not recognized`);
                 }
-                return base.format(f.transform(res.value));
+                return base.format(value);
             }
             return base.format(res.value);
         });
