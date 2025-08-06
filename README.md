@@ -135,6 +135,19 @@ functions to help you with that:
 | [countVariables] | A fast count of variables in a string.         |
 | [enumVariables]  | Enumerates and parses variables from a string. |
 
+**Example:**
+```ts
+import {enumVariables} from 'custom-string-formatter';
+
+enumVariables('${title} ${name} address: ${address:json}');
+// ==>
+[
+    { match: '${title}', property: 'title' },
+    { match: '${name}', property: 'name' },
+    { match: '${address:json}', property: 'address', filter: 'json' }
+]
+```
+
 ## Safety Checks
 
 ### Property-name Safety
