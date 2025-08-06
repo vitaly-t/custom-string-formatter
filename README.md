@@ -63,7 +63,7 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 **Full Syntax:**
 
-Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3|filter}`.
+Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3 | filter}`.
 
 Spaces in between are ignored, i.e. `${  prop1.prop2.prop3  |  filter  }` works the same as `${prop1.prop2.prop3|filter}`.
 
@@ -78,7 +78,7 @@ The first property in the chain can also be `this` - see chapter [Self-Reference
 ## Formatting Filters
 
 A formatting filter can be appended to the property name after `|` to override the default formatting, i.e.
-in the form of `${propertyName|filterName}`.
+in the form of `${propertyName | filterName}` (all spaces in between are ignored).
 
 **Example of using a formatting filter:**
 
