@@ -4,7 +4,7 @@
 [![Node Version](https://img.shields.io/badge/nodejs-20%20--%2024-green.svg?logo=node.js&style=flat)](https://nodejs.org)
 
 * [Installation](#installation)
-* [Basic Syntax](#basic-syntax)
+* [Variable Syntax](#variable-syntax)
 * [Nested Properties](#nested-properties)
 * [Formatting Filters](#formatting-filters)
 * [Self-Reference](#self-reference)
@@ -32,6 +32,11 @@ const s = format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
 console.log(s); //=> Hello Mr. Foreman!
 ```
 
+You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
+unlike ES6 Template Literals, which only work via static JavaScript interpolation.
+
+Plus, you get some nice extensions, like [Formatting Filters].
+
 ## Installation
 
 ```sh
@@ -40,9 +45,9 @@ $ npm i custom-string-formatter
 
 Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browsers the same.
 
-## Basic Syntax
+## Variable Syntax
 
-Supported variable syntax:
+**Basic variable syntax is as below:**
 
 * `${propertyName}`
 * `$(propertyName)`
@@ -58,12 +63,17 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 Name-surrounding spaces are ignored, i.e. `${  propertyName  }` works the same as `${propertyname}`.
 
+**Full Syntax:**
+
+Full variable syntax includes nested properties, plus filter: `${prop1.prop2.prop3:filter}`.
+
+See the chapters below for further details.
+
 ## Nested Properties
 
-Property nesting (separated by `.`) of any depth is supported: `${propA.propB.propC}`.
+Nested properties of any depth are supported, using JavaScript notation: `${prop1.prop2.prop3}`.
 
-Empty property names around `.` are ignored, i.e. `${...propA...propB...propC...}` will work
-the same as `${propA.propB.propC}`.
+The first property in the chain can also be `this` - see chapter [Self-Reference](#self-reference).
 
 ## Formatting Filters
 
@@ -107,9 +117,7 @@ Spaces in between are ignored, i.e. `${  propertyName  :  filterName  }` works t
 ## Self-Reference
 
 When a property chain starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object
-itself.
-
-It is to avoid wrapping the parameter object into another object when you want to format that object itself.
+itself. It is to avoid wrapping the parameter object into another object when you want to format that parameter object itself.
 
 For the above example with the filter, we can use it like this:
 
@@ -121,8 +129,8 @@ console.log(s); //=> Address: {"street":"Springfield","house":10}
 
 Above, we referenced the parameter object itself, and then forwarded formatting into our `json` filter.
 
-Because `this` references the parameter object, its use with nested properties is also valid - `${this.propA.propB}`,
-though it may not have a practical need, as use of `this` in this case is superfluous.
+Because `this` references the parameter object, its use with nested properties is also valid - `${this.prop1.prop2}`,
+though it may not have a practical need (use of `this` in this case is superfluous), but just for logical consistency.
 
 ## Input Analysis
 
