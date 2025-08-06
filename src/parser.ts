@@ -11,34 +11,30 @@ export function createFormatter(base: IFormatter) {
         return text.replace(regEx, (...args: string[]) => {
             const prop = args[6]; // property name
             const filters = args[7]; // filters, if specified
-            const res = resolveProperty(prop, params);
-            if (!res.exists) {
+            let {exists, value} = resolveProperty(prop, params);
+            if (!exists) {
                 if (typeof base.getDefaultValue !== 'function') {
                     throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
                 }
-                res.value = base.getDefaultValue(prop, params);
+                value = base.getDefaultValue(prop, params);
             }
             if (filters) {
-                let value = res.value;
-
-                const filterNames = filters
+                value = filters
                     .split('|')
                     .map(a => a.trim())
-                    .filter(a => a);
-
-                for (const name of filterNames) {
-                    let f = base.filters?.[name];
-                    if (!f && typeof base.getDefaultFilter === 'function') {
-                        f = base.getDefaultFilter(name);
-                    }
-                    if (!f) {
-                        throw new Error(`Filter ${JSON.stringify(name)} not recognized`);
-                    }
-                    value = f.transform(value);
-                }
-                return base.format(value);
+                    .filter(a => a)
+                    .reduce((p, c) => {
+                        let f = base.filters?.[c];
+                        if (!f && typeof base.getDefaultFilter === 'function') {
+                            f = base.getDefaultFilter(c);
+                        }
+                        if (!f) {
+                            throw new Error(`Filter ${JSON.stringify(c)} not recognized`);
+                        }
+                        return f.transform(p);
+                    }, value);
             }
-            return base.format(res.value);
+            return base.format(value);
         });
     }
 }
