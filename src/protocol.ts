@@ -3,9 +3,9 @@
  */
 export interface IFormattingFilter {
     /**
-     * Takes any value and formats it according to the type and/or the filter logic.
+     * Takes a value and transforms it into something else.
      */
-    format(value: any): string;
+    transform(value: any): any;
 }
 
 /**
@@ -13,8 +13,7 @@ export interface IFormattingFilter {
  */
 export interface IFormatter {
     /**
-     * Implements default formatting (when without a filter):
-     *  - takes any value and formats it according to the type.
+     * Formats any value, according to its type.
      */
     format(value: any): string;
 

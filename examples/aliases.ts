@@ -1,7 +1,7 @@
 import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 class DummyFilter implements IFormattingFilter {
-    format(value: any) {
+    transform(value: any): any {
         return '[' + value + ']';
     }
 }

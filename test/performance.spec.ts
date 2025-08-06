@@ -1,7 +1,7 @@
 import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 class TestFilter implements IFormattingFilter {
-    format(value: any): string {
+    transform(value: any): any {
         return (value ?? 'null').toString();
     }
 }

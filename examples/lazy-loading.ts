@@ -1,19 +1,19 @@
 import {createFormatter, IFormatter, IFormattingFilter} from '../src';
 
 class FirstFilter implements IFormattingFilter {
-    format(value: any) {
+    transform(value: any): any {
         return value + '-1';
     }
 }
 
 class SecondFilter implements IFormattingFilter {
-    format(value: any) {
+    transform(value: any): any {
         return value + '-2';
     }
 }
 
 class ThirdFilter implements IFormattingFilter {
-    format(value: any) {
+    transform(value: any): any {
         return value + '-3';
     }
 }

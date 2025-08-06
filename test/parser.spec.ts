@@ -1,7 +1,7 @@
 import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFormattingFilter} from '../src';
 
 class JsonFilter implements IFormattingFilter {
-    format(value: any): string {
+    transform(value: any): any {
         return JSON.stringify(value);
     }
 }

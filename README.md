@@ -77,8 +77,8 @@ The first property in the chain can also be `this` - see chapter [Self-Reference
 
 ## Formatting Filters
 
-A formatting filter can be appended to the property name after `|` to override the default formatting, i.e.
-in the form of `${propertyName | filterName}` (all spaces in between are ignored).
+A formatting filter can be appended to the property name after `|` for value transformation, in the form
+of `${propertyName | filterName}` (all spaces in between are ignored).
 
 **Example of using a formatting filter:**
 
@@ -86,7 +86,7 @@ in the form of `${propertyName | filterName}` (all spaces in between are ignored
 import {createFormatter, IFormatter, IFormattingFilter} from 'custom-string-formatter';
 
 class JsonFilter implements IFormattingFilter {
-    format(value: any): string {
+    transform(value: any): any {
         return JSON.stringify(value);
     }
 }

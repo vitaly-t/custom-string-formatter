@@ -11,7 +11,7 @@ class AngleFilter implements IFormattingFilter {
         this.repeat = n;
     }
 
-    format(value: any) {
+    transform(value: any): any {
         const s = '<'.repeat(this.repeat) + (value ?? 'null').toString() + '>'.repeat(this.repeat);
         this.repeat = 1; // must reset to the default value;
         return s;

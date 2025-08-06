@@ -24,12 +24,12 @@ export function createFormatter(base: IFormatter) {
                     if (typeof base.getDefaultFilter === 'function') {
                         f = base.getDefaultFilter(filter);
                         if (f) {
-                            return f.format(res.value);
+                            return base.format(f.transform(res.value));
                         }
                     }
                     throw new Error(`Filter ${JSON.stringify(filter)} not recognized`);
                 }
-                return f.format(res.value);
+                return base.format(f.transform(res.value));
             }
             return base.format(res.value);
         });
