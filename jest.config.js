@@ -7,6 +7,13 @@ module.exports = {
             lines: 100
         }
     },
+    globals: {
+        'ts-jest': {
+            tsConfig: {
+                target: 'ES2020',
+            }
+        }
+    },
     "roots": [
         "./test"
     ],
