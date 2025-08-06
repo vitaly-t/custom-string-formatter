@@ -73,7 +73,8 @@ See the chapters below for further details.
 **Limitation**
 
 > The library doesn't allow passing arguments into filters, mainly because it is a very new project,
-> and the addition of such is under consideration. Check issue [#4](#4) for the progress, and feel free to contribute.
+> and the addition of such is under consideration. Check [this issue](https://github.com/vitaly-t/custom-string-formatter/issues/4)
+> for the progress, and feel free to contribute.
 
 ## Formatting Filters
 
