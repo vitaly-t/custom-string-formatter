@@ -19,21 +19,20 @@ export function createFormatter(base: IFormatter) {
                 value = base.getDefaultValue(prop, params);
             }
             if (filters) {
-                // INPUT: ${prop | first : one : two | second : hello : there}
-                // OUTPUT: | first : one : two | second : hello : there
                 value = filters
                     .split('|')
                     .map(a => a.trim())
-                    .filter(a => a)
+                    .filter(a => a) // => filter : one : two
                     .reduce((p, c) => {
-                        let f = base.filters?.[c];
+                        const [fName, ...args] = c.split(':').map(a => a.trim());
+                        let f = base.filters?.[fName];
                         if (!f && typeof base.getDefaultFilter === 'function') {
-                            f = base.getDefaultFilter(c);
+                            f = base.getDefaultFilter(fName, args);
                         }
                         if (!f) {
-                            throw new Error(`Filter ${JSON.stringify(c)} not recognized`);
+                            throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
                         }
-                        return f.transform(p, []);
+                        return f.transform(p, args);
                     }, value);
             }
             return base.format(value);

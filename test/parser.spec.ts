@@ -91,6 +91,9 @@ describe('createFormatter', () => {
         expect(() => shortFormat('${value|short}', {value: 123})).toThrow('Filter "short" not recognized');
         expect(() => dummyFormat('${value|dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
     });
+    it('must resolve filter arguments', () => {
+
+    });
 });
 
 describe('hasVariables', () => {
