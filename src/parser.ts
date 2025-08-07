@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s!?#&.-]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -90,6 +90,9 @@ export function enumVariables(text: string): IVariable[] {
             // TODO: Could use use [^:]* in the end or .*, it breaks groups somehow;
             //   need to add other specific symbols, like @, %, *, +, etc...
             //   or, to find out why it breaks and fix it.
+            //  UPDATE: The main regex seems fixed - needed to exclude all variable openers:
+            //    [^:{\[/<(]
+            //   but here it doesn't seem to work yet :|
             const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s!?#&.-]*)*)*)/) as RegExpMatchArray;
             const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             const filters = filtersWithArgs.map(a => {
