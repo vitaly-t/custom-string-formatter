@@ -140,7 +140,11 @@ describe('enumVariables', () => {
     it('must handle multiple matches', () => {
         expect(enumVariables('$[first] $[ second | test | hello ]')).toStrictEqual([
             {match: '$[first]', property: 'first', filters: []},
-            {match: '$[ second | test | hello ]', property: 'second', filters: ['test', 'hello']}
+            {
+                match: '$[ second | test | hello ]',
+                property: 'second',
+                filters: [{name: 'test', args: []}, {name: 'hello', args: []}]
+            }
         ]);
     });
 });

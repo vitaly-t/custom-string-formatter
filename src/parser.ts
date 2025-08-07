@@ -70,9 +70,9 @@ export interface IVariable {
     property: string;
 
     /**
-     * List of specified filter names.
+     * List of specified filters: each with its name and the list of arguments.
      */
-    filters: string[];
+    filters: Array<{ name: string, args: string[] }>
 }
 
 /**
@@ -85,6 +85,7 @@ export interface IVariable {
  * An array of matched variables (as descriptors)
  */
 export function enumVariables(text: string): IVariable[] {
+
     return (text.match(regEx) || [])
         .map(m => {
             // TODO: This needs to be updated and tested
@@ -93,7 +94,7 @@ export function enumVariables(text: string): IVariable[] {
             return {
                 match: m,
                 property: a[1],
-                filters
+                filters: filters.map(a => ({name: a, args: []})) // TODO: This is temporary, for tests to pass
             };
         });
 }
