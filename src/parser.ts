@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s!?#&.-]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -70,7 +70,7 @@ export interface IVariable {
     property: string;
 
     /**
-     * List of specified filters: each with its name and the list of arguments.
+     * List of specified filters: each with its name and arguments.
      */
     filters: Array<{ name: string, args: string[] }>
 }
@@ -85,16 +85,17 @@ export interface IVariable {
  * An array of matched variables (as descriptors)
  */
 export function enumVariables(text: string): IVariable[] {
-
     return (text.match(regEx) || [])
         .map(m => {
-            // TODO: This needs to be updated and tested
-            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
-            const filters = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
-            return {
-                match: m,
-                property: a[1],
-                filters: filters.map(a => ({name: a, args: []})) // TODO: This is temporary, for tests to pass
-            };
+            // TODO: Could use use [^:]* in the end or .*, it breaks groups somehow;
+            //   need to add other specific symbols, like @, %, *, +, etc...
+            //   or, to find out why it breaks and fix it.
+            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s!?#&.-]*)*)*)/) as RegExpMatchArray;
+            const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
+            const filters = filtersWithArgs.map(a => {
+                const [name, ...args] = a.split(':').map(b => b.trim());
+                return {name, args};
+            });
+            return {match: m, property: a[1], filters};
         });
 }

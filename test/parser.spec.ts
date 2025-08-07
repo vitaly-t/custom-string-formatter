@@ -147,4 +147,14 @@ describe('enumVariables', () => {
             }
         ]);
     });
+    it('must handle filter arguments', () => {
+        expect(enumVariables('$[first | ff: Hello there! ] $[ second | test | hello: -123.45 ]')).toStrictEqual([
+            {match: '$[first | ff: Hello there! ]', property: 'first', filters: [{name: 'ff', args: ['Hello there!']}]},
+            {
+                match: '$[ second | test | hello: -123.45 ]',
+                property: 'second',
+                filters: [{name: 'test', args: []}, {name: 'hello', args: ['-123.45']}]
+            }
+        ]);
+    });
 });
