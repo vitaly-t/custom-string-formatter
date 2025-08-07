@@ -5,7 +5,7 @@ export interface IFilter {
     /**
      * Transforms a value.
      */
-    transform(value: any): any;
+    transform(value: any, args: any[]): any;
 }
 
 /**

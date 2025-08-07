@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s$.-]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -19,6 +19,8 @@ export function createFormatter(base: IFormatter) {
                 value = base.getDefaultValue(prop, params);
             }
             if (filters) {
+                // INPUT: ${prop | first : one : two | second : hello : there}
+                // OUTPUT: | first : one : two | second : hello : there
                 value = filters
                     .split('|')
                     .map(a => a.trim())
@@ -31,7 +33,7 @@ export function createFormatter(base: IFormatter) {
                         if (!f) {
                             throw new Error(`Filter ${JSON.stringify(c)} not recognized`);
                         }
-                        return f.transform(p);
+                        return f.transform(p, []);
                     }, value);
             }
             return base.format(value);
