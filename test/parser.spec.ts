@@ -49,8 +49,9 @@ class FullFormatter implements IFormatter {
     };
 }
 
+const fullFormatter = new FullFormatter();
+const fullFormat = createFormatter(fullFormatter);
 const shortFormat = createFormatter(new ShortFormatter());
-const fullFormat = createFormatter(new FullFormatter());
 const dummyFormat = createFormatter(new DummyFormatter());
 
 describe('createFormatter', () => {
@@ -91,11 +92,26 @@ describe('createFormatter', () => {
         expect(() => shortFormat('${value|short}', {value: 123})).toThrow('Filter "short" not recognized');
         expect(() => dummyFormat('${value|dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
     });
-    it('must resolve filter arguments', () => {
-        // TODO: Tests are needed
-        // const mock = jest.fn();
-        // expect().toHaveBeenCalledWith()
+    describe('for filter arguments', () => {
+        it('must handle empty args', () => {
+            const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
+            fullFormat('${value|json:}', {value: 'message'});
+            expect(cb).toHaveBeenCalledWith('message', ['']);
+        });
+        it('must resolve numbers', () => {
+            const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
+            fullFormat('${value|json: 1: 22.33: -45.678}', {value: 'message'});
+            expect(cb).toHaveBeenCalledWith('message', ['1', '22.33', '-45.678']);
+        });
+        it('must resolve random text with spaces', () => {
+            const cb1 = jest.spyOn(fullFormatter.filters.json, 'transform');
+            const cb2 = jest.spyOn(fullFormatter, 'getDefaultFilter');
+            fullFormat('${value|object: Hello World! : Where are we? }', {value: 'message'});
+            expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?']);
+            expect(cb2).toHaveBeenCalledWith('object', ['Hello World!', 'Where are we?']);
+        });
     });
+
 });
 
 describe('hasVariables', () => {
