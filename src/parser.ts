@@ -22,7 +22,7 @@ export function createFormatter(base: IFormatter) {
                 value = filters
                     .split('|')
                     .map(a => a.trim())
-                    .filter(a => a) // => filter : one : two
+                    .filter(a => a)
                     .reduce((p, c) => {
                         const [fName, ...args] = c.split(':').map(a => a.trim());
                         let f = base.filters?.[fName];
@@ -87,6 +87,7 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
+            // TODO: This needs to be updated and tested
             const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
             const filters = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             return {

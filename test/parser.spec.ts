@@ -1,7 +1,7 @@
 import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFilter} from '../src';
 
 class JsonFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         return JSON.stringify(value);
     }
 }
@@ -37,7 +37,7 @@ class FullFormatter implements IFormatter {
         return 'nada';
     }
 
-    getDefaultFilter(filter: string): IFilter | undefined {
+    getDefaultFilter(filter: string, args: string[]): IFilter | undefined {
         if (filter === 'object') {
             return this.filters.json;
         }
@@ -92,7 +92,9 @@ describe('createFormatter', () => {
         expect(() => dummyFormat('${value|dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
     });
     it('must resolve filter arguments', () => {
-
+        // TODO: Tests are needed
+        // const mock = jest.fn();
+        // expect().toHaveBeenCalledWith()
     });
 });
 
