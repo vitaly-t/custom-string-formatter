@@ -1,17 +1,14 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-// works well: \$[{(<[/]\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*([^:{\[/<(]*|'[^']*')*)*)*)\s*[})\]>/]
-// best part - it is the fastest!
+const regEx = new RegExp(/\$[{(<[/]\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*([^{}\[\]/<>()]*|'[^']*')*)*)*)\s*[})\]>/]/g);
 
-// best yet: \$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*('[^']*'|"[^"]*"|[^:{\[/<(])*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)
-// it allows open text, without special symbols, plus quoted text with special symbols.
+const closerMap: { [key: string]: string } = {'{': '}', '(': ')', '[': ']', '<': '>', '/': '/'};
 
-// const regEx = new RegExp(/$[first | ff: Hello there! ] $[ second | test | hello: -123.45 ]/g);
-
-const regEx = new RegExp(/\$[{(<[/]\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*([^:{\[/<(]*|'[^']*')*)*)*)\s*[})\]>/]/g);
-
-const openCloseMap: { [key: string]: string } = {'{': '}', '(': ')', '[': ']', '<': '>', '/': '/'};
+function isValidCloser(variable: string): boolean {
+    const opener = variable[1], closer = variable[variable.length - 1];
+    return closerMap[opener] === closer;
+}
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -19,9 +16,9 @@ const openCloseMap: { [key: string]: string } = {'{': '}', '(': ')', '[': ']', '
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
         return text.replace(regEx, (...args: string[]) => {
-            const opener = args[0][1], closer = args[0][args[0].length - 1];
-            if (openCloseMap[opener] !== closer) {
-                return args[0]; // no replacing
+            const variable = args[0];
+            if (isValidCloser(variable)) {
+                return variable; // no replacing
             }
             const prop = args[1]; // property name
             const filters = args[2]; // filters, if specified
