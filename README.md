@@ -135,7 +135,7 @@ itself.
 For the above example with the filter, we can use it like this:
 
 ```ts
-const s = format('Address: ${this|json}', {street: 'Springfield', house: 10});
+const s = format('Address: ${this | json}', {street: 'Springfield', house: 10});
 
 console.log(s); //=> Address: {"street":"Springfield","house":10}
 ```

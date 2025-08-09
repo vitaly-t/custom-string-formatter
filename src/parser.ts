@@ -4,7 +4,7 @@ import {resolveProperty} from './resolver';
 const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
 /**
- * Returns a function that formats strings according to the specified configurator.
+ * Returns a function that formats a strings from an object-parameter, and according to the specified configurator.
  */
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
@@ -70,7 +70,7 @@ export interface IVariable {
     property: string;
 
     /**
-     * List of specified filters: each with its name and arguments.
+     * Extracted filters with arguments.
      */
     filters: Array<{ name: string, args: string[] }>
 }
@@ -79,7 +79,7 @@ export interface IVariable {
  * Enumerates and parses variables from a string, for any kind of reference analysis.
  *
  * @param text
- * Text string that contains variables.
+ * Text string with variables.
  *
  * @returns IVariable[]
  * An array of matched variables (as descriptors)

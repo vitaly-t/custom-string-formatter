@@ -12,7 +12,7 @@ export interface IFilter {
      * Arguments passed into the filter as ': val1 : val2'.
      *
      * @example
-     * `${propertyName | filterName : -123.45 : Hello World! }`
+     * `${property | filter : -123.45 : Hello World! }`
      * // args = ['-123.45', 'Hello World!']
      */
     transform(value: any, args: string[]): any;
