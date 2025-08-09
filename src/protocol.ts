@@ -4,6 +4,16 @@
 export interface IFilter {
     /**
      * Transforms a value.
+     *
+     * @param value
+     * Value for transformation.
+     *
+     * @param args
+     * Arguments passed into the filter as ': val1 : val2'.
+     *
+     * @example
+     * `${propertyName | filterName : -123.45 : Hello World! }`
+     * // args = ['-123.45', 'Hello World!']
      */
     transform(value: any, args: string[]): any;
 }
