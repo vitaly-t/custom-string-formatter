@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -24,14 +24,15 @@ export function createFormatter(base: IFormatter) {
                     .map(a => a.trim())
                     .filter(a => a)
                     .reduce((p, c) => {
-                        let f = base.filters?.[c];
+                        const [fName, ...args] = c.split(':').map(a => a.trim());
+                        let f = base.filters?.[fName];
                         if (!f && typeof base.getDefaultFilter === 'function') {
-                            f = base.getDefaultFilter(c);
+                            f = base.getDefaultFilter(fName, args);
                         }
                         if (!f) {
-                            throw new Error(`Filter ${JSON.stringify(c)} not recognized`);
+                            throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
                         }
-                        return f.transform(p);
+                        return f.transform(p, args);
                     }, value);
             }
             return base.format(value);
@@ -69,9 +70,9 @@ export interface IVariable {
     property: string;
 
     /**
-     * List of specified filter names.
+     * List of specified filters: each with its name and arguments.
      */
-    filters: string[];
+    filters: Array<{ name: string, args: string[] }>
 }
 
 /**
@@ -86,12 +87,12 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
-            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*)*)/) as RegExpMatchArray;
-            const filters = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
-            return {
-                match: m,
-                property: a[1],
-                filters
-            };
+            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^}\]>)\/]*)*)*)/) as RegExpMatchArray;
+            const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
+            const filters = filtersWithArgs.map(a => {
+                const [name, ...args] = a.split(':').map(b => b.trim());
+                return {name, args};
+            });
+            return {match: m, property: a[1], filters};
         });
 }

@@ -5,7 +5,7 @@ export interface IFilter {
     /**
      * Transforms a value.
      */
-    transform(value: any): any;
+    transform(value: any, args: string[]): any;
 }
 
 /**
@@ -49,10 +49,13 @@ export interface IFormatter {
      * @param filter
      * Filter Name.
      *
+     * @param args
+     * Arguments passed into the filter.
+     *
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).
      */
-    getDefaultFilter?(filter: string): IFilter | undefined;
+    getDefaultFilter?(filter: string, args: string[]): IFilter | undefined;
 
     /**
      * Optional set of filters.

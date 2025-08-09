@@ -62,19 +62,13 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 **Full Syntax:**
 
-Full variable syntax supports a chain of nested properties, plus an optional chain of filters:
+Full variable syntax supports a chain of nested properties, plus optional filters:
 
 * `${prop1.prop2.prop3 | filter1 | filter2 | filter3}`.
 
 All spaces in between are ignored, i.e. `${  prop  |  filter  }` works the same as `${prop|filter}`.
 
 See the chapters below for further details.
-
-**Limitation**
-
-> The library doesn't allow passing arguments into filters, mainly because it is a very new project,
-> and the addition of such is under consideration. Check [this issue](https://github.com/vitaly-t/custom-string-formatter/issues/4)
-> for the progress, and feel free to contribute.
 
 ## Formatting Filters
 
@@ -90,7 +84,7 @@ Output from the last filter in the chain will go to the formatter, to be convert
 import {createFormatter, IFormatter, IFilter} from 'custom-string-formatter';
 
 class JsonFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         return JSON.stringify(value); // transform into a JSON string
     }
 }
@@ -115,6 +109,20 @@ const s = format('${title} ${name} address: ${address|json}', {
 
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
+
+**Filter Arguments**
+
+You can append a parameter to a filter after `:`, and you can pass any number of parameters that way:
+
+```
+${propertyName | filterName : 123.45 : Hello World!}
+```
+
+For the example above, the `transform` will receive `args` set to `['123.45', 'Hello World!']`.
+
+**Limitation**
+
+> Filter parameters cannot contain symbols `}]>)/|`, as they would conflict with the variable syntax.  
 
 ## Self-Reference
 
@@ -154,9 +162,13 @@ import {enumVariables} from 'custom-string-formatter';
 enumVariables('${title} ${name} address: ${address | json}');
 // ==>
 [
-    {match: '${title}', property: 'title', filters: []},
-    {match: '${name}', property: 'name', filters: []},
-    {match: '${address | json}', property: 'address', filters: ['json']}
+    { match: '${title}', property: 'title', filters: [] },
+    { match: '${name}', property: 'name', filters: [] },
+    {
+        match: '${address | json}',
+        property: 'address',
+        filters: [ { name: 'json', args: [] } ]
+    }
 ]
 ```
 
@@ -201,12 +213,12 @@ Tested under NodeJS v20/24.
 
 [IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
 
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L32
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L31
 
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L56
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L58
 
-[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L45
+[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L46
 
-[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L52
+[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L53
 
-[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L86
+[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L87
