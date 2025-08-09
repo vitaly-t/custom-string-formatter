@@ -162,9 +162,13 @@ import {enumVariables} from 'custom-string-formatter';
 enumVariables('${title} ${name} address: ${address | json}');
 // ==>
 [
-    {match: '${title}', property: 'title', filters: []},
-    {match: '${name}', property: 'name', filters: []},
-    {match: '${address | json}', property: 'address', filters: ['json']}
+    { match: '${title}', property: 'title', filters: [] },
+    { match: '${name}', property: 'name', filters: [] },
+    {
+        match: '${address | json}',
+        property: 'address',
+        filters: [ { name: 'json', args: [] } ]
+    }
 ]
 ```
 
