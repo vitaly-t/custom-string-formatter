@@ -50,7 +50,7 @@ export interface IFormatter {
      * Filter Name.
      *
      * @param args
-     * Arguments passed in for the filter.
+     * Arguments passed into the filter.
      *
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).

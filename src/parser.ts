@@ -87,13 +87,7 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
-            // TODO: Could use use [^:]* in the end or .*, it breaks groups somehow;
-            //   need to add other specific symbols, like @, %, *, +, etc...
-            //   or, to find out why it breaks and fix it.
-            //  UPDATE: The main regex seems fixed - needed to exclude all variable openers:
-            //    [^:{\[/<(]
-            //   but here it doesn't seem to work yet :|
-            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[\w\s!?#&.-]*)*)*)/) as RegExpMatchArray;
+            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^}\]>)\/]*)*)*)/) as RegExpMatchArray;
             const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             const filters = filtersWithArgs.map(a => {
                 const [name, ...args] = a.split(':').map(b => b.trim());
