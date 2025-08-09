@@ -52,8 +52,10 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 * `$(propertyName)`
 * `$<propertyName>`
 
-Property names follow open JavaScript variable notation, i.e. the name can contain letters (case-sensitive),
-digits, plus `$` and `_` (underscore).
+The extra syntax is for cases like combining it with ES6 Template Literals, etc.   
+
+Property names follow simple JavaScript variable notation: the name can contain letters (case-sensitive),
+digits, `$`, `_` (underscore) and `.` for nested properties.
 
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
 something like `${propertyName)` is invalid, and won't be recognized as a variable.
@@ -100,7 +102,7 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${title} ${name} address: ${address|json}', {
+const s = format('${title} ${name} address: ${address | json}', {
     title: 'Mr.',
     name: 'Foreman',
     address: {street: 'Springfield', house: 10}
