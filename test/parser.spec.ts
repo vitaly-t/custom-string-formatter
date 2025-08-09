@@ -7,8 +7,8 @@ class JsonFilter implements IFilter {
 }
 
 class AppendFilter implements IFilter {
-    transform(value: any): any {
-        return value + '-append';
+    transform(value: any, args: string[]): any {
+        return [value, ...args].join(',');
     }
 }
 
@@ -75,8 +75,8 @@ describe('createFormatter', () => {
         expect(fullFormat('some ${  value  |  json  }', {value: 'message'})).toEqual('some "message"');
     });
     it('must resolve chained filters', () => {
-        expect(fullFormat('some ${value|append|json}', {value: 'message'})).toEqual('some "message-append"');
-        expect(fullFormat('some ${  value  |  append  |  json  }', {value: 'message'})).toEqual('some "message-append"');
+        expect(fullFormat('some ${value|append:bla|json}', {value: 'message'})).toEqual('some "message,bla"');
+        expect(fullFormat('some ${  value  |  append : bla  |  json  }', {value: 'message'})).toEqual('some "message,bla"');
     });
     it('must resolve aliases', () => {
         expect(fullFormat('some ${value|object}', {value: 'message'})).toEqual('some "message"');
@@ -91,6 +91,9 @@ describe('createFormatter', () => {
         expect(() => fullFormat('${value|full}', {value: 123})).toThrow('Filter "full" not recognized');
         expect(() => shortFormat('${value|short}', {value: 123})).toThrow('Filter "short" not recognized');
         expect(() => dummyFormat('${value|dummy}', {value: 123})).toThrow('Filter "dummy" not recognized');
+    });
+    it('must chain filter results', () => {
+        expect(fullFormat('${value|append:b:c|append:d:e}', {value: 'a'})).toEqual('a,b,c,d,e');
     });
     describe('for filter arguments', () => {
         it('must handle empty args', () => {
@@ -111,7 +114,6 @@ describe('createFormatter', () => {
             expect(cb2).toHaveBeenCalledWith('object', ['Hello World!', 'Where are we?']);
         });
     });
-
 });
 
 describe('hasVariables', () => {
