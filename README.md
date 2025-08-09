@@ -73,10 +73,10 @@ See the chapters below for further details.
 ## Formatting Filters
 
 Formatting filters can be appended to the property name, using `|` separator, for value transformation, in the form
-of `${propertyName | filter1 | filter2 | filter3}` (all spaces in between are ignored).
+of `${propertyName | filter1 | filter2 | filter3}`.
 
-Filters will then perform value transformation in the same order in which they are specified.
-Output from the last filter in the chain will go to the formatter, to be converted into a string (if needed).
+Filters perform value transformation in the same order in which they are specified.
+Output from the last filter in the chain goes to the formatter, to be converted into a string (if needed).
 
 **Example of using formatting filters:**
 
@@ -94,6 +94,7 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
+    // name->object map of all our filters:
     filters = {
         json: new JsonFilter()
     };

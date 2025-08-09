@@ -62,9 +62,7 @@ export class PostgresFormatter implements IFormatter {
             return `array[${value.map(a => this.format(a)).join()}]`;
         }
         if (value instanceof Date) {
-            // in pg-promise, this goes into the base driver, for a very long implementation:
-            // https://github.com/brianc/node-postgres/blob/master/packages/pg/lib/utils.js#L95
-            return value.toDateString(); // temporary
+            return value.toDateString(); // TODO: proper formatting is needed here
         }
         if (Buffer.isBuffer(value)) {
             return `'\\x${value.toString('hex')}'`;
