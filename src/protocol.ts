@@ -48,13 +48,10 @@ export interface IFormatter {
      *
      * Usage Scenarios:
      *
-     *  1. Support for filter aliases when multiple filter names must be
+     *  - Support for filter aliases when multiple filter names must be
      *     resolved into one filter.
-     *  2. Support for dynamic filters. For example, to lazy-load filters
+     *  - Support for dynamic filters. For example, to lazy-load filters
      *     and add them to the list upon first use.
-     *  3. Support for composite filters names when a name may include
-     *     parameters, like `gap_5`, to be parsed for extra data to be
-     *     passed into the filter.
      *
      * @param filter
      * Filter Name.

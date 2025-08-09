@@ -182,7 +182,7 @@ This is to help with detection of invalid property names.
 If a property is missing, it must be set to `undefined` before it can be referenced from a string, to avoid the error.
 
 You can override such behavior by implementing [getDefaultValue] function inside [IFormatter] and return
-a default value whenever the property cannot be resolved. This is not a safe approach when no error is thrown,
+a default value whenever the property cannot be resolved. This is not the safest approach when no error is thrown,
 as invalid property names can be easily missed.
 
 ### Filter-name Safety
