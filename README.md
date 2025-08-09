@@ -112,7 +112,7 @@ console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 
 **Filter Arguments**
 
-You can pass arguments into a filter after `:`:
+You can pass arguments into a filter after `:` symbol:
 
 ```
 ${propertyName | filterName : -123.45 : Hello World!}
