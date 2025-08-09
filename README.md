@@ -123,7 +123,7 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 
 **Limitation**
 
-> Filter arguments cannot contain symbols `|:}]>)/`, as they conflict with the variable syntax.  
+> Filter arguments cannot contain symbols `|:{}[]<>()/`, as they conflict with the variable syntax.  
 
 ## Self-Reference
 
