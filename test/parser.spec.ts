@@ -59,9 +59,7 @@ describe('createFormatter', () => {
         const obj = {value: 'hi'};
         expect(fullFormat('${value}', obj)).toEqual('hi');
         expect(fullFormat('$(value)', obj)).toEqual('hi');
-        expect(fullFormat('$[value]', obj)).toEqual('hi');
         expect(fullFormat('$<value>', obj)).toEqual('hi');
-        expect(fullFormat('$/value/', obj)).toEqual('hi');
     });
     it('must not recognize mixed opener-closer pairs', () => {
         const obj = {value: 'hi'};
@@ -131,7 +129,7 @@ describe('countVariables', () => {
         expect(countVariables('')).toBe(0);
         expect(countVariables('$(bla}')).toBe(0);
         expect(countVariables('$(bla)')).toBe(1);
-        expect(countVariables('$(bla) $[here]')).toBe(2);
+        expect(countVariables('$(bla) $<here>')).toBe(2);
     });
 });
 
@@ -140,20 +138,20 @@ describe('enumVariables', () => {
         expect(enumVariables('')).toStrictEqual([]);
     });
     it('must handle multiple matches', () => {
-        expect(enumVariables('$[first] $[ second | test | hello ]')).toStrictEqual([
-            {match: '$[first]', property: 'first', filters: []},
+        expect(enumVariables('$<first> $< second | test | hello >')).toStrictEqual([
+            {match: '$<first>', property: 'first', filters: []},
             {
-                match: '$[ second | test | hello ]',
+                match: '$< second | test | hello >',
                 property: 'second',
                 filters: [{name: 'test', args: []}, {name: 'hello', args: []}]
             }
         ]);
     });
     it('must handle filter arguments', () => {
-        expect(enumVariables('$[first | ff: Hello there! ] $[ second | test | hello: -123.45 ]')).toStrictEqual([
-            {match: '$[first | ff: Hello there! ]', property: 'first', filters: [{name: 'ff', args: ['Hello there!']}]},
+        expect(enumVariables('$(first | ff: Hello there! ) $( second | test | hello: -123.45 )')).toStrictEqual([
+            {match: '$(first | ff: Hello there! )', property: 'first', filters: [{name: 'ff', args: ['Hello there!']}]},
             {
-                match: '$[ second | test | hello: -123.45 ]',
+                match: '$( second | test | hello: -123.45 )',
                 property: 'second',
                 filters: [{name: 'test', args: []}, {name: 'hello', args: ['-123.45']}]
             }

@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)(?=\4)(?=\5)}|(?=\1)(?=\3)(?=\4)(?=\5)\)|(?=\1)(?=\2)(?=\4)(?=\5)>|(?=\1)(?=\2)(?=\3)(?=\5)]|(?=\1)(?=\2)(?=\3)(?=\4)\/)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
 /**
  * Returns a function that formats strings according to the specified configurator.
@@ -9,8 +9,8 @@ const regEx = new RegExp(/\$(?:({)|(\()|(<)|(\[)|(\/))\s*([\w$.]+)((\s*\|\s*[\w$
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
         return text.replace(regEx, (...args: string[]) => {
-            const prop = args[6]; // property name
-            const filters = args[7]; // filters, if specified
+            const prop = args[4]; // property name
+            const filters = args[5]; // filters, if specified
             let {exists, value} = resolveProperty(prop, params);
             if (!exists) {
                 if (typeof base.getDefaultValue !== 'function') {
@@ -87,7 +87,7 @@ export interface IVariable {
 export function enumVariables(text: string): IVariable[] {
     return (text.match(regEx) || [])
         .map(m => {
-            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^}\]>)\/]*)*)*)/) as RegExpMatchArray;
+            const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^}>)]*)*)*)/) as RegExpMatchArray;
             const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             const filters = filtersWithArgs.map(a => {
                 const [name, ...args] = a.split(':').map(b => b.trim());
