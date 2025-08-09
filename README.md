@@ -50,15 +50,13 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 
 * `${propertyName}`
 * `$(propertyName)`
-* `$[propertyName]`
 * `$<propertyName>`
-* `$/propertyName/`
 
 Property names follow open JavaScript variable notation, i.e. the name can contain letters (case-sensitive),
 digits, plus `$` and `_` (underscore).
 
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
-something like `${propertyName]` is invalid, and won't be recognized as a variable.
+something like `${propertyName)` is invalid, and won't be recognized as a variable.
 
 **Full Syntax:**
 
@@ -123,7 +121,7 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 
 **Limitation**
 
-> Filter arguments cannot contain symbols `|:{}[]<>()/`, as they conflict with the variable syntax.
+> Filter arguments cannot contain symbols `|:{}<>()`, as they conflict with the variable syntax.
 > This, however, is being worked on, see [issue #6](https://github.com/vitaly-t/custom-string-formatter/issues/6).  
 
 ## Self-Reference
