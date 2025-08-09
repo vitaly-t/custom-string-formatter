@@ -123,7 +123,8 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 
 **Limitation**
 
-> Filter arguments cannot contain symbols `|:{}[]<>()/`, as they conflict with the variable syntax.  
+> Filter arguments cannot contain symbols `|:{}[]<>()/`, as they conflict with the variable syntax.
+> This, however, is being worked on, see [issue #6](https://github.com/vitaly-t/custom-string-formatter/issues/6).  
 
 ## Self-Reference
 
