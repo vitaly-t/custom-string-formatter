@@ -84,7 +84,7 @@ export class PostgresFormatter implements IFormatter {
  *  - from an object (for property names)
  */
 export class SqlNameFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         switch (typeof value) {
             case 'string': {
                 return `"${value}"`;

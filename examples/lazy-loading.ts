@@ -1,19 +1,19 @@
 import {createFormatter, IFormatter, IFilter} from '../src';
 
 class FirstFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         return value + '-1';
     }
 }
 
 class SecondFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         return value + '-2';
     }
 }
 
 class ThirdFilter implements IFilter {
-    transform(value: any): any {
+    transform(value: any, args: string[]): any {
         return value + '-3';
     }
 }
@@ -23,7 +23,7 @@ class BaseFormatter implements IFormatter {
         return (value ?? 'null').toString();
     }
 
-    getDefaultFilter(filter: string): IFilter | undefined {
+    getDefaultFilter(filter: string, args: string[]): IFilter | undefined {
         switch (filter) {
             case 'first': {
                 return this.filters.first = new FirstFilter();
