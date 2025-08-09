@@ -112,17 +112,17 @@ console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 
 **Filter Arguments**
 
-You can append a parameter to a filter after `:`, and you can pass any number of parameters that way:
+You can pass arguments into a filter after `:`:
 
 ```
-${propertyName | filterName : 123.45 : Hello World!}
+${propertyName | filterName : -123.45 : Hello World!}
 ```
 
-For the example above, the `transform` will receive `args` set to `['123.45', 'Hello World!']`.
+For the example above, the `transform` will receive `args` set to `['-123.45', 'Hello World!']`.
 
 **Limitation**
 
-> Filter parameters cannot contain symbols `}]>)/|`, as they would conflict with the variable syntax.  
+> Filter arguments cannot contain symbols `:}]>)/|`, as they conflict with the variable syntax.  
 
 ## Self-Reference
 
