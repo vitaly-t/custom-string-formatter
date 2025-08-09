@@ -32,7 +32,7 @@ console.log(s); //=> Hello Mr. Foreman!
 ```
 
 You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
-unlike ES6 Template Literals, which only work via JavaScript interpolation for static templates.
+unlike ES6 Template Literals, which only work via JavaScript interpolation.
 
 Plus, you get some nice extensions, like [Formatting Filters](#formatting-filters).
 
@@ -62,11 +62,11 @@ something like `${propertyName]` is invalid, and won't be recognized as a variab
 
 **Full Syntax:**
 
-Full variable syntax supports a chain of nested properties, plus optional filters:
+Full variable syntax supports a chain of nested properties, plus optional filters with arguments:
 
-* `${prop1.prop2.prop3 | filter1 | filter2 | filter3}`.
+* `${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}`.
 
-All spaces in between are ignored, i.e. `${  prop  |  filter  }` works the same as `${prop|filter}`.
+All spaces in between are ignored, i.e. `${  prop  |  filter  :  arg  }` works the same as `${prop|filter:arg}`.
 
 See the chapters below for further details.
 
@@ -110,9 +110,9 @@ const s = format('${title} ${name} address: ${address|json}', {
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
 ```
 
-**Filter Arguments**
+### Filter Arguments
 
-You can pass arguments into a filter after `:` symbol:
+You can pass optional arguments into a filter after `:` symbol:
 
 ```
 ${propertyName | filterName : -123.45 : Hello World!}
@@ -122,7 +122,7 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 
 **Limitation**
 
-> Filter arguments cannot contain symbols `:}]>)/|`, as they conflict with the variable syntax.  
+> Filter arguments cannot contain symbols `|:}]>)/`, as they conflict with the variable syntax.  
 
 ## Self-Reference
 
@@ -195,7 +195,6 @@ an alternative filter. This can have various uses, such as:
 
 * Support for filter aliases
 * Support for dynamic filters / lazy-loading
-* Support for composite filters names
 
 Check out [the examples](./examples).
 
