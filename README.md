@@ -212,11 +212,11 @@ The engine can do the following inside 1 second:
 
 Tested under NodeJS v20/24.
 
-[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L14
+[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L24
 
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L31
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L41
 
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L58
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L65
 
 [hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L46
 

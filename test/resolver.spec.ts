@@ -19,4 +19,10 @@ describe('resolveProperty', () => {
         expect(resolveProperty('.', {})).toEqual({exists: false});
         expect(resolveProperty('...', {})).toEqual({exists: false});
     });
+    it('must handle array indexes', () => {
+        expect(resolveProperty('a.1.value', {a: [0, {value: 123}]})).toEqual({exists: true, value: 123});
+    });
+    it('must handle array indexes outside range', () => {
+        expect(resolveProperty('a.2', {a: [0, 1]})).toEqual({exists: false});
+    });
 });
