@@ -96,14 +96,3 @@ export function enumVariables(text: string): IVariable[] {
             return {match: m, property: a[1], filters};
         });
 }
-
-// Similar to filtersWithArgs above, just more verbose now;
-const filtersSample = `|open : some text : 'single |: quoted' : "double {}():| quoted"`;
-
-function parseFilters(filters: string) {
-    // TODO: try to implement it;
-    return filters;
-}
-
-const s = parseFilters(filtersSample);
-console.log(s);
