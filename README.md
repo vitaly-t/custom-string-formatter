@@ -144,6 +144,9 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
+See also: [Sanitizing Filter Arguments](https://github.com/vitaly-t/custom-string-formatter/issues/9) enhancement
+that likely will be added soon.
+
 ## Self-Reference
 
 When a property chain starts with `this` (case-sensitive), the parser treats it as the reference to the parameter object
