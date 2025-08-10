@@ -1,6 +1,6 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
-import {decodeSymbols} from './decoder';
+import {decodeSymbols} from './encoding';
 
 const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
