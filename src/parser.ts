@@ -1,7 +1,7 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^:{\[/<(]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
+const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^|:{}\[\]<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
 /**
  * Returns a function that formats a strings from an object-parameter, and according to the specified configurator.
@@ -96,3 +96,14 @@ export function enumVariables(text: string): IVariable[] {
             return {match: m, property: a[1], filters};
         });
 }
+
+// Similar to filtersWithArgs above, just more verbose now;
+const filtersSample = `|open : some text : 'single |: quoted' : "double {}():| quoted"`;
+
+function parseFilters(filters: string) {
+    // TODO: try to implement it;
+    return filters;
+}
+
+const s = parseFilters(filtersSample);
+console.log(s);
