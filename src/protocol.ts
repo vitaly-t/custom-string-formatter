@@ -11,11 +11,30 @@ export interface IFilter {
      * @param args
      * Arguments passed into the filter as ': val1 : val2'.
      *
+     * By default, each argument is HTML-decoded, unless override
+     * `decodeArguments` is implemented.
+     *
      * @example
      * `${property | filter : -123.45 : Hello World! }`
      * // args = ['-123.45', 'Hello World!']
      */
     transform(value: any, args: string[]): any;
+
+    /**
+     * Optional override for arguments decoding.
+     *
+     * By default, all HTML-encoded symbols inside arguments are automatically decoded
+     * before they are passed into `transform`. And adding this method overrides that.
+     *
+     * This is mainly for filters designed to handle HTML inside its arguments.
+     *
+     * @param args
+     * Raw text arguments that may contain HTML-encoded symbols.
+     *
+     * @returns
+     * List of arguments to be passed into `transform`.
+     */
+    decodeArguments?(args: string[]): string[];
 }
 
 /**
@@ -57,7 +76,7 @@ export interface IFormatter {
      * Filter Name.
      *
      * @param args
-     * Arguments passed into the filter.
+     * Raw filter arguments (before HTML decoding).
      *
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).
