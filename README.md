@@ -144,8 +144,7 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
-See also: [Sanitizing Filter Arguments](https://github.com/vitaly-t/custom-string-formatter/issues/9) enhancement
-that likely will be added soon.
+Use function [sanitizeFilterArg] to make dynamic filter arguments correctly encoded.
 
 ## Self-Reference
 
@@ -244,3 +243,5 @@ Tested under NodeJS v20/24.
 [countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L55
 
 [enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L89
+
+[sanitizeFilterArg]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/encoding.ts#L16

@@ -9,9 +9,9 @@ export type ArgumentEncoding = 'decimal' | 'hex' | 'hex-cap';
  *
  * @param encoding
  * How to HTML-encode the replacement strings:
- *  - `decimal` (default): Produce Decimal HTML encoding
- *  - `hex`: Produce Hexadecimal HTML encoding
- *  - `hex-cap`: Produce Hexadecimal HTML encoding, capitalized
+ *  - `decimal` (default): Produce Decimal HTML encodings
+ *  - `hex`: Produce Hexadecimal HTML encodings
+ *  - `hex-cap`: Produce Hexadecimal HTML encodings, capitalized
  */
 export function sanitizeFilterArg(arg: string, encoding: ArgumentEncoding = 'decimal'): string {
     return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {
