@@ -52,7 +52,7 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 * `$(propertyName)`
 * `$<propertyName>`
 
-The extra syntax is for cases like combining it with ES6 Template Literals, etc.   
+The extra syntax is for cases like combining it with ES6 Template Literals, etc.
 
 Property names follow simple JavaScript variable notation: the name can contain letters (case-sensitive),
 digits, `$`, `_` (underscore) and `.` for nested properties.
@@ -124,7 +124,25 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 **Limitation**
 
 > Filter arguments cannot contain symbols `|:{}<>()`, as they conflict with the variable syntax.
-> This, however, is being worked on, see [issue #6](https://github.com/vitaly-t/custom-string-formatter/issues/6).  
+> To pass those in, use HTML symbol encoding, as explained below.
+
+Filter arguments automatically decode HTML-encoded symbols, as below:
+
+* `&#8364;` => `€`: decimal symbol codes (1–6 digits)
+* `&#x1F60a;` => `😊`: hexadecimal symbol codes (1–5 hex digits, case-insensitive)
+
+Codes for symbols that must be encoded inside filter arguments:
+
+| symbol | decimal  | hexadecimal |
+|:------:|:--------:|:-----------:|
+|  `\|`  | `&#124;` |  `&#x7c;`   |
+|  `:`   | `&#58;`  |  `&#x3a;`   |
+|  `{`   | `&#123;` |  `&#x7b;`   |
+|  `}`   | `&#125;` |  `&#x7d;`   |
+|  `<`   | `&#60;`  |  `&#x3c;`   |
+|  `>`   | `&#62;`  |  `&#x3e;`   |
+|  `(`   | `&#40;`  |  `&#x28;`   |
+|  `)`   | `&#41;`  |  `&#x29;`   |
 
 ## Self-Reference
 
@@ -164,12 +182,12 @@ import {enumVariables} from 'custom-string-formatter';
 enumVariables('${title} ${name} address: ${address | json}');
 // ==>
 [
-    { match: '${title}', property: 'title', filters: [] },
-    { match: '${name}', property: 'name', filters: [] },
+    {match: '${title}', property: 'title', filters: []},
+    {match: '${name}', property: 'name', filters: []},
     {
         match: '${address | json}',
         property: 'address',
-        filters: [ { name: 'json', args: [] } ]
+        filters: [{name: 'json', args: []}]
     }
 ]
 ```
