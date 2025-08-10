@@ -1,6 +1,6 @@
 {
   "name": "custom-string-formatter",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Customizable String Formatter",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

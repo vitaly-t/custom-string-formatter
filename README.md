@@ -236,8 +236,8 @@ Tested under NodeJS v20/24.
 
 [getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L65
 
-[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L46
+[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L48
 
-[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L53
+[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L55
 
-[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L87
+[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L89
