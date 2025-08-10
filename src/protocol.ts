@@ -26,13 +26,25 @@ export interface IFilter {
      * By default, all HTML-encoded symbols inside arguments are automatically decoded
      * before they are passed into `transform`. And adding this method overrides that.
      *
-     * This is mainly for filters designed to handle HTML inside its arguments.
+     * This is mainly for filters designed to handle HTML inside their arguments.
      *
      * @param args
      * Raw text arguments that may contain HTML-encoded symbols.
      *
      * @returns
      * List of arguments to be passed into `transform`.
+     *
+     * @example
+     * The example below replicates the default behavior, i.e., implementing
+     * it like this is the same as not having this method at all.
+     *
+     * ```ts
+     * import {decodeFilterArg} from 'custom-string-format';
+     *
+     * decodeArguments(args: string[]): string {
+     *     return args.map(decodeFilterArg);
+     * }
+     * ```
      */
     decodeArguments?(args: string[]): string[];
 }
@@ -76,7 +88,7 @@ export interface IFormatter {
      * Filter Name.
      *
      * @param args
-     * Raw filter arguments (before HTML decoding).
+     * Raw filter arguments (not decoded).
      *
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).
