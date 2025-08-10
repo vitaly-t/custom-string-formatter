@@ -144,7 +144,7 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
-Use function [sanitizeFilterArg] to make dynamic filter arguments correctly encoded.
+Use function [sanitizeFilterArg] to make filter arguments correctly encoded.
 
 ## Self-Reference
 
