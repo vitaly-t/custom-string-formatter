@@ -7,11 +7,11 @@ describe('decodeSymbols', () => {
     });
     it('must handle short Unicode symbols', () => {
         // Symbols: Euro + Sigma + Infinity:
-        expect(decodeSymbols(['\\u20AC', '\\u3A3', '\\u221E'])).toEqual(['€', 'Σ', '∞']);
-        expect(decodeSymbols(['\\u20ac', '\\u3a3', '\\u221e'])).toEqual(['€', 'Σ', '∞']);
+        expect(decodeSymbols(['\\x20AC', '\\x3A3', '\\x221E'])).toEqual(['€', 'Σ', '∞']);
+        expect(decodeSymbols(['\\x20ac', '\\x3a3', '\\x221e'])).toEqual(['€', 'Σ', '∞']);
     });
     it('must handle long Unicode symbols', () => {
-        expect(decodeSymbols(['\\u{1F60A}', '\\u{1F451}'])).toEqual(['😊', '👑']);
-        expect(decodeSymbols(['\\u{1F60a}', '\\u{1f451}'])).toEqual(['😊', '👑']);
+        expect(decodeSymbols(['\\x1F60A', '\\x1F451'])).toEqual(['😊', '👑']);
+        expect(decodeSymbols(['\\x1F60a', '\\x1f451'])).toEqual(['😊', '👑']);
     });
 });
