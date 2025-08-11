@@ -238,18 +238,18 @@ The engine can do the following inside 1 second:
 
 Tested under NodeJS v20/24.
 
-[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L57
+[IFormatter]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFormatter.html
 
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L74
+[getDefaultValue]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFormatter.html#getdefaultvalue
 
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L98
+[getDefaultFilter]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFormatter.html#getdefaultfilter
 
-[hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L48
+[hasVariables]:https://vitaly-t.github.io/custom-string-formatter/functions/hasVariables.html
 
-[countVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L55
+[countVariables]:https://vitaly-t.github.io/custom-string-formatter/functions/countVariables.html
 
-[enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L89
+[enumVariables]:https://vitaly-t.github.io/custom-string-formatter/functions/enumVariables.html
 
-[sanitizeFilterArg]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/encoding.ts#L16
+[sanitizeFilterArg]:https://vitaly-t.github.io/custom-string-formatter/functions/sanitizeFilterArg.html
 
-[decodeArguments]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L51
+[decodeArguments]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFilter.html#decodearguments

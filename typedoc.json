@@ -4,6 +4,7 @@
   "out": "../custom-string-formatter-docs",
   "excludeExternals": true,
   "excludePrivate": true,
+  "cleanOutputDir": false,
   "entryPoints": [
     "src/index.ts"
   ],
