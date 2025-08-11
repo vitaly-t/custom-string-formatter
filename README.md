@@ -124,7 +124,7 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 
 **Limitation**
 
-> Filter arguments cannot contain symbols `|:{}<>()`, as they conflict with the variable syntax.
+> Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
 > To pass those in, use HTML symbol encoding, as explained below.
 
 Filter arguments are automatically HTML-decoded (unless [decodeArguments] override is used):
