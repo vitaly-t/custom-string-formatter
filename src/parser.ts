@@ -1,6 +1,6 @@
 import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
-import {decodeSymbols} from './encoding';
+import {decodeFilterArg} from './encoding';
 
 const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
@@ -26,14 +26,14 @@ export function createFormatter(base: IFormatter) {
                     .filter(a => a)
                     .reduce((p, c) => {
                         const [fName, ...args] = c.split(':').map(a => a.trim());
-                        const decodedArgs = decodeSymbols(args);
                         let f = base.filters?.[fName];
                         if (!f && typeof base.getDefaultFilter === 'function') {
-                            f = base.getDefaultFilter(fName, decodedArgs);
+                            f = base.getDefaultFilter(fName, args);
                         }
                         if (!f) {
                             throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
                         }
+                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(decodeFilterArg);
                         return f.transform(p, decodedArgs);
                     }, value);
             }
@@ -72,7 +72,7 @@ export interface IVariable {
     property: string;
 
     /**
-     * Extracted filters with arguments.
+     * Extracted filters with raw arguments (not decoded).
      */
     filters: Array<{ name: string, args: string[] }>
 }
@@ -93,7 +93,7 @@ export function enumVariables(text: string): IVariable[] {
             const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
             const filters = filtersWithArgs.map(a => {
                 const [name, ...args] = a.split(':').map(b => b.trim());
-                return {name, args: decodeSymbols(args)};
+                return {name, args};
             });
             return {match: m, property: a[1], filters};
         });

@@ -10,6 +10,10 @@ class AppendFilter implements IFilter {
     transform(value: any, args: string[]): any {
         return [value, ...args].join(',');
     }
+
+    decodeArguments(args: string[]): string[] {
+        return args; // to avoid decoding
+    }
 }
 
 class ShortFormatter implements IFormatter {
@@ -110,6 +114,16 @@ describe('createFormatter', () => {
             fullFormat('${value|object: Hello World! : Where are we? }', {value: 'message'});
             expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?']);
             expect(cb2).toHaveBeenCalledWith('object', ['Hello World!', 'Where are we?']);
+        });
+        it('must decode HTML symbols by default', () => {
+            const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
+            fullFormat('${value|json: &#58;}', {value: 'message'});
+            expect(cb).toHaveBeenCalledWith('message', [':']);
+        });
+        it('must not decode HTML symbols with override present', () => {
+            const cb = jest.spyOn(fullFormatter.filters.append, 'transform');
+            fullFormat('${value|append: &#58;}', {value: 'message'});
+            expect(cb).toHaveBeenCalledWith('message', ['&#58;']);
         });
     });
 });
