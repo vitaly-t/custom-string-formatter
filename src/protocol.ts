@@ -27,6 +27,8 @@ export interface IFilter {
      * before they are passed into `transform`. And adding this method overrides that.
      *
      * This is mainly for filters designed to handle HTML inside their arguments.
+     * However, if your filter takes arguments for which no decoding will ever be needed,
+     * adding this override to simply return the original arguments will improve the filter's performance.
      *
      * @param args
      * Raw text arguments that may contain HTML-encoded symbols.

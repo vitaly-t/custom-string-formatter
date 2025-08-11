@@ -145,8 +145,12 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
-Use function [sanitizeFilterArg] to make a filter argument correctly encoded. And if your filter needs to
-control arguments decoding on its own, override [decodeArguments] method.
+Use function [sanitizeFilterArg] to make a filter argument correctly encoded.
+
+You can also override method [decodeArguments], for the following purposes:
+
+* to let the filter control individual argument decoding
+* to optimize the filter's performance by not decoding some or all arguments
 
 ## Self-Reference
 
@@ -234,11 +238,11 @@ The engine can do the following inside 1 second:
 
 Tested under NodeJS v20/24.
 
-[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L55
+[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L57
 
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L72
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L74
 
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L96
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L98
 
 [hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L48
 
@@ -248,4 +252,4 @@ Tested under NodeJS v20/24.
 
 [sanitizeFilterArg]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/encoding.ts#L16
 
-[decodeArguments]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L49
+[decodeArguments]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L51
