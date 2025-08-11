@@ -41,7 +41,7 @@ export interface IFilter {
      * ```ts
      * import {decodeFilterArg} from 'custom-string-format';
      *
-     * decodeArguments(args: string[]): string {
+     * decodeArguments(args: string[]): string[] {
      *     return args.map(decodeFilterArg);
      * }
      * ```
