@@ -126,7 +126,7 @@ For the example above, the `transform` will receive `args` set to `['-123.45', '
 > Filter arguments cannot contain symbols `|:{}<>()`, as they conflict with the variable syntax.
 > To pass those in, use HTML symbol encoding, as explained below.
 
-Filter arguments automatically decode HTML-encoded symbols, as below:
+Filter arguments are automatically HTML-decoded, as explained below, unless [decodeArguments] override is used.
 
 * `&#8364;` => `€`: decimal symbol codes (1–6 digits)
 * `&#x1F60a;` => `😊`: hexadecimal symbol codes (1–5 hex digits, case-insensitive)
@@ -144,7 +144,8 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
-Use function [sanitizeFilterArg] to make filter arguments correctly encoded.
+Use function [sanitizeFilterArg] to make filter arguments correctly encoded. And if your filter needs to
+receive arguments undecoded, override [decodeArguments] method.
 
 ## Self-Reference
 
@@ -232,11 +233,11 @@ The engine can do the following inside 1 second:
 
 Tested under NodeJS v20/24.
 
-[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L24
+[IFormatter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L55
 
-[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L41
+[getDefaultValue]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L72
 
-[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L65
+[getDefaultFilter]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L96
 
 [hasVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L48
 
@@ -245,3 +246,5 @@ Tested under NodeJS v20/24.
 [enumVariables]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/parser.ts#L89
 
 [sanitizeFilterArg]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/encoding.ts#L16
+
+[decodeArguments]:https://github.com/vitaly-t/custom-string-formatter/blob/main/src/protocol.ts#L49
