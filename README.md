@@ -145,7 +145,7 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
 Use function [sanitizeFilterArg] to make filter arguments correctly encoded. And if your filter needs to
-receive arguments undecoded, override [decodeArguments] method.
+control arguments decoding on its own, override [decodeArguments] method.
 
 ## Self-Reference
 
