@@ -2,14 +2,14 @@ import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 import {decodeFilterArg} from './encoding';
 
-const regEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
+const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
 /**
  * Returns a function that formats a string from an object-parameter, and according to the specified configurator.
  */
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
-        return text.replace(regEx, (...args: string[]) => {
+        return text.replace(formatRegEx, (...args: string[]) => {
             const prop = args[4]; // property name
             const filters = args[5]; // filters, if specified
             let {exists, value} = resolveProperty(prop, params);
@@ -46,14 +46,14 @@ export function createFormatter(base: IFormatter) {
  * A fast check if a string has variables in it.
  */
 export function hasVariables(text: string): boolean {
-    return text.search(regEx) >= 0;
+    return text.search(formatRegEx) >= 0;
 }
 
 /**
  * A fast count of variables in a string.
  */
 export function countVariables(text: string): number {
-    return text.match(regEx)?.length ?? 0;
+    return text.match(formatRegEx)?.length ?? 0;
 }
 
 /**
@@ -87,7 +87,7 @@ export interface IVariable {
  * An array of matched variables (as descriptors)
  */
 export function enumVariables(text: string): IVariable[] {
-    return (text.match(regEx) || [])
+    return (text.match(formatRegEx) || [])
         .map(m => {
             const a = m.match(/.\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^}>)]*)*)*)/) as RegExpMatchArray;
             const filtersWithArgs = a[2] ? a[2].split('|').map(a => a.trim()).filter(a => a) : [];
