@@ -39,7 +39,7 @@ export interface IFilter {
      * it like this is the same as not having this method at all.
      *
      * ```ts
-     * import {decodeFilterArg} from 'custom-string-format';
+     * import {decodeFilterArg} from 'custom-string-formatter';
      *
      * decodeArguments(args: string[]): string[] {
      *     return args.map(decodeFilterArg);
