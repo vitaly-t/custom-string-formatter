@@ -19,6 +19,7 @@ import {createFormatter, IFormatter} from 'custom-string-formatter';
 
 class BaseFormatter implements IFormatter {
     format(value: any): string {
+        // your own value formatting here;
         return (value ?? 'null').toString();
     }
 }
@@ -35,7 +36,7 @@ console.log(s); //=> Hello Mr. Foreman!
 You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
 unlike ES6 Template Literals, which only work via JavaScript interpolation.
 
-Plus, you get some nice extensions, like [Formatting Filters](#formatting-filters).
+Plus, you get powerful [Formatting Filters](#formatting-filters).
 
 ## Installation
 
@@ -73,7 +74,7 @@ See the chapters below for further details.
 
 ## Formatting Filters
 
-Formatting filters can be appended to the property name, using `|` separator, for value transformation, in the form
+Formatting filters can be appended to the property name after `|` separator, for value transformation, in the form
 of `${propertyName | filter1 | filter2 | filter3}`.
 
 Filters perform value transformation in the same order in which they are specified.
@@ -120,14 +121,14 @@ You can pass optional arguments into a filter after `:` symbol:
 ${propertyName | filterName : -123.45 : Hello World!}
 ```
 
-For the example above, the `transform` will receive `args` set to `['-123.45', 'Hello World!']`.
+For the example above, method `transform` will receive `args` set to `['-123.45', 'Hello World!']`.
 
 **Limitation**
 
 > Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
-> To pass those in, use HTML symbol encoding, as explained below.
+> To pass those in, use HTML encoding, as explained below.
 
-Filter arguments are automatically HTML-decoded (unless [decodeArguments] override is used):
+Filter arguments are automatically HTML-decoded (unless [decodeArguments] override is present):
 
 * `&#8364;` => `€`: decimal symbol codes (1–6 digits)
 * `&#x1F60a;` => `😊`: hexadecimal symbol codes (1–5 hex digits, case-insensitive)
