@@ -6,6 +6,7 @@
 * [Installation](#installation)
 * [Variable Syntax](#variable-syntax)
 * [Formatting Filters](#formatting-filters)
+    - [Filter Arguments](#filter-arguments)
 * [Self-Reference](#self-reference)
 * [Input Analysis](#input-analysis)
 * [Safety Checks](#safety-checks)
