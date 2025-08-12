@@ -12,7 +12,7 @@
 * [Safety Checks](#safety-checks)
 * [Performance](#performance)
 
-Platform for implementing string-value formatting, using a unified variable syntax, with support for
+Platform for implementing value-string formatting, using a unified variable syntax, with support for
 nested properties, plus chaining filters with arguments:
 
 * `${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}`
