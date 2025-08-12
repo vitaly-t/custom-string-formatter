@@ -12,7 +12,12 @@
 * [Safety Checks](#safety-checks)
 * [Performance](#performance)
 
-Platform for implementing string-value formatting: unified formatting syntax for any type of output.
+Platform for implementing string-value formatting, using a unified variable syntax, with support for
+nested properties, plus chaining filters with arguments:
+
+* `${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}`
+
+**Basic Use:**
 
 ```ts
 import {createFormatter, IFormatter} from 'custom-string-formatter';
@@ -35,8 +40,6 @@ console.log(s); //=> Hello Mr. Foreman!
 
 You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
 unlike ES6 Template Literals, which only work via JavaScript interpolation.
-
-Plus, you get powerful [Formatting Filters](#formatting-filters).
 
 ## Installation
 
