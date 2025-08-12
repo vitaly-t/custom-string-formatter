@@ -1,6 +1,6 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "name": "Custom String Formatter v0.12.5",
+  "name": "Custom String Formatter API",
   "out": "../custom-string-formatter-docs",
   "excludeExternals": true,
   "excludePrivate": true,

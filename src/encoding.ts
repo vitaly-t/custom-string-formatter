@@ -1,3 +1,6 @@
+/**
+ * Argument encoding type, as used by {@link sanitizeFilterArg}
+ */
 export type ArgumentEncoding = 'decimal' | 'hex' | 'hex-cap';
 
 /**
@@ -12,6 +15,9 @@ export type ArgumentEncoding = 'decimal' | 'hex' | 'hex-cap';
  *  - `decimal` (default): Produce Decimal HTML encodings
  *  - `hex`: Produce Hexadecimal HTML encodings
  *  - `hex-cap`: Produce Hexadecimal HTML encodings, capitalized
+ *
+ * @returns
+ * Sanitized string.
  */
 export function sanitizeFilterArg(arg: string, encoding: ArgumentEncoding = 'decimal'): string {
     return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {

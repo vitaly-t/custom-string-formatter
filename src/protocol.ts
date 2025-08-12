@@ -14,9 +14,8 @@ export interface IFilter {
      * By default, each argument is HTML-decoded, unless override
      * `decodeArguments` is implemented.
      *
-     * @example
-     * `${property | filter : -123.45 : Hello World! }`
-     * // args = ['-123.45', 'Hello World!']
+     * @returns
+     * Result of the value transformation.
      */
     transform(value: any, args: string[]): any;
 
@@ -24,7 +23,7 @@ export interface IFilter {
      * Optional override for arguments decoding.
      *
      * By default, all HTML-encoded symbols inside arguments are automatically decoded
-     * before they are passed into `transform`. And adding this method overrides that.
+     * before they are passed into {@link transform}. And adding this method overrides that.
      *
      * This is mainly for filters designed to handle HTML inside their arguments.
      * However, if your filter takes arguments for which no decoding will ever be needed,
@@ -34,7 +33,7 @@ export interface IFilter {
      * Raw text arguments that may contain HTML-encoded symbols.
      *
      * @returns
-     * List of arguments to be passed into `transform`.
+     * List of arguments to be passed into {@link transform}.
      *
      * @example
      * The example below replicates the default behavior, i.e., implementing
@@ -57,6 +56,9 @@ export interface IFilter {
 export interface IFormatter {
     /**
      * Formats any value, according to its type.
+     *
+     * @returns
+     * Formatted string.
      */
     format(value: any): string;
 
@@ -70,6 +72,9 @@ export interface IFormatter {
      *
      * @param params
      * Parameter object that the property was being resolved against.
+     *
+     * @returns
+     * Default value to be used whenever a property cannot be resolved.
      */
     getDefaultValue?(prop: string, params: { [key: string]: any }): any;
 
@@ -101,7 +106,7 @@ export interface IFormatter {
      * Optional set of filters.
      *
      * When the parser cannot find a filter by name in this map, it will use
-     *  the `getDefaultFilter` method when such is provided.
+     *  the {@link getDefaultFilter} method when such is provided.
      */
     filters?: { [name: string]: IFilter };
 }

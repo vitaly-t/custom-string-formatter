@@ -6,6 +6,9 @@ const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\
 
 /**
  * Returns a function that formats a string from an object-parameter, and according to the specified configurator.
+ *
+ * @returns
+ * A function to format strings from object-parameter.
  */
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
@@ -44,6 +47,9 @@ export function createFormatter(base: IFormatter) {
 
 /**
  * A fast check if a string has variables in it.
+ *
+ * @returns
+ * Boolean flag, indicating if the string has variables in it.
  */
 export function hasVariables(text: string): boolean {
     return text.search(formatRegEx) >= 0;
@@ -51,13 +57,16 @@ export function hasVariables(text: string): boolean {
 
 /**
  * A fast count of variables in a string.
+ *
+ * @returns
+ * Number of variables in the string.
  */
 export function countVariables(text: string): number {
     return text.match(formatRegEx)?.length ?? 0;
 }
 
 /**
- * Variable descriptor, as returned from `enumVariables` function.
+ * Variable descriptor, as returned from {@link enumVariables} function.
  */
 export interface IVariable {
 
