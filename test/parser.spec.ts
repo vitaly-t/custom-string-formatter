@@ -1,13 +1,13 @@
 import {countVariables, createFormatter, enumVariables, hasVariables, IFormatter, IFilter} from '../src';
 
-class JsonFilter implements IFilter {
-    transform(value: any, args: string[]): any {
+class JsonFilter implements IFilter<any, string> {
+    transform(value: any) {
         return JSON.stringify(value);
     }
 }
 
-class AppendFilter implements IFilter {
-    transform(value: any, args: string[]): any {
+class AppendFilter implements IFilter<any, string> {
+    transform(value: any, args: string[]) {
         return [value, ...args].join(',');
     }
 

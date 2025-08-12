@@ -1,7 +1,7 @@
 /**
  * Value-Transformation Filter.
  */
-export interface IFilter {
+export interface IFilter<T = any, R = any> {
     /**
      * Transforms a value.
      *
@@ -17,7 +17,7 @@ export interface IFilter {
      * @returns
      * Result of the value transformation.
      */
-    transform(value: any, args: string[]): any;
+    transform(value: T, args: string[]): R;
 
     /**
      * Optional override for arguments decoding.
