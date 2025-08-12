@@ -9,10 +9,10 @@ export interface IFilter {
      * Value for transformation.
      *
      * @param args
-     * Arguments passed into the filter as ': val1 : val2'.
+     * Arguments passed into the filter as `: val1 : val2`.
      *
      * By default, each argument is HTML-decoded, unless override
-     * `decodeArguments` is implemented.
+     * {@link decodeArguments} is implemented.
      *
      * @returns
      * Result of the value transformation.
