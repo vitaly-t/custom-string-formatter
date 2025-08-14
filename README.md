@@ -38,9 +38,6 @@ const s = format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
 console.log(s); //=> Hello Mr. Foreman!
 ```
 
-You get access to rich formatting syntax that works with any dynamic text (from file, HTTP, user input or generated),
-unlike ES6 Template Literals, which only work via JavaScript interpolation.
-
 ## Installation
 
 ```sh
@@ -59,7 +56,7 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 
 The extra syntax is for cases like combining it with ES6 Template Literals, etc.
 
-Property names follow simple JavaScript variable notation: the name can contain letters (case-sensitive),
+Property names follow a simple JavaScript variable notation: the name can contain letters (case-sensitive),
 digits, `$`, `_` (underscore) and `.` for nested properties.
 
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
@@ -80,6 +77,9 @@ See the chapters below for further details.
 Formatting filters can be appended to the property name after `|` separator, for value transformation, in the form
 of `${propertyName | filter1 | filter2 | filter3}`.
 
+Filter names follow a simple JavaScript variable notation: the name can contain letters (case-sensitive),
+digits, `$` and `_` (underscore).
+ 
 Filters perform value transformation in the same order in which they are specified.
 Output from the last filter in the chain goes to the formatter, to be converted into a string (if needed).
 
@@ -126,8 +126,7 @@ ${propertyName | filterName : -123.45 : Hello World!}
 
 For the example above, method `transform` will receive `args` set to `['-123.45', 'Hello World!']`.
 
-**Limitation**
-
+**IMPORTANT** ☝
 > Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
 > To pass those in, use HTML encoding, as explained below.
 
