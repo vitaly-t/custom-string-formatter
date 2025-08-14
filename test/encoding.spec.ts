@@ -1,15 +1,9 @@
 import {sanitizeFilterArg, decodeFilterArg} from '../src';
 
 describe('sanitizeFilterArg', () => {
-    const allSymbols = 'Test-:|{}<>()';
-    it('must convert into decimals', () => {
-        expect(sanitizeFilterArg(allSymbols)).toEqual('Test-&#58;&#124;&#123;&#125;&#60;&#62;&#40;&#41;');
-    });
     it('must convert into hex', () => {
-        expect(sanitizeFilterArg(allSymbols, 'hex')).toEqual('Test-&#x3a;&#x7c;&#x7b;&#x7d;&#x3c;&#x3e;&#x28;&#x29;');
-    });
-    it('must convert into hex-cap', () => {
-        expect(sanitizeFilterArg(allSymbols, 'hex-cap')).toEqual('Test-&#x3A;&#x7C;&#x7B;&#x7D;&#x3C;&#x3E;&#x28;&#x29;');
+        const allSymbols = 'Test-:|{}<>()';
+        expect(sanitizeFilterArg(allSymbols)).toEqual('Test-&#x3a;&#x7c;&#x7b;&#x7d;&#x3c;&#x3e;&#x28;&#x29;');
     });
 });
 

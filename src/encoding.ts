@@ -1,35 +1,17 @@
 /**
- * Argument encoding type, as used by {@link sanitizeFilterArg}
- */
-export type ArgumentEncoding = 'decimal' | 'hex' | 'hex-cap';
-
-/**
  * Sanitizes a filter-argument text by replacing symbols `:|{}()<>`
- * with their corresponding HTML-encoded strings.
+ * with their corresponding HTML-encoded strings (hexadecimal).
  *
  * @param arg
  * Filter argument text to be sanitized.
  *
- * @param encoding
- * How to HTML-encode the replacement strings:
- *  - `decimal` (default): Produce Decimal HTML encodings
- *  - `hex`: Produce Hexadecimal HTML encodings
- *  - `hex-cap`: Produce Hexadecimal HTML encodings, capitalized
- *
  * @returns
- * Sanitized string.
+ * Sanitized string that's safe to use as a filter argument.
  */
-export function sanitizeFilterArg(arg: string, encoding: ArgumentEncoding = 'decimal'): string {
+export function sanitizeFilterArg(arg: string): string {
     return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {
-        const code = m.charCodeAt(0).toString(encoding === 'decimal' ? 10 : 16);
-        switch (encoding) {
-            case 'hex':
-                return `&#x${code};`;
-            case 'hex-cap':
-                return `&#x${code.toUpperCase()};`;
-            default:
-                return `&#${code};`;
-        }
+        const code = m.charCodeAt(0).toString(16);
+        return `&#x${code};`;
     });
 }
 
