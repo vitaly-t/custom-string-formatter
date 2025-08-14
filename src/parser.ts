@@ -5,10 +5,24 @@ import {decodeFilterArg} from './encoding';
 const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
 /**
- * Returns a function that formats a string from an object-parameter, and according to the specified configurator.
+ * Creates a formatter function.
  *
  * @returns
- * A function to format strings from object-parameter.
+ * A function that formats a string from an object-parameter, and according to the specified configurator.
+ *
+ * @example
+ * import {createFormatter, IFormatter} from 'custom-string-formatter';
+ *
+ * class BaseFormatter implements IFormatter {
+ *     format(value: any): string {
+ *         return (value ?? 'null').toString();
+ *     }
+ * }
+ *
+ * const format = createFormatter(new BaseFormatter());
+ *
+ * format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
+ * //=> Hello Mr. Foreman!
  */
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {
@@ -50,6 +64,13 @@ export function createFormatter(base: IFormatter) {
  *
  * @returns
  * Boolean flag, indicating if the string has variables in it.
+ *
+ * @example
+ * import {hasVariables} from 'custom-string-formatter';
+ *
+ * hasVariables('${value}'); //=> true
+ *
+ * hasVariables('some text'); //=> false
  */
 export function hasVariables(text: string): boolean {
     return text.search(formatRegEx) >= 0;
@@ -60,6 +81,13 @@ export function hasVariables(text: string): boolean {
  *
  * @returns
  * Number of variables in the string.
+ *
+ * @example
+ * import {countVariables} from 'custom-string-formatter';
+ *
+ * countVariables('some text'); //=> 0
+ *
+ * countVariables('${first} ${second}'); //=> 2
  */
 export function countVariables(text: string): number {
     return text.match(formatRegEx)?.length ?? 0;
@@ -94,6 +122,21 @@ export interface IVariable {
  *
  * @returns IVariable[]
  * An array of matched variables (as descriptors)
+ *
+ * @example
+ * import {enumVariables} from 'custom-string-formatter';
+ *
+ * enumVariables('${title} ${name} address: ${address | json}');
+ * // ==>
+ * [
+ *     {match: '${title}', property: 'title', filters: []},
+ *     {match: '${name}', property: 'name', filters: []},
+ *     {
+ *         match: '${address | json}',
+ *         property: 'address',
+ *         filters: [{name: 'json', args: []}]
+ *     }
+ * ]
  */
 export function enumVariables(text: string): IVariable[] {
     return (text.match(formatRegEx) || [])

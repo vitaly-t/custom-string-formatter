@@ -7,6 +7,11 @@
  *
  * @returns
  * Sanitized string that's safe to use as a filter argument.
+ *
+ * @example
+ * import {sanitizeFilterArg} from 'custom-string-formatter';
+ *
+ * sanitizeFilterArg('some (text)'); //=> some &#x28;text&#x29;
  */
 export function sanitizeFilterArg(arg: string): string {
     return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {
@@ -25,6 +30,11 @@ export function sanitizeFilterArg(arg: string): string {
  *
  * @returns
  * Decoded string.
+ *
+ * @example
+ * import {decodeFilterArg} from 'custom-string-formatter';
+ *
+ * decodeFilterArg('some &#x28;text&#x29;'); //=> some (text)
  */
 export function decodeFilterArg(arg: string): string {
     return arg.replace(/&#(\d{1,6});|&#x([\da-f]{1,5});/gi, (...m: string[]) => {

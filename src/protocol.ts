@@ -16,6 +16,15 @@ export interface IFilter<T = any, R = any> {
      *
      * @returns
      * Result of the value transformation.
+     *
+     * @example
+     * import {IFilter} from 'custom-string-formatter';
+     *
+     * class JsonFilter implements IFilter {
+     *     transform(value: any, args: string[]): any {
+     *         return JSON.stringify(value); // transform into a JSON string
+     *     }
+     * }
      */
     transform(value: T, args: string[]): R;
 
@@ -36,16 +45,21 @@ export interface IFilter<T = any, R = any> {
      * List of arguments to be passed into {@link transform}.
      *
      * @example
-     * The example below replicates the default behavior, i.e., implementing
-     * it like this is the same as not having this method at all.
+     * // The example below replicates the default behavior, i.e., implementing
+     * // it like this is the same as not having this method at all.
      *
-     * ```ts
-     * import {decodeFilterArg} from 'custom-string-formatter';
+     * import {IFormatter} from 'custom-string-formatter';
      *
-     * decodeArguments(args: string[]): string[] {
-     *     return args.map(decodeFilterArg);
+     * class BaseFormatter implements IFormatter {
+     *     format(value: any): string {
+     *         // your own value formatting here;
+     *         return (value ?? 'null').toString();
+     *     }
+     *
+     *     decodeArguments(args: string[]): string[] {
+     *         return args.map(decodeFilterArg);
+     *     }
      * }
-     * ```
      */
     decodeArguments?(args: string[]): string[];
 }
@@ -59,6 +73,16 @@ export interface IFormatter {
      *
      * @returns
      * Formatted string.
+     *
+     * @example
+     * import {IFormatter} from 'custom-string-formatter';
+     *
+     * class BaseFormatter implements IFormatter {
+     *     format(value: any): string {
+     *         // your own value formatting here;
+     *         return (value ?? 'null').toString();
+     *     }
+     * }
      */
     format(value: any): string;
 
@@ -74,7 +98,22 @@ export interface IFormatter {
      * Parameter object that the property was being resolved against.
      *
      * @returns
-     * Default value to be used whenever a property cannot be resolved.
+     * Default value to be used whenever a property fails to be resolved.
+     *
+     * @example
+     * import {IFormatter} from 'custom-string-formatter';
+     *
+     * class BaseFormatter implements IFormatter {
+     *     format(value: any): string {
+     *         // your own value formatting here;
+     *         return (value ?? 'null').toString();
+     *     }
+     *
+     *     getDefaultValue(prop: string, params: { [key: string]: any }) {
+     *         // return whatever is to be the default for properties,
+     *         // including nothing (undefined)
+     *     }
+     * }
      */
     getDefaultValue?(prop: string, params: { [key: string]: any }): any;
 
@@ -99,6 +138,28 @@ export interface IFormatter {
      *
      * @returns
      * An alternative filter, or nothing (if no alternative filter can be provided).
+     *
+     * @example
+     * // Example of aliasing a filter name to an existing filter;
+     *
+     * import {createFormatter, IFormatter} from 'custom-string-formatter';
+     *
+     * class BaseFormatter implements IFormatter {
+     *     format(value: any) {
+     *         return (value ?? 'null').toString();
+     *     }
+     *
+     *     getDefaultFilter(filter: string, args: string[]): IFilter | undefined {
+     *         if (filter === 'object' || filter === 'any') {
+     *             return this.filters.json; // alias to another filter
+     *         }
+     *         // else nothing, to throw default error
+     *     }
+     *
+     *     filters = {
+     *         json: new JsonFilter()
+     *     }
+     * }
      */
     getDefaultFilter?(filter: string, args: string[]): IFilter | undefined;
 
