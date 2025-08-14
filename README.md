@@ -128,7 +128,7 @@ For the example above, method `transform` will receive `args` set to `['-123.45'
 
 **IMPORTANT** ☝
 > Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
-> To pass those in, use HTML encoding, as explained below.
+> To pass those in, you need to HTML-encode them (see below).
 
 Filter arguments are automatically HTML-decoded (unless [decodeArguments] override is present):
 
