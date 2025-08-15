@@ -71,6 +71,8 @@ export function createFormatter(base: IFormatter) {
  * hasVariables('${value}'); //=> true
  *
  * hasVariables('some text'); //=> false
+ *
+ * @see {@link countVariables}, {@link enumVariables}
  */
 export function hasVariables(text: string): boolean {
     return text.search(formatRegEx) >= 0;
@@ -88,6 +90,8 @@ export function hasVariables(text: string): boolean {
  * countVariables('some text'); //=> 0
  *
  * countVariables('${first} ${second}'); //=> 2
+ *
+ * @see {@link hasVariables}, {@link enumVariables}
  */
 export function countVariables(text: string): number {
     return text.match(formatRegEx)?.length ?? 0;
@@ -137,6 +141,8 @@ export interface IVariable {
  *         filters: [{name: 'json', args: []}]
  *     }
  * ]
+ *
+ * @see {@link hasVariables}, {@link countVariables}
  */
 export function enumVariables(text: string): IVariable[] {
     return (text.match(formatRegEx) || [])

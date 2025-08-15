@@ -12,6 +12,8 @@
  * import {sanitizeFilterArg} from 'custom-string-formatter';
  *
  * sanitizeFilterArg('some (text)'); //=> some &#x28;text&#x29;
+ *
+ * @see {@link decodeFilterArg}
  */
 export function sanitizeFilterArg(arg: string): string {
     return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {
@@ -35,6 +37,8 @@ export function sanitizeFilterArg(arg: string): string {
  * import {decodeFilterArg} from 'custom-string-formatter';
  *
  * decodeFilterArg('some &#x28;text&#x29;'); //=> some (text)
+ *
+ * @see {@link sanitizeFilterArg}
  */
 export function decodeFilterArg(arg: string): string {
     return arg.replace(/&#(\d{1,6});|&#x([\da-f]{1,5});/gi, (...m: string[]) => {
