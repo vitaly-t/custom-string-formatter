@@ -45,19 +45,14 @@ export interface IFilter<T = any, R = any> {
      * List of arguments to be passed into {@link transform}.
      *
      * @example
-     * // The example below replicates the default behavior, i.e., implementing
-     * // it like this is the same as not having this method at all.
+     * // The example below replicates the default argument decoding, i.e.,
+     * // implementing decodeArguments like this is the same as not having it at all.
      *
      * import {IFormatter} from 'custom-string-formatter';
      *
      * class BaseFormatter implements IFormatter {
-     *     format(value: any): string {
-     *         // your own value formatting here;
-     *         return (value ?? 'null').toString();
-     *     }
-     *
      *     decodeArguments(args: string[]): string[] {
-     *         return args.map(decodeFilterArg);
+     *         return args.map(decodeFilterArg); // decoding all arguments
      *     }
      * }
      */
@@ -104,11 +99,6 @@ export interface IFormatter {
      * import {IFormatter} from 'custom-string-formatter';
      *
      * class BaseFormatter implements IFormatter {
-     *     format(value: any): string {
-     *         // your own value formatting here;
-     *         return (value ?? 'null').toString();
-     *     }
-     *
      *     getDefaultValue(prop: string, params: { [key: string]: any }) {
      *         // return whatever is to be the default for properties,
      *         // including nothing (undefined)
@@ -142,13 +132,9 @@ export interface IFormatter {
      * @example
      * // Example of aliasing a filter name to an existing filter;
      *
-     * import {createFormatter, IFormatter} from 'custom-string-formatter';
+     * import {IFormatter} from 'custom-string-formatter';
      *
      * class BaseFormatter implements IFormatter {
-     *     format(value: any) {
-     *         return (value ?? 'null').toString();
-     *     }
-     *
      *     getDefaultFilter(filter: string, args: string[]): IFilter | undefined {
      *         if (filter === 'object' || filter === 'any') {
      *             return this.filters.json; // alias to another filter
