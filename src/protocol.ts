@@ -53,12 +53,13 @@ export interface IFilter<T = any, R = any> {
      * By default, all HTML-encoded symbols inside arguments are automatically decoded
      * before they are passed into {@link transform}. And adding this method overrides that.
      *
-     * This is mainly for filters designed to handle HTML inside their arguments.
-     * However, if your filter takes arguments for which no decoding will ever be needed,
+     * If your filter takes arguments for which no decoding will ever be needed,
      * adding this override to simply return the original arguments will improve the filter's performance.
      *
      * @param args
-     * Raw text arguments that may contain HTML-encoded symbols.
+     * Raw text arguments that may contain HTML-encoded symbols, using notations:
+     *  - `&#123;` - decimal symbol code (1-6 digits);
+     *  - `&#x1a3;` - hexadecimal symbol code (1-5 hex digits, case-insensitive);
      *
      * @returns
      * List of arguments to be passed into {@link transform}.
@@ -173,6 +174,9 @@ export interface IFormatter {
      *
      * When the parser cannot find a filter by name in this map, it will use
      *  the {@link getDefaultFilter} method when such is provided.
+     *
+     * You can add or delete filters in it at any point, thus allowing for
+     * lazy-loading filters or any other dynamic scenario.
      */
     filters?: { [name: string]: IFilter };
 }
