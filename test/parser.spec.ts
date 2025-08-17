@@ -102,6 +102,9 @@ describe('createFormatter', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
             fullFormat('${value|json:}', {value: 'message'});
             expect(cb).toHaveBeenCalledWith('message', ['']);
+
+            fullFormat('${value|json:::Hello World!}', {value: 'message'});
+            expect(cb).toHaveBeenCalledWith('message', ['', '', 'Hello World!']);
         });
         it('must resolve numbers', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');

@@ -126,6 +126,9 @@ ${propertyName | filterName : -123.45 : Hello World!}
 
 For the example above, method `transform` will receive `args` set to `['-123.45', 'Hello World!']`.
 
+Passing in empty arguments like `filter:::Hello!` or `filter : : : Hello World! ` will produce a list of arguments
+set to `['', '', 'Hello World!']`.
+
 **IMPORTANT** ☝
 > Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
 > To pass those in, you need to HTML-encode them (see below).

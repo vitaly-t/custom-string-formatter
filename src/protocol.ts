@@ -53,7 +53,7 @@ export interface IFilter<T = any, R = any> {
      * By default, all HTML-encoded symbols inside filter arguments are automatically decoded
      * before they are passed into {@link transform}. And adding this method overrides that.
      *
-     * <b>Reasons for overriding this method:</b>
+     * <b>Some of the reasons for overriding this method:</b>
      *
      * - To decode arguments individually, as needed, instead of all of them.
      *
@@ -64,7 +64,7 @@ export interface IFilter<T = any, R = any> {
      * - Forcing removal of accents (diacritical marks) during decoding, which function {@link decodeFilterArg}
      *   supports as an option.
      *
-     * If your filter does not take any arguments, overriding this method will have no effect.
+     * - To throw an error if the filter receives more arguments than it supports, or fewer than required.
      *
      * @param args
      * Raw text arguments that may contain HTML-encoded symbols, using notations:
