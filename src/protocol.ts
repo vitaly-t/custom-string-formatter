@@ -48,16 +48,23 @@ export interface IFilter<T = any, R = any> {
     transform(value: T, args: string[]): R;
 
     /**
-     * Optional override for arguments decoding.
+     * Optional override for decoding filter arguments.
      *
-     * By default, all HTML-encoded symbols inside arguments are automatically decoded
+     * By default, all HTML-encoded symbols inside filter arguments are automatically decoded
      * before they are passed into {@link transform}. And adding this method overrides that.
      *
-     * If your filter takes arguments for which no decoding will ever be needed,
-     * adding this override to simply return the original arguments will improve the filter's performance.
+     * <b>Reasons for overriding this method:</b>
      *
-     * Another reason for overriding it - force removal of accents (diacritical marks) during decoding,
-     * which function {@link decodeFilterArg} supports as an option.
+     * - To decode arguments individually, as needed, instead of all of them.
+     *
+     * - To skip decoding for filters that do not need it and thus improving the filter performance.
+     *   For example, if your filter accepts only numbers as arguments, the method should just return the
+     *   original list of arguments to avoid any decoding.
+     *
+     * - Forcing removal of accents (diacritical marks) during decoding, which function {@link decodeFilterArg}
+     *   supports as an option.
+     *
+     * If your filter does not take any arguments, overriding this method will have no effect.
      *
      * @param args
      * Raw text arguments that may contain HTML-encoded symbols, using notations:
