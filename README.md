@@ -13,7 +13,7 @@
 * [Performance](#performance)
 
 Platform for implementing value-string formatting, using a unified variable syntax, with support for
-nested properties, chains of filters and filter arguments:
+nested properties, filters chaining (pipeline) and filter arguments:
 
 * `${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}`
 
@@ -80,8 +80,8 @@ of `${propertyName | filter1 | filter2 | filter3}`.
 Filter names follow a simple JavaScript variable notation: the name can contain letters (case-sensitive),
 digits, `$` and `_` (underscore).
  
-Filters perform value transformation in the same order in which they are specified.
-Output from the last filter in the chain goes to the formatter, to be converted into a string (if needed).
+Filters perform value transformation in the same order in which they are specified, as a pipeline, with the
+output from the last filter going to the formatter, to be converted into a string (if needed).
 
 **Example of using formatting filters:**
 

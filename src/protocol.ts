@@ -1,5 +1,8 @@
 /**
- * Value-Transformation Filter.
+ * Value-Transformation Filter / Pipe
+ *
+ * It takes the current value and then transforms/pipes it into the next filter
+ * in the chain (or the formatter, if last in the chain).
  */
 export interface IFilter<T = any, R = any> {
     /**
