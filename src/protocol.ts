@@ -72,7 +72,7 @@ export interface IFilter<T = any, R = any> {
      *
      * class BaseFormatter implements IFormatter {
      *     decodeArguments(args: string[]): string[] {
-     *         return args.map(decodeFilterArg); // decoding all arguments
+     *         return args.map(a => decodeFilterArg(a)); // decoding all arguments
      *     }
      * }
      */

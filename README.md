@@ -79,7 +79,7 @@ of `${propertyName | filter1 | filter2 | filter3}`.
 
 Filter names follow a simple JavaScript variable notation: the name can contain letters (case-sensitive),
 digits, `$` and `_` (underscore).
- 
+
 Filters perform value transformation in the same order in which they are specified, as a pipeline, with the
 output from the last filter going to the formatter, to be converted into a string (if needed).
 
@@ -154,6 +154,7 @@ You can also override method [decodeArguments], for the following purposes:
 
 * to let the filter control individual argument decoding
 * to optimize the filter's performance by not decoding some or all arguments
+* to also remove accents (diacritical marks), supported by [decodeFilterArg]
 
 ## Self-Reference
 
@@ -256,3 +257,5 @@ Tested under NodeJS v20/24.
 [sanitizeFilterArg]:https://vitaly-t.github.io/custom-string-formatter/functions/sanitizeFilterArg.html
 
 [decodeArguments]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFilter.html#decodearguments
+
+[decodeFilterArg]:https://vitaly-t.github.io/custom-string-formatter/functions/decodeFilterArg.html
