@@ -56,6 +56,9 @@ export interface IFilter<T = any, R = any> {
      * If your filter takes arguments for which no decoding will ever be needed,
      * adding this override to simply return the original arguments will improve the filter's performance.
      *
+     * Another reason for overriding it - force removal of accents (diacritical marks) during decoding,
+     * which function {@link decodeFilterArg} supports as an option.
+     *
      * @param args
      * Raw text arguments that may contain HTML-encoded symbols, using notations:
      *  - `&#123;` - decimal symbol code (1-6 digits);
@@ -68,11 +71,23 @@ export interface IFilter<T = any, R = any> {
      * // The example below replicates the default argument decoding, i.e.,
      * // implementing decodeArguments like this is the same as not having it at all.
      *
-     * import {IFormatter} from 'custom-string-formatter';
+     * import {IFilter} from 'custom-string-formatter';
      *
-     * class BaseFormatter implements IFormatter {
+     * class MyFilter implements IFilter {
      *     decodeArguments(args: string[]): string[] {
      *         return args.map(a => decodeFilterArg(a)); // decoding all arguments
+     *     }
+     * }
+     *
+     * @example
+     * // This filter encodes all arguments and removes accents (diacritical marks) from letters.
+     *
+     * import {IFilter} from 'custom-string-formatter';
+     *
+     * class MyFilter implements IFilter {
+     *     decodeArguments(args: string[]): string[] {
+     *         // decoding all arguments, plus removing accents:
+     *         return args.map(a => decodeFilterArg(a, true));
      *     }
      * }
      */

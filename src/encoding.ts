@@ -49,6 +49,10 @@ export function sanitizeFilterArg(arg: string): string {
  *
  * decodeFilterArg('some &#x28;text&#x29;'); //=> some (text)
  *
+ * decodeFilterArg('sòmê &#60;téxt&#62;'); //=> sòmê <téxt>
+ *
+ * decodeFilterArg('sòmê &#60;téxt&#62;', true); //=> some <text>
+ *
  * @see {@link sanitizeFilterArg}
  */
 export function decodeFilterArg(arg: string, removeAccents = false): string {

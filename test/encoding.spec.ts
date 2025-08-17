@@ -34,4 +34,12 @@ describe('decodeFilterArg', () => {
         expect(decodeFilterArg('&#60;')).toEqual('<');
         expect(decodeFilterArg('&#62;')).toEqual('>');
     });
+    describe('with accents in text ', () => {
+        it('must be kept by default', () => {
+            expect(decodeFilterArg('sòmê &#60;téxt&#62;')).toEqual('sòmê <téxt>');
+        });
+        it('must be removed when flag is set', () => {
+            expect(decodeFilterArg('sòmê &#60;téxt&#62;', true)).toEqual('some <text>');
+        });
+    });
 });
