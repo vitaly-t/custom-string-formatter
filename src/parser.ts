@@ -23,6 +23,16 @@ const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\
  *
  * format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
  * //=> Hello Mr. Foreman!
+ *
+ * @example
+ * // Function createFormatter expects only an interface,
+ * // so using a class is not necessary:
+ *
+ * const format = createFormatter({
+ *      format(value: any): string {
+ *         return (value ?? 'null').toString();
+ *     }
+ * });
  */
 export function createFormatter(base: IFormatter) {
     return function (text: string, params: { [key: string]: any }) {

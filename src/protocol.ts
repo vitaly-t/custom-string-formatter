@@ -1,12 +1,12 @@
 /**
  * Value-Transformation Filter / Pipe
  *
- * It takes the current value and then transforms/pipes it into the next filter
+ * It takes the current value and then transforms / pipes it into the next filter
  * in the chain (or the formatter, if last in the chain).
  */
 export interface IFilter<T = any, R = any> {
     /**
-     * Transforms a value.
+     * Transforms a value, to be piped into the next filter.
      *
      * @param value
      * Value for transformation.
@@ -28,6 +28,22 @@ export interface IFilter<T = any, R = any> {
      *         return JSON.stringify(value); // transform into a JSON string
      *     }
      * }
+     *
+     * @example
+     * // Since property `IFormatter.filters` uses interfaces,
+     * // creating IFilter-based classes is not necessary:
+     *
+     * // simple object with an arrow function:
+     * const json = {transform: (value: any) => JSON.stringify(value)};
+     *
+     * // or, as an object with a normal function:
+     * const json = {
+     *      transform(value: any) => {
+     *          return JSON.stringify(value);
+     *      }
+     * };
+     *
+     * // Both approaches will work the same as the example above.
      */
     transform(value: T, args: string[]): R;
 
