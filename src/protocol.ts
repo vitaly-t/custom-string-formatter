@@ -80,7 +80,7 @@ export interface IFilter<T = any, R = any> {
      * }
      *
      * @example
-     * // This filter encodes all arguments and removes accents (diacritical marks) from letters.
+     * // This filter decodes all arguments and removes accents (diacritical marks) from letters.
      *
      * import {IFilter} from 'custom-string-formatter';
      *
