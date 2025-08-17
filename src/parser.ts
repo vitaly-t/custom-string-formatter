@@ -60,7 +60,7 @@ export function createFormatter(base: IFormatter) {
                         if (!f) {
                             throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
                         }
-                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(decodeFilterArg);
+                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(a => decodeFilterArg(a));
                         return f.transform(p, decodedArgs);
                     }, value);
             }
