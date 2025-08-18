@@ -4,6 +4,45 @@ import {decodeFilterArg} from './encoding';
 
 const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
 
+// one with support for: ${  prop  [" hello world "]   ['s sds' ]  .  rt  | first:123} ${first.sd['s'].df[ 'd' ]['s'].asd}
+// const richFormatRegEx = /\$(?:({)|(\()|(<))\s*([\w$]+(\s*|\.\s*[\w$]+|\[\s*('[^']+'|"[^"]+")\s*\])*)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g;
+
+export function createRichFormatter(base: IFormatter) {
+    return function (text: string, params: { [key: string]: any }) {
+        return text.replace(formatRegEx, (...args: string[]) => {
+            const prop = args[4]; // property name
+            const filters = args[7]; // filters, if specified
+            // TODO: need to tokenize the property here
+            let {exists, value} = resolveProperty(prop, params);
+            if (!exists) {
+                if (typeof base.getDefaultValue !== 'function') {
+                    throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+                }
+                value = base.getDefaultValue(prop, params);
+            }
+            if (filters) {
+                value = filters
+                    .split('|')
+                    .map(a => a.trim())
+                    .filter(a => a)
+                    .reduce((p, c) => {
+                        const [fName, ...args] = c.split(':').map(a => a.trim());
+                        let f = base.filters?.[fName];
+                        if (!f && typeof base.getDefaultFilter === 'function') {
+                            f = base.getDefaultFilter(fName, args);
+                        }
+                        if (!f) {
+                            throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
+                        }
+                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(a => decodeFilterArg(a));
+                        return f.transform(p, decodedArgs);
+                    }, value);
+            }
+            return base.format(value);
+        });
+    }
+}
+
 /**
  * Creates a formatter function.
  *
