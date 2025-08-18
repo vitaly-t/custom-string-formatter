@@ -57,7 +57,9 @@ Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browser
 The extra syntax is for cases like combining it with ES6 Template Literals, etc.
 
 Property names follow a simple JavaScript variable notation: the name can contain letters (case-sensitive),
-digits, `$`, `_` (underscore) and `.` for nested properties.
+digits, `$`, `_` (underscore) and `.` for nested properties. For array access, like `prop[123].value`,
+use `prop.123.value` syntax instead, for the fastest possible value resolution that avoids performance-expensive
+property tokenization.
 
 You can use a combination of the above inside one string, but you cannot combine opener-closer pairs, i.e.
 something like `${propertyName)` is invalid, and won't be recognized as a variable.
@@ -238,10 +240,8 @@ Check out [the examples](./examples).
 The high performance of this library is enforced right in the unit tests (
 see [./test/performance.spec.ts](./test/performance.spec.ts)).
 
-The engine can do the following inside 1 second:
-
-- replace 1 million variables inside a string that contains 1 million variables;
-- replace a variable inside one-variable string 4 million times in a row.
+The engine can replace over one million variables per second. It is faster than most alternatives
+out there, which make use of performance-expensive property tokenization.
 
 Tested under NodeJS v20/24.
 
