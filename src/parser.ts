@@ -2,7 +2,47 @@ import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 import {decodeFilterArg} from './encoding';
 
-const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
+// New regex that understands this:
+// ${one.two.three | fil1 : 'asd sds{}'  } $(as['s'].one | bla: 'hey' | extra: 'three') $<bla[123]|last> ${last["hey"].there|filter|bla: -123.456}
+const formatRegEx = /\$(?:({)|(\()|(<))\s*([\w$]+(\s*|\.\s*[\w$]+|\[\s*('[^']+'|"[^"]+"|\d+)\s*])*)((\s*\|\s*[\w$]*(\s*:\s*('[^']*'|"[^"]*"|[\d.-])*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g;
+
+//TODO: '" inside the same
+
+export function createFormatter_New(base: IFormatter) {
+    return function (text: string, params: { [key: string]: any }) {
+        return text.replace(formatRegEx, (...args: string[]) => {
+            const propPath = args[4]; // full property path
+            const filterList = args[7]; // all filters with arguments
+            let {exists, value} = resolveProperty(propPath, params);
+            if (!exists) {
+                if (typeof base.getDefaultValue !== 'function') {
+                    throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+                }
+                value = base.getDefaultValue(prop, params);
+            }
+            if (filters) {
+                value = filters
+                    .split('|')
+                    .map(a => a.trim())
+                    .filter(a => a)
+                    .reduce((p, c) => {
+                        const [fName, ...args] = c.split(':').map(a => a.trim());
+                        let f = base.filters?.[fName];
+                        if (!f && typeof base.getDefaultFilter === 'function') {
+                            f = base.getDefaultFilter(fName, args);
+                        }
+                        if (!f) {
+                            throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
+                        }
+                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(a => decodeFilterArg(a));
+                        return f.transform(p, decodedArgs);
+                    }, value);
+            }
+            return base.format(value);
+        });
+    }
+}
+
 
 /**
  * Creates a formatter function.
