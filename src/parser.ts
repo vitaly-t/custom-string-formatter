@@ -1,5 +1,5 @@
-import {IFormatter} from './protocol';
-import {resolveProperty} from './resolver';
+import {IFilter, IFormatter} from './protocol';
+import {IProperty} from './resolver';
 import {decodeFilterArg} from './encoding';
 
 // New regex that understands this:
@@ -8,17 +8,26 @@ const formatRegEx = /\$(?:({)|(\()|(<))\s*([\w$]+(\s*|\.\s*[\w$]+|\[\s*('[^']+'|
 
 //TODO: '" inside the same
 
-export function createFormatter_New(base: IFormatter) {
-    return function (text: string, params: { [key: string]: any }) {
+export abstract class Formatter {
+
+    getDefaultValue?(prop: string, params: { [key: string]: any }): any;
+
+    getDefaultFilter?(name: string, args: string[]): any;
+
+    abstract format(value: any): string;
+
+    filters?: { [name: string]: IFilter };
+
+    replace(text: string, params: { [key: string]: any }) {
         return text.replace(formatRegEx, (...args: string[]) => {
-            const propPath = args[4]; // full property path
-            const filterList = args[7]; // all filters with arguments
-            let {exists, value} = resolveProperty(propPath, params);
+            const pp = args[4]; // full property path
+            const filters = args[7]; // all filters with arguments
+            let {exists, value} = Formatter.resolveProperty(pp, params);
             if (!exists) {
-                if (typeof base.getDefaultValue !== 'function') {
-                    throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
+                if (typeof this.getDefaultValue !== 'function') {
+                    throw new Error(`Property ${JSON.stringify(pp)} does not exist`);
                 }
-                value = base.getDefaultValue(prop, params);
+                value = this.getDefaultValue(pp, params);
             }
             if (filters) {
                 value = filters
@@ -27,9 +36,9 @@ export function createFormatter_New(base: IFormatter) {
                     .filter(a => a)
                     .reduce((p, c) => {
                         const [fName, ...args] = c.split(':').map(a => a.trim());
-                        let f = base.filters?.[fName];
-                        if (!f && typeof base.getDefaultFilter === 'function') {
-                            f = base.getDefaultFilter(fName, args);
+                        let f = this.filters?.[fName];
+                        if (!f && typeof this.getDefaultFilter === 'function') {
+                            f = this.getDefaultFilter(fName, args);
                         }
                         if (!f) {
                             throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
@@ -38,8 +47,40 @@ export function createFormatter_New(base: IFormatter) {
                         return f.transform(p, decodedArgs);
                     }, value);
             }
-            return base.format(value);
+            return this.format(value);
         });
+    }
+
+    /**
+     * Parses a property and resolves its value from an object.
+     *
+     * It supports `this` as the first name to reference the object itself.
+     */
+    private static resolveProperty(path: string, obj: { [key: string]: any }): IProperty {
+        let names: string[] = [];
+        if (path.indexOf('[') > 0) {
+            // verbose syntax that needs tokenization;
+            const reg = /\[\s*(-*\d+)(?=\s*])|\[\s*(["'])((?:\\.|(?!\2).)*)\2\s*]|[-\w$]+/g;
+            let a;
+            while (a = reg.exec(path)) {
+                names.push(a[1] || a[3] || a[0]);
+            }
+        } else {
+            names = path.split('.').filter(a => a);
+        }
+        let exists = false, value = obj;
+        for (const [i, n] of names.entries()) {
+            if (!i && n === 'this') {
+                exists = true;
+                continue;
+            }
+            if (value === null || value === undefined || !(n in value)) {
+                return {exists: false};
+            }
+            exists = true;
+            value = value[n];
+        }
+        return exists ? {exists, value} : {exists};
     }
 }
 
@@ -74,40 +115,7 @@ export function createFormatter_New(base: IFormatter) {
  *     }
  * });
  */
-export function createFormatter(base: IFormatter) {
-    return function (text: string, params: { [key: string]: any }) {
-        return text.replace(formatRegEx, (...args: string[]) => {
-            const prop = args[4]; // property name
-            const filters = args[5]; // filters, if specified
-            let {exists, value} = resolveProperty(prop, params);
-            if (!exists) {
-                if (typeof base.getDefaultValue !== 'function') {
-                    throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
-                }
-                value = base.getDefaultValue(prop, params);
-            }
-            if (filters) {
-                value = filters
-                    .split('|')
-                    .map(a => a.trim())
-                    .filter(a => a)
-                    .reduce((p, c) => {
-                        const [fName, ...args] = c.split(':').map(a => a.trim());
-                        let f = base.filters?.[fName];
-                        if (!f && typeof base.getDefaultFilter === 'function') {
-                            f = base.getDefaultFilter(fName, args);
-                        }
-                        if (!f) {
-                            throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
-                        }
-                        const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(a => decodeFilterArg(a));
-                        return f.transform(p, decodedArgs);
-                    }, value);
-            }
-            return base.format(value);
-        });
-    }
-}
+
 
 /**
  * A fast check if a string has variables in it.
@@ -206,3 +214,15 @@ export function enumVariables(text: string): IVariable[] {
             return {match: m, property: a[1], filters};
         });
 }
+
+class MyFormatter extends Formatter {
+    format(value: any): string {
+        return (value ?? 'null').toString();
+    }
+}
+
+const a = new MyFormatter();
+
+const format = a.replace.bind(a)
+
+console.log(format(`$(first) text`, {first: 'hello'}));
