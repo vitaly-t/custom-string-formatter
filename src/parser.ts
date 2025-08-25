@@ -1,4 +1,4 @@
-import {IFilter, IFormatter} from './protocol';
+import {IFilter} from './protocol';
 import {IProperty} from './resolver';
 import {decodeFilterArg} from './encoding';
 
