@@ -12,10 +12,15 @@
 * [Safety Checks](#safety-checks)
 * [Performance](#performance)
 
-Platform for implementing value-string formatting, using a unified variable syntax, with support for
-nested properties, filters chaining (pipeline) and filter arguments:
+Replaces variables in a string, using your own value formatting.
 
-* `${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}`
+The variable syntax supports:
+
+* nested properties
+* filters chaining / pipeline
+* filter arguments
+
+> ${prop1.prop2.prop3 | filter1 | filter2 | filter3 : arg1 : arg2}
 
 **Basic Use:**
 
