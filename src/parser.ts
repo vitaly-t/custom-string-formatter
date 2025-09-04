@@ -26,7 +26,7 @@ const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\
  *
  * @example
  * // Function createFormatter expects only an interface,
- * // so using a class is not necessary:
+ * // so using a class is not really necessary:
  *
  * const format = createFormatter({
  *      format(value: any): string {
