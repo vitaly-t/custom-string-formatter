@@ -16,7 +16,7 @@
  * @see {@link decodeFilterArg}
  */
 export function sanitizeFilterArg(arg: string): string {
-    return arg.replace(/:|\||\(|\)|{|}|<|>/g, m => {
+    return arg.replace(/[:|(){}<>]/g, m => {
         const code = m.charCodeAt(0).toString(16);
         return `&#x${code};`;
     });

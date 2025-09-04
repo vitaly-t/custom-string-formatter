@@ -2,7 +2,7 @@ import {IFormatter} from './protocol';
 import {resolveProperty} from './resolver';
 import {decodeFilterArg} from './encoding';
 
-const formatRegEx = new RegExp(/\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g);
+const formatRegEx = /\$(?:({)|(\()|(<))\s*([\w$.]+)((\s*\|\s*[\w$]*(\s*:\s*[^{}<>()]*)*)*)\s*(?:(?=\2)(?=\3)}|(?=\1)(?=\3)\)|(?=\1)(?=\2)>)/g;
 
 /**
  * Creates a formatter function.
