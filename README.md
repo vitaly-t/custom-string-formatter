@@ -248,7 +248,7 @@ see [./test/performance.spec.ts](./test/performance.spec.ts)).
 The engine can replace over one million variables per second. It is faster than most alternatives
 out there, which make use of performance-expensive property tokenization.
 
-Tested under NodeJS v20/24.
+Tested under NodeJS v18/24.
 
 [IFormatter]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFormatter.html
 
