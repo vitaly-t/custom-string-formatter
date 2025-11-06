@@ -190,11 +190,11 @@ though it may not have a practical need (use of `this` in this case is superfluo
 If you need to verify an input string for the variable references it has, this library offers three global
 functions to help you with that:
 
-| Function         | Description                                    |
-|------------------|------------------------------------------------|
-| [hasVariables]   | A fast check if a string has variables in it.  |
-| [countVariables] | A fast count of variables in a string.         |
-| [enumVariables]  | Enumerates and parses variables from a string. |
+| Function         | Description                                         |
+|------------------|-----------------------------------------------------|
+| [hasVariables]   | A fast check if a string has valid variables in it. |
+| [countVariables] | A fast count of valid variables in a string.        |
+| [enumVariables]  | Enumerates and parses variables from a string.      |
 
 **Example:**
 

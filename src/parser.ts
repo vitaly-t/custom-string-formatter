@@ -70,10 +70,10 @@ export function createFormatter(base: IFormatter) {
 }
 
 /**
- * A fast check if a string has variables in it.
+ * A fast check if a string has valid variables in it.
  *
  * @returns
- * Boolean flag, indicating if the string has variables in it.
+ * Boolean flag, indicating if the string has valid variables in it.
  *
  * @example
  * import {hasVariables} from 'custom-string-formatter';
@@ -89,10 +89,10 @@ export function hasVariables(text: string): boolean {
 }
 
 /**
- * A fast count of variables in a string.
+ * A fast count of valid variables in a string.
  *
  * @returns
- * Number of variables in the string.
+ * Number of valid variables in the string.
  *
  * @example
  * import {countVariables} from 'custom-string-formatter';
