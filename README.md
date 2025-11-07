@@ -57,7 +57,7 @@ const format = createFormatter({
 $ npm i custom-string-formatter
 ```
 
-Current GitHub CI is set up for just NodeJS v20-v24, but it works in all browsers the same.
+Current GitHub CI is set up for just NodeJS v18-v24, but it works in all browsers the same.
 
 ## Variable Syntax
 
