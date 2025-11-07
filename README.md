@@ -158,7 +158,7 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `(`   | `&#40;`  |  `&#x28;`   |
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
-For dynamic filter arguments, you can use function [sanitizeFilterArg] to encode them.
+For dynamic filter arguments, use function [sanitizeFilterArgs] to encode them.
 
 You can also override method [decodeArguments], for the following purposes:
 
@@ -262,7 +262,7 @@ Tested under NodeJS v18/24.
 
 [enumVariables]:https://vitaly-t.github.io/custom-string-formatter/functions/enumVariables.html
 
-[sanitizeFilterArg]:https://vitaly-t.github.io/custom-string-formatter/functions/sanitizeFilterArg.html
+[sanitizeFilterArgs]:https://vitaly-t.github.io/custom-string-formatter/functions/sanitizeFilterArgs.html
 
 [decodeArguments]:https://vitaly-t.github.io/custom-string-formatter/interfaces/IFilter.html#decodearguments
 

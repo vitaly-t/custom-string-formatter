@@ -1,9 +1,12 @@
-import {sanitizeFilterArg, decodeFilterArg} from '../src';
+import {sanitizeFilterArgs, decodeFilterArg} from '../src';
 
-describe('sanitizeFilterArg', () => {
+describe('sanitizeFilterArgs', () => {
     it('must convert into hex', () => {
-        const allSymbols = 'Test-:|{}<>()';
-        expect(sanitizeFilterArg(allSymbols)).toEqual('Test-&#x3a;&#x7c;&#x7b;&#x7d;&#x3c;&#x3e;&#x28;&#x29;');
+        const input = 'Test-:|{}<>()';
+        expect(sanitizeFilterArgs(input)).toEqual('Test-&#x3a;&#x7c;&#x7b;&#x7d;&#x3c;&#x3e;&#x28;&#x29;');
+    });
+    it('must handle multiple strings', () => {
+        expect(sanitizeFilterArgs('(a)', ':b:', '|c|')).toEqual('&#x28;a&#x29;:&#x3a;b&#x3a;:&#x7c;c&#x7c;');
     });
 });
 

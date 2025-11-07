@@ -1,25 +1,26 @@
 /**
- * Sanitizes a filter-argument text by replacing symbols `:|{}()<>`
+ * Sanitizes text for one or more filter arguments by replacing symbols `:|{}()<>`
  * with their corresponding HTML-encoded strings (hexadecimal).
  *
- * @param arg
- * Filter argument text to be sanitized.
+ * @param args
+ * Filter argument(s) text to be sanitized.
  *
  * @returns
  * Sanitized string that's safe to use as a filter argument.
+ * When more than one argument is provided, they are joined with `:`.
  *
  * @example
- * import {sanitizeFilterArg} from 'custom-string-formatter';
+ * import {sanitizeFilterArgs} from 'custom-string-formatter';
  *
- * sanitizeFilterArg('some (text)'); //=> some &#x28;text&#x29;
+ * sanitizeFilterArgs('some (text)'); //=> some &#x28;text&#x29;
  *
  * @see {@link decodeFilterArg}
  */
-export function sanitizeFilterArg(arg: string): string {
-    return arg.replace(/[:|(){}<>]/g, m => {
+export function sanitizeFilterArgs(...args: string[]): string {
+    return args.map(a => a.replace(/[:|(){}<>]/g, m => {
         const code = m.charCodeAt(0).toString(16);
         return `&#x${code};`;
-    });
+    })).join(':');
 }
 
 /**
@@ -53,7 +54,7 @@ export function sanitizeFilterArg(arg: string): string {
  *
  * decodeFilterArg('sòmê &#60;téxt&#62;', true); //=> some <text>
  *
- * @see {@link sanitizeFilterArg}
+ * @see {@link sanitizeFilterArgs}
  */
 export function decodeFilterArg(arg: string, removeAccents = false): string {
     if (removeAccents) {
