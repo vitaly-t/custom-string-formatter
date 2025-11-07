@@ -43,6 +43,14 @@ const s = format('Hello ${title} ${name}!', {title: 'Mr.', name: 'Foreman'});
 console.log(s); //=> Hello Mr. Foreman!
 ```
 
+And because the above is based on interfaces, you can simplify it to just:
+
+```ts
+const format = createFormatter({
+    format: (value: any) => (value ?? 'null').toString()
+});
+```
+
 ## Installation
 
 ```sh
