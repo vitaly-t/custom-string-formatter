@@ -2,17 +2,25 @@
  * Sanitizes text for one or more filter arguments by replacing symbols `:|{}()<>`
  * with their corresponding HTML-encoded strings (hexadecimal).
  *
+ * When multiple arguments are provided, they are sanitized separately and then joined with `:`.
+ *
+ * Using this function on the same text multiple times will sanitize the text only once.
+ *
  * @param args
  * Filter argument(s) text to be sanitized.
  *
  * @returns
  * Sanitized string that's safe to use as a filter argument.
- * When more than one argument is provided, they are joined with `:`.
  *
  * @example
  * import {sanitizeFilterArgs} from 'custom-string-formatter';
  *
  * sanitizeFilterArgs('some (text)'); //=> some &#x28;text&#x29;
+ *
+ * @example
+ * import {sanitizeFilterArgs} from 'custom-string-formatter';
+ *
+ * sanitizeFilterArgs('hello', 'there :)'); //=> hello:there &#x3a;&#x29;
  *
  * @see {@link decodeFilterArg}
  */
