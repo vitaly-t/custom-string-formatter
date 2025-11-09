@@ -142,6 +142,8 @@ const s = format('${title} ${name} address: ${address | json}, updated: ${update
 console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}, updated: 09-11-2025
 ```
 
+For more, see [Examples in the WiKi](https://github.com/vitaly-t/custom-string-formatter/wiki/Examples).
+
 ### Filter Arguments
 
 You can pass optional arguments into a filter after `:` symbol:

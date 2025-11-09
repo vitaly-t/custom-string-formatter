@@ -9,3 +9,5 @@ Advanced examples of using `getDefaultFilter` function:
 **Misc**
 
 * [./postgres](./postgres.ts) - a formatter draft for PostgreSQL, as a demo
+
+For more, see [examples in the WiKi](https://github.com/vitaly-t/custom-string-formatter/wiki/Examples).
