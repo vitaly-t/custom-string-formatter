@@ -130,14 +130,14 @@ class BaseFormatter implements IFormatter {
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${title}${name} address: ${address | json}, updated: ${updated | date : DD-MM-YYYY}', {
+const s = format('${title} ${name} address: ${address | json}, updated: ${updated | date : DD-MM-YYYY}', {
     title: 'Mr.',
-    name: 'Plum',
+    name: 'Foreman',
     address: {street: 'Springfield', house: 10},
     updated: new Date()
 });
 
-console.log(s); //=> Mr.Plum address: {"street":"Springfield","house":10}, updated: 09-11-2025
+console.log(s); //=> Mr.Foreman address: {"street":"Springfield","house":10}, updated: 09-11-2025
 ```
 
 ### Filter Arguments
