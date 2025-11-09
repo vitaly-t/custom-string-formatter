@@ -178,6 +178,7 @@ Codes for symbols that must be encoded inside filter arguments:
 |  `)`   | `&#41;`  |  `&#x29;`   |
 
 You can use function [sanitizeFilterArgs] to encode all such special symbols.
+See also [online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview) for quick manual conversion.
 
 You can also override method [decodeArguments], for the following purposes:
 
