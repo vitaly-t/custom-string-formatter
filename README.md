@@ -110,8 +110,10 @@ class JsonFilter implements IFilter {
     }
 }
 
-class DateFilter implements IFilter<Date | number, string> {
-    transform(value: Date | number, args: string[]): string {
+type DateInput = Date | number | string; // inputs that dayjs supports
+
+class DateFilter implements IFilter<DateInput, string> {
+    transform(value: DateInput, args: string[]): string {
         return dayjs(value).format(args[0]); // use dayjs to format the date
     }
 }
