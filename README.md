@@ -102,10 +102,17 @@ output from the last filter going to the formatter, to be converted into a strin
 
 ```ts
 import {createFormatter, IFormatter, IFilter} from 'custom-string-formatter';
+import dayjs from 'dayjs';
 
 class JsonFilter implements IFilter {
     transform(value: any, args: string[]): any {
         return JSON.stringify(value); // transform into a JSON string
+    }
+}
+
+class DateFilter implements IFilter<Date | number, string> {
+    transform(value: Date | number, args: string[]): string {
+        return dayjs(value).format(args[0]); // use dayjs to format the date
     }
 }
 
@@ -116,19 +123,21 @@ class BaseFormatter implements IFormatter {
 
     // name->object map of all our filters:
     filters = {
+        date: new DateFilter(),
         json: new JsonFilter()
     };
 }
 
 const format = createFormatter(new BaseFormatter());
 
-const s = format('${title} ${name} address: ${address | json}', {
+const s = format('${title} ${name} address: ${address | json}, updated: ${updated | date : DD-MM-YYYY}', {
     title: 'Mr.',
     name: 'Foreman',
-    address: {street: 'Springfield', house: 10}
+    address: {street: 'Springfield', house: 10},
+    updated: new Date()
 });
 
-console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}
+console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}, updated: 09-11-2025
 ```
 
 ### Filter Arguments
