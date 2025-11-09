@@ -164,6 +164,7 @@ Filter arguments are automatically HTML-decoded (unless [decodeArguments] overri
 * `&#8364;` => `€`: decimal symbol codes (1–6 digits)
 * `&#x1F60a;` => `😊`: hexadecimal symbol codes (1–5 hex digits, case-insensitive)
 
+---
 <details>
 <summary><b>List of symbols that must be encoded.</b></summary>
 
@@ -180,6 +181,7 @@ Filter arguments are automatically HTML-decoded (unless [decodeArguments] overri
 
 </details>
 
+---
 You can use function [sanitizeFilterArgs] to encode all such special symbols.
 See also [online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview) for quick manual conversion.
 
