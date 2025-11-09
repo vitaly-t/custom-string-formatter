@@ -139,7 +139,7 @@ const s = format('${title} ${name} address: ${address | json}, updated: ${update
     updated: new Date()
 });
 
-console.log(s); //=> Mr.Foreman address: {"street":"Springfield","house":10}, updated: 09-11-2025
+console.log(s); //=> Mr. Foreman address: {"street":"Springfield","house":10}, updated: 09-11-2025
 ```
 
 ### Filter Arguments
