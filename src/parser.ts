@@ -39,7 +39,7 @@ export function createFormatter(base: IFormatter) {
         return text.replace(formatRegEx, (...args: string[]) => {
             const prop = args[4]; // property name
             const filters = args[5]; // filters, if specified
-            let {exists, value} = resolveProperty(prop, params);
+            let {exists, value, parent} = resolveProperty(prop, params);
             if (!exists) {
                 if (typeof base.getDefaultValue !== 'function') {
                     throw new Error(`Property ${JSON.stringify(prop)} does not exist`);
@@ -61,7 +61,7 @@ export function createFormatter(base: IFormatter) {
                             throw new Error(`Filter ${JSON.stringify(fName)} not recognized`);
                         }
                         const decodedArgs = typeof f.decodeArguments === 'function' ? f.decodeArguments(args) : args.map(a => decodeFilterArg(a));
-                        return f.transform(p, decodedArgs);
+                        return f.transform(p, decodedArgs, parent);
                     }, value);
             }
             return base.format(value);

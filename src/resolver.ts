@@ -9,9 +9,16 @@ export interface IProperty {
     exists: boolean;
 
     /**
-     * The resolved value, set only when 'exists' = true
+     * The resolved value, set only when 'exists' = true.
      */
     value?: any;
+
+    /**
+     * Container for the resolved property - value/property immediately preceding it (in the resolution chain).
+     *
+     * It is set only when 'exists' = true.
+     */
+    parent?: any;
 }
 
 /**
@@ -21,7 +28,7 @@ export interface IProperty {
  */
 export function resolveProperty(prop: string, obj: { [key: string]: any }): IProperty {
     const names = prop.split('.').filter(a => a);
-    let exists = false, value = obj;
+    let exists = false, value = obj, parent = undefined;
     for (const [i, n] of names.entries()) {
         if (!i && n === 'this') {
             exists = true;
@@ -31,7 +38,8 @@ export function resolveProperty(prop: string, obj: { [key: string]: any }): IPro
             return {exists: false};
         }
         exists = true;
+        parent = value;
         value = value[n];
     }
-    return exists ? {exists, value} : {exists};
+    return exists ? {exists, value, parent} : {exists};
 }

@@ -17,6 +17,13 @@ export interface IFilter<T = any, R = any> {
      * By default, each argument is HTML-decoded, unless override
      * {@link decodeArguments} is implemented.
      *
+     * @param parent
+     * Container for the resolved property - value/property immediately preceding it (in the resolution chain).
+     *
+     * For example, for a simple property reference (not a nested one), the container is the formatting object itself.
+     *
+     * It is `undefined` when the property chain contains only `this`, because in that case there is no container.
+     *
      * @returns
      * Result of the value transformation.
      *
@@ -45,7 +52,7 @@ export interface IFilter<T = any, R = any> {
      *
      * // Both approaches will work the same as the example above.
      */
-    transform(value: T, args: string[]): R;
+    transform(value: T, args: string[], parent: any): R;
 
     /**
      * Optional override for decoding filter arguments.
