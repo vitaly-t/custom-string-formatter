@@ -157,7 +157,7 @@ set to `['', '', 'Hello World!']`.
 
 **IMPORTANT** ☝
 > Filter arguments cannot contain symbols `|:{}<>()`, as they would conflict with the variable syntax.
-> To pass those in, you need to HTML-encode them (see below).
+> To pass those in, you need to sanitize them (HTML-encode), as shown below.
 
 Filter arguments are automatically HTML-decoded (unless [decodeArguments] override is present):
 
@@ -182,8 +182,8 @@ Filter arguments are automatically HTML-decoded (unless [decodeArguments] overri
 </details>
 
 ---
-You can use function [sanitizeFilterArgs] to encode all such special symbols.
-See also [online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview) for quick manual conversion.
+You can use function [sanitizeFilterArgs] to encode all such special symbols automatically.
+For manual conversion, check out the [online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview).
 
 You can also override method [decodeArguments], for the following purposes:
 
