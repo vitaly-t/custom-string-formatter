@@ -183,7 +183,8 @@ Filter arguments are automatically HTML-decoded (unless [decodeArguments] overri
 
 ---
 You can use function [sanitizeFilterArgs] to encode all such special symbols automatically.
-For manual conversion, check out the [online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview).
+For manual conversion, use the table above or check out the
+[online helper](https://plnkr.co/edit/4fVQSHfv9rIzfzDZ?open=lib%2Fscript.js&preview).
 
 You can also override method [decodeArguments], for the following purposes:
 
