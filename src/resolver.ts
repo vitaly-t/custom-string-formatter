@@ -1,5 +1,7 @@
 /**
  * Property-Resolution Context.
+ *
+ * @see {@link IFilter.transform}
  */
 export interface IPropertyContext {
     /**
@@ -8,9 +10,9 @@ export interface IPropertyContext {
     path: string;
 
     /**
-     * Container for the resolved property - value/property immediately preceding it (in the resolution chain).
+     * Container for the resolved value/property, immediately preceding it (in the resolution chain).
      *
-     * For example, for a simple property reference (not a nested one), the container is the formatting object itself.
+     * For a simple property reference (not a nested one), the container is the formatting object itself.
      *
      * It is `undefined` when the property chain contains only `this` or when the property does not exist,
      * because in those cases there is no container.
