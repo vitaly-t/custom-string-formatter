@@ -105,7 +105,7 @@ import {createFormatter, IFormatter, IFilter} from 'custom-string-formatter';
 import dayjs from 'dayjs';
 
 class JsonFilter implements IFilter {
-    transform(value: any, args: string[]): any {
+    transform(value: any): any {
         return JSON.stringify(value); // transform into a JSON string
     }
 }
