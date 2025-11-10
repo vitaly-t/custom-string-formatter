@@ -1,5 +1,5 @@
 /**
- * Property Resolution Context.
+ * Property-Resolution Context.
  */
 export interface IPropertyContext {
     /**
@@ -29,9 +29,9 @@ export interface IProperty {
     exists: boolean;
 
     /**
-     * Property resolution context.
+     * Property-Resolution Context.
      */
-    context: IPropertyContext;
+    ctx: IPropertyContext;
 
     /**
      * The resolved value, set only when 'exists' = true.
@@ -47,18 +47,18 @@ export interface IProperty {
 export function resolveProperty(path: string, obj: { [key: string]: any }): IProperty {
     const nameList = path.split('.').filter(a => a);
     let exists = false, value = obj;
-    const context: IPropertyContext = {path, parent: undefined};
+    const ctx: IPropertyContext = {path, parent: undefined};
     for (const [i, n] of nameList.entries()) {
         if (!i && n === 'this') {
             exists = true;
             continue;
         }
         if (value === null || value === undefined || !(n in value)) {
-            return {exists: false, context: {path, parent: undefined}};
+            return {exists: false, ctx: {path, parent: undefined}};
         }
         exists = true;
-        context.parent = value;
+        ctx.parent = value;
         value = value[n];
     }
-    return exists ? {exists, value, context} : {exists, context};
+    return exists ? {exists, value, ctx} : {exists, ctx};
 }

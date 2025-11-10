@@ -19,8 +19,8 @@ export interface IFilter<T = any, R = any> {
      * By default, each argument is HTML-decoded, unless override
      * {@link decodeArguments} is implemented.
      *
-     * @param context
-     * Property resolution context.
+     * @param ctx
+     * Property-Resolution Context.
      *
      * @returns
      * Result of the value transformation.
@@ -50,7 +50,7 @@ export interface IFilter<T = any, R = any> {
      *
      * // Both approaches will work the same as the example above.
      */
-    transform(value: T, args: string[], context: IPropertyContext): R;
+    transform(value: T, args: string[], ctx: IPropertyContext): R;
 
     /**
      * Optional override for decoding filter arguments.
