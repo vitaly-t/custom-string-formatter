@@ -102,35 +102,38 @@ describe('createFormatter', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
             const obj = {value: 'message'};
             fullFormat('${value|json:}', obj);
-            expect(cb).toHaveBeenCalledWith('message', [''], obj);
+            expect(cb).toHaveBeenCalledWith('message', [''], {path: 'value', parent: obj});
             fullFormat('${value|json:::Hello World!}', obj);
-            expect(cb).toHaveBeenCalledWith('message', ['', '', 'Hello World!'], obj);
+            expect(cb).toHaveBeenCalledWith('message', ['', '', 'Hello World!'], {path: 'value', parent: obj});
         });
         it('must resolve numbers', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
             const obj = {value: 'message'};
             fullFormat('${value|json: 1: 22.33: -45.678}', obj);
-            expect(cb).toHaveBeenCalledWith('message', ['1', '22.33', '-45.678'], obj);
+            expect(cb).toHaveBeenCalledWith('message', ['1', '22.33', '-45.678'], {path: 'value', parent: obj});
         });
         it('must resolve random text with spaces', () => {
             const cb1 = jest.spyOn(fullFormatter.filters.json, 'transform');
             const cb2 = jest.spyOn(fullFormatter, 'getDefaultFilter');
             const obj = {value: 'message'};
             fullFormat('${value|object: Hello World! : Where are we? }', obj);
-            expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?'], obj);
+            expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?'], {
+                path: 'value',
+                parent: obj
+            });
             expect(cb2).toHaveBeenCalledWith('object', ['Hello World!', 'Where are we?']);
         });
         it('must decode HTML symbols by default', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
             const obj = {value: 'message'};
             fullFormat('${value|json: &#58;}', obj);
-            expect(cb).toHaveBeenCalledWith('message', [':'], obj);
+            expect(cb).toHaveBeenCalledWith('message', [':'], {path: 'value', parent: obj});
         });
         it('must not decode HTML symbols with override present', () => {
             const cb = jest.spyOn(fullFormatter.filters.append, 'transform');
             const obj = {value: 'message'};
             fullFormat('${value|append: &#58;}', obj);
-            expect(cb).toHaveBeenCalledWith('message', ['&#58;'], obj);
+            expect(cb).toHaveBeenCalledWith('message', ['&#58;'], {path: 'value', parent: obj});
         });
     });
 });
