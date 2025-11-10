@@ -100,33 +100,37 @@ describe('createFormatter', () => {
     describe('for filter arguments', () => {
         it('must handle empty args', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
-            fullFormat('${value|json:}', {value: 'message'});
-            expect(cb).toHaveBeenCalledWith('message', ['']);
-
-            fullFormat('${value|json:::Hello World!}', {value: 'message'});
-            expect(cb).toHaveBeenCalledWith('message', ['', '', 'Hello World!']);
+            const obj = {value: 'message'};
+            fullFormat('${value|json:}', obj);
+            expect(cb).toHaveBeenCalledWith('message', [''], obj);
+            fullFormat('${value|json:::Hello World!}', obj);
+            expect(cb).toHaveBeenCalledWith('message', ['', '', 'Hello World!'], obj);
         });
         it('must resolve numbers', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
-            fullFormat('${value|json: 1: 22.33: -45.678}', {value: 'message'});
-            expect(cb).toHaveBeenCalledWith('message', ['1', '22.33', '-45.678']);
+            const obj = {value: 'message'};
+            fullFormat('${value|json: 1: 22.33: -45.678}', obj);
+            expect(cb).toHaveBeenCalledWith('message', ['1', '22.33', '-45.678'], obj);
         });
         it('must resolve random text with spaces', () => {
             const cb1 = jest.spyOn(fullFormatter.filters.json, 'transform');
             const cb2 = jest.spyOn(fullFormatter, 'getDefaultFilter');
-            fullFormat('${value|object: Hello World! : Where are we? }', {value: 'message'});
-            expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?']);
+            const obj = {value: 'message'};
+            fullFormat('${value|object: Hello World! : Where are we? }', obj);
+            expect(cb1).toHaveBeenCalledWith('message', ['Hello World!', 'Where are we?'], obj);
             expect(cb2).toHaveBeenCalledWith('object', ['Hello World!', 'Where are we?']);
         });
         it('must decode HTML symbols by default', () => {
             const cb = jest.spyOn(fullFormatter.filters.json, 'transform');
-            fullFormat('${value|json: &#58;}', {value: 'message'});
-            expect(cb).toHaveBeenCalledWith('message', [':']);
+            const obj = {value: 'message'};
+            fullFormat('${value|json: &#58;}', obj);
+            expect(cb).toHaveBeenCalledWith('message', [':'], obj);
         });
         it('must not decode HTML symbols with override present', () => {
             const cb = jest.spyOn(fullFormatter.filters.append, 'transform');
-            fullFormat('${value|append: &#58;}', {value: 'message'});
-            expect(cb).toHaveBeenCalledWith('message', ['&#58;']);
+            const obj = {value: 'message'};
+            fullFormat('${value|append: &#58;}', obj);
+            expect(cb).toHaveBeenCalledWith('message', ['&#58;'], obj);
         });
     });
 });
