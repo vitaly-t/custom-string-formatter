@@ -39,10 +39,10 @@
   },
   "devDependencies": {
     "@types/jest": "30.0.0",
-    "@types/node": "24.10.0",
+    "@types/node": "25.3.0",
     "jest": "30.2.0",
-    "ts-jest": "29.4.5",
-    "typedoc": "0.28.14",
+    "ts-jest": "29.4.6",
+    "typedoc": "0.28.17",
     "typescript": "5.9.3"
   }
 }
